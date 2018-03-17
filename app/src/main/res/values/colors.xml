@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#03A9F4</color>
+
+    <color name="lightPrimary">#BBDEFB</color>
+    <color name="textIcon">#FFFFFF</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="activated_color">#E8E8E8</color>
+
+
+    <color name="branco">#ffffff</color>
+    <color name="cinza">#EEEEEE</color>
+    <color name="preto">#000000</color>
+    <color name="preto_2">#242323</color>
+    <color name="accent_pressed">#b8b8b8</color>
+    <color name="ripple">#b8b8b8</color>
+
+    <color name="vermelho">#c71c22</color>
+    <color name="vermelho_pressed">#eb373e</color>
+
+    <color name="verde">#73a839</color>
+    <color name="verde_pressed">#7dba3a</color>
+
+    <color name="primaryDark2">#136dc5</color>
+
+    <!--Color theme vermelho-->
+    <color name="theme_red_primary">#F44336</color>
+    <color name="theme_red_primaryDark">#D32F2F</color>
+    <color name="theme_red_lightPrimary">#FFCDD2</color>
+    <color name="theme_red_accent">#FF5722</color>
+    <color name="theme_red_primaryText">#212121</color>
+    <color name="theme_red_secondaryText">#757575</color>
+    <color name="theme_red_textIcon">#FFFFFF</color>
+    <color name="theme_red_divider">#BDBDBD</color>
+    <color name="theme_red_activated_color">#E8E8E8</color>
+
+    <!--Color theme green-->
+    <color name="theme_green_primary">#4CAF50</color>
+    <color name="theme_green_primaryDark">#388E3C</color>
+    <color name="theme_green_lightPrimary">#C8E6C9</color>
+    <color name="theme_green_accent">#8BC34A</color>
+    <color name="theme_green_primaryText">#212121</color>
+    <color name="theme_green_secondaryText">#757575</color>
+    <color name="theme_green_textIcon">#FFFFFF</color>
+    <color name="theme_green_divider">#BDBDBD</color>
+    <color name="theme_green_activated_color">#E8E8E8</color>
+
+    <color name="ripplecolor">#b8b8b8</color>
+</resources>
+

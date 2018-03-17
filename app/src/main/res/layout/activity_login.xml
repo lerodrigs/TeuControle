@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:id="@+id/login_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/logo"
+            android:layout_marginTop="80dp" />
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_email"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/email"
+            android:textColorHint="@color/cinza"
+            android:textColor="@color/branco"
+            android:padding="10dp"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_senha"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/senha"
+            android:padding="10dp"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/cinza"
+            android:inputType="textPassword" />
+        <Button
+            android:text="@string/btnLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLogin"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/branco"
+            android:background="@drawable/button" />
+        <TextView
+            android:text="@string/esqueci_senha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_esqueci_senha"
+            android:textColor="@color/branco"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:textSize="15dp" />
+        <RelativeLayout
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/relativeLayout1">
+            <TextView
+                android:text="@string/cadastre_se"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_cadastre_se"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/branco" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_lancamentos"
+            android:icon="@mipmap/ic_home_1"
+            android:title="@string/lancamentos" />
+
+        <item
+            android:id="@+id/nav_home_configuracoes"
+            android:icon="@mipmap/ic_home_2"
+            android:title="@string/configuracoes" />
+
+        <item
+            android:id="@+id/nav_home_sair"
+            android:icon="@mipmap/ic_home_2"
+            android:title="@string/sair" />
+    </group>
+</menu>

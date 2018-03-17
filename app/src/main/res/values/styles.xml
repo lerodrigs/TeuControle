@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MyTheme.Green" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/theme_green_primary</item>
+        <item name="colorPrimaryDark">@color/theme_green_primaryDark</item>
+        <item name="colorAccent">@color/theme_green_accent</item>
+        <!--<item name="actionBarStyle">@android:style/MyTheme.ActionBar</item>-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="MyTheme.Red" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/theme_red_primary</item>
+        <item name="colorPrimaryDark">@color/theme_red_primaryDark</item>
+        <item name="colorAccent">@color/theme_red_accent</item>
+        <!--<item name="actionBarStyle">@style/MyTheme.ActionBar</item>-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <!--<item name="android:colorControlHighlight">@color/ripplecolor</item>-->
+    </style>
+
+    <style name="TablayoutTheme" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/branco</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/branco</item>
+    </style>
+
+</resources>

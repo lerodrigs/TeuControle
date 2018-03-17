@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">TeuControle</string>
+
+    <string name="home">Home</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="fragment1">You are on Fragment 1</string>
+    <string name="fragment2">You are on Fragment 2</string>
+
+    <string name="lancamentos">Lançamentos</string>
+    <string name="fluxo_de_caixa">Fluxo de Caixa</string>
+    <string name="relatorios">Relatórios</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="sair">Sair</string>
+
+    <string name="receitas">Receitas</string>
+    <string name="despesas">Despesas</string>
+    <string name="categorias">Categorias</string>
+    <string name="contas_e_cartoes">Contas e Cartões</string>
+    <string name="faturas">Faturas</string>
+
+    <string name="adicionar_receita">Adicionar Receita</string>
+    <string name="adicionar_despesa">Adicionar Despesa</string>
+    <string name="adicionar_categoria">Adicionar Categoria</string>
+    <string name="adicionar_conta">Adicionar Conta</string>
+    <string name="adicionar_cartao">Adicionar Cartão</string>
+    <string name="pagar_fatura">Pagar Fatura</string>
+
+    <string name="acoes">Ações</string>
+
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="btnLogin">Login</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="esqueci_senha">Esqueci minha senha?</string>
+
+    <string name="adicionar_conta_bancaria">Adicionar conta bancária</string>
+    <string name="adicionar_cartao_de_credito">Adicionar cartão</string>
+
+    <string name="nome_receita">Digite o nome da receita</string>
+    <string name="nome_despesa">Digite o nome da despesa</string>
+    <string name="valor">Valor</string>
+    <string name="adicionar_valor">Adicionar valor</string>
+
+    <string name="adicionar_valor_recebido">Adicionar valor recebido</string>
+    <string name="valor_recebido">Valor recebido</string>
+
+    <string name="conta">Conta</string>
+    <string name="selecione">Selecione</string>
+
+    <string name="categoria">Categoria</string>
+    <string name="vencimento">Vencimento</string>
+    <string name="descricao">Descrição</string>
+    <string name="adicionar_descricao">Adicionar descrição</string>
+
+    <string name="situacao">Situação</string>
+    <string name="data_pagamento">Data do pagamento</string>
+    <string name="adicionar_data">Adicionar data</string>
+
+    <string name="nome_item">nome_item</string>
+    <string name="perfis">Perfis</string>
+    <string name="perfil">Perfil</string>
+
+    <string name="nome_conta_bancaria">Digite o nome da conta</string>
+    <string name="lbl_tipo_conta">Tipo de Conta</string>
+    <string name="lbl_saldo">Saldo</string>
+
+    <string name="lbl_nome_cartao">Nome do cartao</string>
+    <string name="lbl_dia_fechamento">Dia do fechamento</string>
+    <string name="lbl_dia_vencimento">Dia do vencimento</string>
+    <string name="lbl_bandeira">Bandeira</string>
+    <string name="lbl_limite_total">Limite total</string>
+    <string name="lbl_limite_disponivel">Limite disponível</string>
+    <string name="lbl_conta_debitar">Conta a debitar</string>
+
+    <string name="precos">R$ 0,00</string>
+    <string name="zero">0</string>
+
+    <string name="nova_categoria">Nova categoria</string>
+    <string name="novo_perfil">Novo perfil</string>
+    <string name="nome">Nome</string>
+
+    <string name="estado">Estado</string>
+    <string name="cidade">Cidade</string>
+    <string name="sexo">Sexo</string>
+
+    <string name="masculino">Masculino</string>
+    <string name="feminino">Feminino</string>
+    <string name="assiantura_txt">Aproveite, por enquanto é gratuito :)</string>
+    <string name="lbl_data_dialog">Datas</string>
+
+    <string name="inicio">Início</string>
+    <string name="fim">Fim</string>
+
+    <string name="mascara_data">dd/mm/yyyy</string>
+
+    <string name="txt_nenhum_registro_encontrado">Nenhum registro encontrado.</string>
+
+    <string name="nome_row">nome</string>
+    <string name="vencimento_row">00/00/0000</string>
+    <string name="status_row">status</string>
+    <string name="valor_row">R$ 0,00</string>
+    <string name="categoria_row">Categoria 1</string>
+
+    <string name="contas_bancarias">Contas Bancárias</string>
+    <string name="cartoes_de_credito">Cartões de Crédito</string>
+    <string name="outros">Outros</string>
+
+    <string name="convidados">Convidados</string>
+    <string name="lbl_adicionar_usuarios">Adicionar usuários</string>
+
+    <string name="item">Item</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
