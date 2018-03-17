@@ -1,5 +1,6 @@
 package com.teucontrole.teucontrole.Actitivies;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity
 {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    ListView listView;
-    int id_fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,8 +36,29 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fabReceita = findViewById(R.id.fab_receitas);
+        fabReceita.setOnClickListener(fabReceitasClick);
+
+        FloatingActionButton fabDespesas = findViewById(R.id.fab_despesas);
+        fabDespesas.setOnClickListener(fabDespesasClick);
+
+        FloatingActionButton fabCategoriaReceita = findViewById(R.id.fab_cat_receita);
+        fabCategoriaReceita.setOnClickListener(fabCategoriaReceitaClick);
+
+        FloatingActionButton fabCategoriaDespesa = findViewById(R.id.fab_cat_despesa);
+        fabCategoriaDespesa.setOnClickListener(fabCategoriaDespesaClick);
+
+        FloatingActionButton fabAddContaBancaria = findViewById(R.id.adicionar_conta_bancaria);
+        fabAddContaBancaria.setOnClickListener(fabAddContaBancariaClick);
+
+        FloatingActionButton fabAddCartaoCredito = findViewById(R.id.adicionar_cartao_de_credito);
+        fabAddCartaoCredito.setOnClickListener(fabAddCartaoCreditoClick);
+
+        FloatingActionButton fabFaturas = findViewById(R.id.fab_faturas);
+        fabFaturas.setOnClickListener(fabFaturasClick);
 
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.setDrawerListener(toogle);
@@ -55,7 +75,6 @@ public class MainActivity extends AppCompatActivity
         listviewMenu.setItemsCanFocus(false);
 
         setChoosedFragment(1);
-        id_fragment = 1;
     }
 
     private ListView.OnItemClickListener itemClickListener = new ListView.OnItemClickListener()
@@ -94,4 +113,67 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+    private FloatingActionButton.OnClickListener fabReceitasClick = new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabDespesasClick = new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabCategoriaReceitaClick = new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabAddContaBancariaClick= new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabCategoriaDespesaClick= new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabAddCartaoCreditoClick= new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabFaturasClick= new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
 }

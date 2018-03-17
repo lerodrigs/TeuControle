@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
+import com.teucontrole.teucontrole.Actitivies.MainActivity;
 import com.teucontrole.teucontrole.R;
 
 public class ReceitasFragment extends Fragment
@@ -26,6 +28,7 @@ public class ReceitasFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null)
         {
         }
