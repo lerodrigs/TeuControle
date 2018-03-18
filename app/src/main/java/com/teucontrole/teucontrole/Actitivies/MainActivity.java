@@ -1,6 +1,8 @@
 package com.teucontrole.teucontrole.Actitivies;
 
-import android.support.design.widget.FloatingActionButton;
+import android.app.Activity;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.teucontrole.teucontrole.Adapters.AdapterMenuItems;
@@ -28,37 +29,24 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    static Activity context;
+    static FloatingActionButton fabReceita;
+    static FloatingActionButton fabDespesas;
+    static FloatingActionMenu fabMenuContasCartao;
+    static FloatingActionMenu fabMenuCategorias;
+    static FloatingActionButton fabFaturas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        context = this;
         drawerLayout = findViewById(R.id.drawer_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fabReceita = findViewById(R.id.fab_receitas);
-        fabReceita.setOnClickListener(fabReceitasClick);
-
-        FloatingActionButton fabDespesas = findViewById(R.id.fab_despesas);
-        fabDespesas.setOnClickListener(fabDespesasClick);
-
-        FloatingActionButton fabCategoriaReceita = findViewById(R.id.fab_cat_receita);
-        fabCategoriaReceita.setOnClickListener(fabCategoriaReceitaClick);
-
-        FloatingActionButton fabCategoriaDespesa = findViewById(R.id.fab_cat_despesa);
-        fabCategoriaDespesa.setOnClickListener(fabCategoriaDespesaClick);
-
-        FloatingActionButton fabAddContaBancaria = findViewById(R.id.adicionar_conta_bancaria);
-        fabAddContaBancaria.setOnClickListener(fabAddContaBancariaClick);
-
-        FloatingActionButton fabAddCartaoCredito = findViewById(R.id.adicionar_cartao_de_credito);
-        fabAddCartaoCredito.setOnClickListener(fabAddCartaoCreditoClick);
-
-        FloatingActionButton fabFaturas = findViewById(R.id.fab_faturas);
-        fabFaturas.setOnClickListener(fabFaturasClick);
 
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.setDrawerListener(toogle);
@@ -73,6 +61,30 @@ public class MainActivity extends AppCompatActivity
         listviewMenu.setOnItemClickListener(itemClickListener);
         listviewMenu.setAdapter(adapterMenuItems);
         listviewMenu.setItemsCanFocus(false);
+
+        fabReceita = findViewById(R.id.fab_receitas);
+        fabReceita.setOnClickListener(fabReceitasClick);
+
+        fabDespesas = findViewById(R.id.fab_despesas);
+        fabDespesas.setOnClickListener(fabDespesasClick);
+
+        fabMenuContasCartao = findViewById(R.id.fab_contas_cartao);
+        fabMenuCategorias = findViewById(R.id.fab_categorias);
+
+        FloatingActionButton fabCategoriaReceita = findViewById(R.id.fab_cat_receita);
+        fabCategoriaReceita.setOnClickListener(fabCategoriaReceitaClick);
+
+        FloatingActionButton fabCategoriaDespesa = findViewById(R.id.fab_cat_despesa);
+        fabCategoriaDespesa.setOnClickListener(fabCategoriaDespesaClick);
+
+        FloatingActionButton fabAddContaBancaria = findViewById(R.id.adicionar_conta_bancaria);
+        fabAddContaBancaria.setOnClickListener(fabAddContaBancariaClick);
+
+        FloatingActionButton fabAddCartaoCredito = findViewById(R.id.adicionar_cartao_de_credito);
+        fabAddCartaoCredito.setOnClickListener(fabAddCartaoCreditoClick);
+
+        fabFaturas = findViewById(R.id.fab_faturas);
+        fabFaturas.setOnClickListener(fabFaturasClick);
 
         setChoosedFragment(1);
     }
@@ -95,9 +107,11 @@ public class MainActivity extends AppCompatActivity
             switch(id)
             {
                 case 1:
+                    chooseFloatingActionButton(0);
                     fragment = LancamentosFragment.NewInstance();
                     break;
                 case 2:
+                    chooseFloatingActionButton(5);
                     fragment = ConfiguracoesFragment.NewInstance();
                     break;
             }
@@ -112,6 +126,50 @@ public class MainActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
+    }
+
+    public static void chooseFloatingActionButton(final int id)
+    {
+        try
+        {
+            context.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    fabReceita.hide(true);
+                    fabDespesas.hide(true);
+                    fabMenuContasCartao.hideMenuButton(true);
+                    fabMenuCategorias.hideMenuButton(true);
+                    fabFaturas.hide(true);
+
+                    switch (id)
+                    {
+                        case 0:
+                            fabReceita.show(true);
+                            break;
+
+                        case 1:
+                            fabDespesas.show(true);
+                            break;
+
+                        case 2:
+                            fabMenuContasCartao.showMenuButton(true);
+                            break;
+
+                        case 3:
+                            fabMenuCategorias.showMenuButton(true);
+                            break;
+
+                        case 4:
+                            fabFaturas.show(true);
+                            break;
+                    }
+                }
+            });
+
+        }
+        catch (Exception e ) { }
     }
 
     private FloatingActionButton.OnClickListener fabReceitasClick = new FloatingActionButton.OnClickListener()
@@ -176,4 +234,7 @@ public class MainActivity extends AppCompatActivity
 
         }
     };
+
+
+
 }

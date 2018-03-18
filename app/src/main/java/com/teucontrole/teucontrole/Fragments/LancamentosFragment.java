@@ -1,24 +1,18 @@
 package com.teucontrole.teucontrole.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
+import com.teucontrole.teucontrole.Actitivies.MainActivity;
 import com.teucontrole.teucontrole.Adapters.AdapterViewPage;
 import com.teucontrole.teucontrole.R;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LancamentosFragment extends Fragment
 {
@@ -65,7 +59,7 @@ public class LancamentosFragment extends Fragment
             setupViewPager(viewPager, getFragmentManager());
 
             tabLayout.setupWithViewPager(viewPager);
-
+            tabLayout.setOnTabSelectedListener(tabSelectedListener);
         }
         catch (Exception e )
         {
@@ -84,4 +78,27 @@ public class LancamentosFragment extends Fragment
 
         viewPager.setAdapter(adapter);
     }
+
+    private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener()
+    {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab)
+        {
+            int position = tab.getPosition();
+
+            MainActivity.chooseFloatingActionButton(position);
+            viewPager.setCurrentItem(position, true);
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
+
 }
