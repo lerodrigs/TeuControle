@@ -9,7 +9,7 @@
 
     <item android:id="@+id/salvar"
         android:icon="@mipmap/salvar"
-        android:title="Remover"
+        android:title="Salvar"
         app:showAsAction="always">
     </item>
 

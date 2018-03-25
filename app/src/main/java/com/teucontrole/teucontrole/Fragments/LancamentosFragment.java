@@ -74,6 +74,7 @@ public class LancamentosFragment extends Fragment
         adapter.addFragment(ReceitasFragment.NewInstance(), "Receitas");
         adapter.addFragment(DespesasFragment.NewInstance(), "Despesas");
         adapter.addFragment(ContasCartoesFragment.NewInstance(), "Contas e Cartões");
+        adapter.addFragment(CategoriasFragment.NewInstance(), "Categorias");
         adapter.addFragment(FaturasFragment.NewInstance(), "Faturas");
 
         viewPager.setAdapter(adapter);

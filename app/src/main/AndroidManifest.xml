@@ -16,8 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Actitivies.MainActivity"></activity>
-        <activity android:name=".Actitivies.LoginActivity"></activity>
+        <activity android:name=".Actitivies.MainActivity" />
+        <activity android:name=".Actitivies.LoginActivity" />
+        <activity android:name=".Actitivies.AdicionarReceitasActivity" />
+        <activity android:name=".Actitivies.AdicionarDespesaActivity" />
+        <activity android:name=".Actitivies.AdicionarFaturasActivity" />
+        <activity android:name=".Actitivies.CartaoCreditoActivity" />
+        <activity android:name=".Actitivies.ContaBancariaActivity"></activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 
+import com.teucontrole.teucontrole.Fragments.CategoriasFragment;
 import com.teucontrole.teucontrole.Fragments.ContasCartoesFragment;
 import com.teucontrole.teucontrole.Fragments.DespesasFragment;
 import com.teucontrole.teucontrole.Fragments.FaturasFragment;
@@ -50,6 +51,9 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
                     break;
 
                 case 3:
+                    fragment = CategoriasFragment.NewInstance();
+                    break;
+                case 4:
                     fragment = FaturasFragment.NewInstance();
                     break;
             }
@@ -90,6 +94,10 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
                     break;
 
                 case 3:
+                    title = "Categorias";
+                    break;
+
+                case 4:
                     title = "Faturas";
                     break;
             }

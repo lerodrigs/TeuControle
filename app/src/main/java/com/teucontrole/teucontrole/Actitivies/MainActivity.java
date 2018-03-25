@@ -3,6 +3,10 @@ package com.teucontrole.teucontrole.Actitivies;
 import android.app.Activity;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.teucontrole.teucontrole.Adapters.AdapterMenuItems;
 import com.teucontrole.teucontrole.Fragments.ConfiguracoesFragment;
@@ -177,7 +182,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
+            Intent adicionarReceitasIntent= new Intent(context, AdicionarReceitasActivity.class);
+            startActivity(adicionarReceitasIntent);
         }
     };
 
@@ -186,7 +192,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
+            Intent despesas = new Intent(context, AdicionarDespesaActivity.class);
+            startActivity(despesas);
         }
     };
 
@@ -195,16 +202,18 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = context.getLayoutInflater().inflate(R.layout.adicionar_categorias, null);
 
-        }
-    };
+            TextView lbl_categoria = view.findViewById(R.id.lbl_categoria);
+            lbl_categoria.setText(lbl_categoria.getText() + " (Receitas)");
 
-    private FloatingActionButton.OnClickListener fabAddContaBancariaClick= new FloatingActionButton.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
+            builder.setView(view);
+            builder.setPositiveButton(R.string.Adicionar, btnAdicionarCategoriaListener);
+            builder.setNegativeButton(R.string.Cancelar, null);
 
+            builder.create();
+            builder.show();
         }
     };
 
@@ -213,7 +222,28 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = context.getLayoutInflater().inflate(R.layout.adicionar_categorias, null);
 
+            TextView lbl_categoria = view.findViewById(R.id.lbl_categoria);
+            lbl_categoria.setText(lbl_categoria.getText() + " (Despesas)");
+
+            builder.setView(view);
+            builder.setPositiveButton(R.string.Adicionar, btnAdicionarCategoriaListener);
+            builder.setNegativeButton(R.string.Cancelar, null);
+
+            builder.create();
+            builder.show();
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabAddContaBancariaClick= new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Intent contaBancaria = new Intent(context, ContaBancariaActivity.class);
+            startActivity(contaBancaria);
         }
     };
 
@@ -222,7 +252,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
+            Intent cartaoDeCredito = new Intent(context, CartaoCreditoActivity.class);
+            startActivity(cartaoDeCredito);
         }
     };
 
@@ -231,10 +262,36 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
+            Intent faturas = new Intent(context, AdicionarFaturasActivity.class);
+            startActivity(faturas);
         }
     };
 
+    public void addNewCategoria(final boolean isReceita)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if(isReceita)
+                {
 
+                }
+                else
+                {
 
+                }
+            }
+        }).start();
+    }
+
+    private DialogInterface.OnClickListener btnAdicionarCategoriaListener = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            addNewCategoria(true);
+        }
+    };
 }
