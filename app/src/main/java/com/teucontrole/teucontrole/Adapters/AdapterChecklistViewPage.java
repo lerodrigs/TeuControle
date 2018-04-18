@@ -1,27 +1,23 @@
 package com.teucontrole.teucontrole.Adapters;
 
-
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.ListFragment;
 
-import com.teucontrole.teucontrole.Fragments.CategoriasFragment;
-import com.teucontrole.teucontrole.Fragments.ContasCartoesFragment;
-import com.teucontrole.teucontrole.Fragments.DespesasFragment;
-import com.teucontrole.teucontrole.Fragments.FaturasFragment;
-import com.teucontrole.teucontrole.Fragments.ReceitasFragment;
+import com.teucontrole.teucontrole.Fragments.CheckListGeralFragment;
+import com.teucontrole.teucontrole.Fragments.CheckListModeloFragment;
+import com.teucontrole.teucontrole.Fragments.Check_sList_sFragment;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterViewPage extends FragmentStatePagerAdapter
+public class AdapterChecklistViewPage extends FragmentStatePagerAdapter
 {
     List<Fragment> fragments;
     List<String> titles;
 
-    public AdapterViewPage(FragmentManager _fragmentManager)
+    public AdapterChecklistViewPage(FragmentManager _fragmentManager)
     {
         super(_fragmentManager);
 
@@ -39,22 +35,15 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
             switch (position)
             {
                 case 0:
-                    fragment = ReceitasFragment.NewInstance();
-                break;
+                    fragment = Check_sList_sFragment.newInstance();
+                    break;
 
                 case 1:
-                    fragment = DespesasFragment.NewInstance();
-                break;
+                    fragment = CheckListGeralFragment.newInstance();
+                    break;
 
                 case 2:
-                    fragment = ContasCartoesFragment.NewInstance();
-                    break;
-
-                case 3:
-                    fragment = CategoriasFragment.NewInstance();
-                    break;
-                case 4:
-                    fragment = FaturasFragment.NewInstance();
+                    fragment = CheckListModeloFragment.newInstance();
                     break;
             }
 
@@ -82,23 +71,15 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
             switch(position)
             {
                 case 0:
-                    title = "Receitas";
+                    title = "Checklists";
                     break;
 
                 case 1:
-                    title = "Despesas";
+                    title = "Geral";
                     break;
 
                 case 2:
-                    title = "Contas e Cartões";
-                    break;
-
-                case 3:
-                    title = "Categorias";
-                    break;
-
-                case 4:
-                    title = "Faturas";
+                    title = "Modelos";
                     break;
             }
 
@@ -115,5 +96,4 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
         fragments.add(fragment);
         titles.add(title);
     }
-
 }

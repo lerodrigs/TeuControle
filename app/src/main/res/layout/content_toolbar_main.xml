@@ -135,5 +135,38 @@
         app:fab_colorRipple="@color/ripple" />
 
 
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_checklists"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="10dp"
+        android:visibility="visible"
+        android:enabled="false"
+        android:src="@mipmap/ic_add_white"
+        app:menu_backgroundColor="#99000000"
+        app:menu_animationDelayPerItem="0"
+        app:menu_labels_style="@style/FabMenuLabel"
+        app:menu_colorNormal="@color/verde"
+        app:menu_colorPressed="@color/verde_pressed"
+        app:menu_colorRipple="@color/ripple">
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="@string/add_checklist"
+            android:id="@+id/add_checklist"
+            style="@style/FabMenuButton" />
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="@string/add_checklist_modelo"
+            android:id="@+id/add_checklist_modelo"
+            style="@style/FabMenuButton" />
+    </com.github.clans.fab.FloatingActionMenu>
+
+
 
 </FrameLayout>

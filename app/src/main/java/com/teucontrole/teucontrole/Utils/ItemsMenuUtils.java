@@ -29,6 +29,14 @@ public class ItemsMenuUtils
 
             items.add(item);
 
+            item = new Item();
+
+            item.setDescricao("CheckLists");
+            item.setId(3);
+            item.setImage(R.mipmap.ic_checklist);
+
+            items.add(item);
+
             return items;
         }
         catch (Exception e )

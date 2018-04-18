@@ -27,7 +27,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nome_receita"
+                    android:id="@+id/txt_nome_receita"
                     android:minHeight="63dp"
                     android:background="@color/branco"
                     android:textColor="@color/primaryText"
@@ -250,7 +250,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_selecione_situacao"
+                        android:id="@+id/txt_situacao"
                         android:layout_below="@id/lbl_situacao"
                         android:textColor="@color/secondaryText"
                         android:text="@string/selecione"

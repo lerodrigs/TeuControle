@@ -8,11 +8,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.teucontrole.teucontrole.R;
+import com.teucontrole.teucontrole.Utils.MaskUtils;
 
 public class ContaBancariaActivity extends AppCompatActivity
 {
+
+    private EditText nomeContaBancaria;
+    private EditText txtDescricao;
+    private EditText txtSaldo;
+
+    private TextView tipoConta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,16 +30,38 @@ public class ContaBancariaActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conta_bancaria);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Adicionar conta");
-        toolbar.setTitleTextColor(Color.WHITE);
+        try
+        {
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle("Adicionar conta");
+            toolbar.setTitleTextColor(Color.WHITE);
 
-        setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.icone_back_white);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.icone_back_white);
+
+            nomeContaBancaria = findViewById(R.id.nome_conta_bancaria);
+            txtDescricao = findViewById(R.id.txt_descricao);
+
+            tipoConta = findViewById(R.id.txt_tipo_conta);
+            tipoConta.setOnClickListener(tipoContaClick);
+
+            txtSaldo = findViewById(R.id.txt_saldo);
+            txtSaldo.addTextChangedListener(new MaskUtils(txtSaldo, "##.##", true));
+        }
+        catch (Exception e) {}
     }
+
+    public View.OnClickListener tipoContaClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

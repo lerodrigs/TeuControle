@@ -53,6 +53,8 @@ public class LancamentosFragment extends Fragment
     {
         try
         {
+            MainActivity.setToolbar("Home");
+
             tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
             viewPager = (ViewPager) view.findViewById(R.id.pager);
 
@@ -61,10 +63,7 @@ public class LancamentosFragment extends Fragment
             tabLayout.setupWithViewPager(viewPager);
             tabLayout.setOnTabSelectedListener(tabSelectedListener);
         }
-        catch (Exception e )
-        {
-            e.printStackTrace();
-        }
+        catch (Exception e ) { }
     }
 
     private void setupViewPager(ViewPager viewPager, FragmentManager fragmentManager)

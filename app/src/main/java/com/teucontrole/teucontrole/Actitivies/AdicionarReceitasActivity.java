@@ -3,12 +3,14 @@ package com.teucontrole.teucontrole.Actitivies;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +20,19 @@ import com.teucontrole.teucontrole.Utils.MaskUtils;
 
 public class AdicionarReceitasActivity extends AppCompatActivity
 {
+    private TextView txt_conta;
+    private TextView txt_categoria;
+    private TextView txt_data_vencimento;
+    private TextView txt_data_pagamento;
+    private TextView txt_situacao;
+    private TextView txt_descricao;
+
+    private EditText txt_valor;
+    private EditText txt_valor_recebido;
+
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder builderDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,23 +59,77 @@ public class AdicionarReceitasActivity extends AppCompatActivity
                 window.setStatusBarColor(ContextCompat.getColor(this, R.color.theme_green_primaryDark));
             }
 
-            TextView txt_conta = findViewById(R.id.txt_conta);
-            TextView txt_categoria = findViewById(R.id.txt_categoria);
-            TextView txt_data_vencimento = findViewById(R.id.txt_dt_vencimento);
-            TextView txt_data_pagamento = findViewById(R.id.txt_dt_pagamento);
-            TextView txt_situacao = findViewById(R.id.txt_selecione_situacao);
+            txt_conta = findViewById(R.id.txt_conta);
+            txt_conta.setOnClickListener(txtContaClick);
 
-            EditText txt_valor = findViewById(R.id.txt_valor);
+            txt_categoria = findViewById(R.id.txt_categoria);
+            txt_categoria.setOnClickListener(txtCategoriaClick);
+
+            txt_data_vencimento = findViewById(R.id.txt_dt_vencimento);
+            txt_data_vencimento.setOnClickListener(txtDataVencimentoClick);
+
+            txt_data_pagamento = findViewById(R.id.txt_dt_pagamento);
+            txt_data_pagamento.setOnClickListener(txtDataPagamentoClick);
+
+            txt_situacao = findViewById(R.id.txt_selecione_situacao);
+            txt_situacao.setOnClickListener(txtSituacaoClick);
+
+            txt_valor = findViewById(R.id.txt_valor);
             txt_valor.addTextChangedListener(new MaskUtils(txt_valor, "##.##", true));
 
-            EditText txt_valor_recebido = findViewById(R.id.txt_valor_recebido);
+            txt_valor_recebido = findViewById(R.id.txt_valor_recebido);
             txt_valor_recebido.addTextChangedListener(new MaskUtils(txt_valor_recebido, "##.##", true));
 
-            TextView txt_descricao = findViewById(R.id.txt_descricao);
+            txt_descricao = findViewById(R.id.txt_descricao);
         }
         catch(Exception e ){}
 
     }
+
+    public View.OnClickListener txtContaClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    public View.OnClickListener txtCategoriaClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    public View.OnClickListener txtDataVencimentoClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    public View.OnClickListener txtDataPagamentoClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
+
+    public View.OnClickListener txtSituacaoClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

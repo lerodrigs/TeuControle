@@ -5,9 +5,11 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import android.app.AlertDialog;
+import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.teucontrole.teucontrole.Adapters.AdapterMenuItems;
+import com.teucontrole.teucontrole.Fragments.CheckListFragment;
 import com.teucontrole.teucontrole.Fragments.ConfiguracoesFragment;
 import com.teucontrole.teucontrole.Fragments.LancamentosFragment;
 import com.teucontrole.teucontrole.Models.Item;
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     static FloatingActionMenu fabMenuContasCartao;
     static FloatingActionMenu fabMenuCategorias;
     static FloatingActionButton fabFaturas;
+    static FloatingActionMenu fabCheckList;
+    static Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,7 +55,9 @@ public class MainActivity extends AppCompatActivity
         context = this;
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Home");
+
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
@@ -91,7 +98,29 @@ public class MainActivity extends AppCompatActivity
         fabFaturas = findViewById(R.id.fab_faturas);
         fabFaturas.setOnClickListener(fabFaturasClick);
 
+        fabCheckList = findViewById(R.id.fab_checklists);
+        FloatingActionButton fabAddCheckList = findViewById(R.id.add_checklist);
+        fabAddCheckList.setOnClickListener(fabCheckListClick);
+
+        FloatingActionButton fabAddCheckListModelo = findViewById(R.id.add_checklist_modelo);
+        fabAddCheckListModelo.setOnClickListener(fabCheckListModeloClick);
+
         setChoosedFragment(1);
+    }
+
+    public static void setToolbar(final String textToolbar)
+    {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                toolbar.setTitle(textToolbar);
+            }
+        });
+    }
+
+    public static Toolbar getToolbar()
+    {
+        return toolbar;
     }
 
     private ListView.OnItemClickListener itemClickListener = new ListView.OnItemClickListener()
@@ -109,6 +138,8 @@ public class MainActivity extends AppCompatActivity
         {
             android.support.v4.app.Fragment fragment = null;
 
+            resetFragmentManager();
+
             switch(id)
             {
                 case 1:
@@ -116,8 +147,13 @@ public class MainActivity extends AppCompatActivity
                     fragment = LancamentosFragment.NewInstance();
                     break;
                 case 2:
-                    chooseFloatingActionButton(5);
+                    chooseFloatingActionButton(6);
                     fragment = ConfiguracoesFragment.NewInstance();
+                    break;
+
+                case 3:
+                    chooseFloatingActionButton(5);
+                    fragment = CheckListFragment.newInstance();
                     break;
             }
 
@@ -131,6 +167,33 @@ public class MainActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
+    }
+
+    public void resetFragmentManager()
+    {
+        try
+        {
+            if(getSupportFragmentManager().getFragments() != null)
+            {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment = null;
+
+                int qtdFragments = getSupportFragmentManager().getFragments().size();
+
+                for(int c=0; c < qtdFragments; c++)
+                {
+                    fragment = getSupportFragmentManager().getFragments().get(c);
+
+                    if(fragment != null)
+                    {
+                        fragmentTransaction.remove(fragment);
+                    }
+                }
+
+                fragmentTransaction.commit();
+            }
+        }
+        catch (Exception e){}
     }
 
     public static void chooseFloatingActionButton(final int id)
@@ -147,6 +210,7 @@ public class MainActivity extends AppCompatActivity
                     fabMenuContasCartao.hideMenuButton(true);
                     fabMenuCategorias.hideMenuButton(true);
                     fabFaturas.hide(true);
+                    fabCheckList.hideMenuButton(true);
 
                     switch (id)
                     {
@@ -169,6 +233,11 @@ public class MainActivity extends AppCompatActivity
                         case 4:
                             fabFaturas.show(true);
                             break;
+
+                        case 5:
+                            fabCheckList.showMenuButton(true);
+                            break;
+
                     }
                 }
             });
@@ -267,6 +336,80 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    private DialogInterface.OnClickListener btnAdicionarCategoriaListener = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            addNewCategoria(true);
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabCheckListClick = new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = context.getLayoutInflater().inflate(R.layout.adicionar_checklist_modelo, null);
+
+            TextView lbl_adicionar = view.findViewById(R.id.lbl_adicionar);
+            lbl_adicionar.setText("Adicionar Checklist");
+
+            builder.setView(view);
+            builder.setPositiveButton(R.string.Adicionar, btnAddCheckList);
+            builder.setNegativeButton(R.string.Cancelar, null);
+
+            builder.create();
+            builder.show();
+        }
+    };
+
+    private FloatingActionButton.OnClickListener fabCheckListModeloClick = new FloatingActionButton.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = context.getLayoutInflater().inflate(R.layout.adicionar_checklist_modelo, null);
+
+            TextView lbl_adicionar = view.findViewById(R.id.lbl_adicionar);
+            lbl_adicionar.setText("Adicionar Modelo");
+
+            builder.setView(view);
+            builder.setPositiveButton(R.string.Adicionar, btnAddModelo);
+            builder.setNegativeButton(R.string.Cancelar, null);
+
+            builder.create();
+            builder.show();
+        }
+    };
+
+    private DialogInterface.OnClickListener btnAddCheckList = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            try
+            {
+
+            }
+            catch (Exception e){}
+        }
+    };
+
+    private DialogInterface.OnClickListener btnAddModelo = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            try
+            {
+            }
+            catch (Exception e){}
+        }
+    };
+
     public void addNewCategoria(final boolean isReceita)
     {
         new Thread(new Runnable()
@@ -286,12 +429,5 @@ public class MainActivity extends AppCompatActivity
         }).start();
     }
 
-    private DialogInterface.OnClickListener btnAdicionarCategoriaListener = new DialogInterface.OnClickListener()
-    {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            addNewCategoria(true);
-        }
-    };
+
 }
