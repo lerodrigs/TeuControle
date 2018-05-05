@@ -13,7 +13,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.teucontrole.teucontrole.Api.ApiRequest;
+import com.teucontrole.teucontrole.Controllers.UserControllers;
 import com.teucontrole.teucontrole.R;
+import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,9 +84,35 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
+                        UserControllers userControllers = new UserControllers(getApplicationContext());
+                        String token = userControllers.login(email, pass);
+
+                        if(token == null)
+                        {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run()
+                                {
+                                    dialog.dismiss();
+
+                                    Snackbar.make(rootView, "Email ou senha incorreta!", Snackbar.LENGTH_LONG)
+                                            .setAction("OK", snackBarBtn )
+                                            .show();
+                                }
+                            });
+
+                            return;
+                        }
+
+                        Bundle arguments = new Bundle();
+                        arguments.putCharSequence("user_email", email);
+
                         Intent intentMain = new Intent(getBaseContext(), MainActivity.class);
+                        intentMain.putExtras(arguments);
+
                         startActivity(intentMain);
                         finish();
+
                     }
                 }).start();
             }
