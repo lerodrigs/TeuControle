@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         UserControllers userControllers = new UserControllers(getApplicationContext());
-                        String token = userControllers.login(email, pass);
+                        String token = userControllers.getToken(email, pass);
 
                         if(token == null)
                         {
@@ -104,12 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
-                        Bundle arguments = new Bundle();
-                        arguments.putCharSequence("user_email", email);
-
                         Intent intentMain = new Intent(getBaseContext(), MainActivity.class);
-                        intentMain.putExtras(arguments);
-
                         startActivity(intentMain);
                         finish();
 

@@ -1,6 +1,8 @@
 package com.teucontrole.teucontrole.Api;
 
+import com.teucontrole.teucontrole.Actitivies.SplashScreenActivity;
 import com.teucontrole.teucontrole.Models.Receita;
+import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,19 +10,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.json.JSONObject;
 
 public class ApiRequest
 {
     String api = "https://www.teucontrole.com/api/";
-    HttpURLConnection connection;
-    URL url;
 
-    static String token;
+    public static String token;
+    private HttpURLConnection connection;
+    private URL url;
 
     public String getToken(String email, String pass)
     {
@@ -61,6 +60,11 @@ public class ApiRequest
                     token = jObject.getString("access_token");
                 }
 
+                UserPreferences userPreferences = new UserPreferences(SplashScreenActivity.context);
+
+                userPreferences.set("email", email);
+                userPreferences.set("pass", pass);
+
                 return token;
             }
             else
@@ -71,33 +75,6 @@ public class ApiRequest
         {
             return null;
         }
-    }
-
-    public List<Receita> getReceitas(String id_perfil, Date dt_inicio, Date dt_fim)
-    {
-        try
-        {
-            List<Receita> receitas = new ArrayList<Receita>();
-
-            if(token != null)
-            {
-                url = new URL(api);
-            }
-
-            return receitas;
-        }
-        catch (Exception e ){return null;}
-    }
-
-    public Receita getReceitaById(String id_perfil, String id_receita, String id_receita_recorrente, byte excecao, Date dt_ocorrencia, byte tipo_edicao)
-    {
-        try
-        {
-            Receita receita = new Receita();
-
-            return null;
-        }
-        catch (Exception e ){ return null;}
     }
 
 }

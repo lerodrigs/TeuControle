@@ -1,5 +1,6 @@
 package com.teucontrole.teucontrole.Actitivies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,11 +12,16 @@ import com.teucontrole.teucontrole.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
+
+    public static Activity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        context = this;
 
         userLogged();
     }
