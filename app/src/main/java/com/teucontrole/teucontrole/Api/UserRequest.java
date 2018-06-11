@@ -1,6 +1,8 @@
 package com.teucontrole.teucontrole.Api;
 
 import com.teucontrole.teucontrole.Utils.ApiUtils;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,12 +18,14 @@ public class UserRequest extends ApiRequest
         this.token = ApiRequest.token;
     }
 
-    public JSONObject getInfo(String email)
+    public JSONObject getInfo(String email) throws Exception
     {
+        JSONObject jObject = null;
+
         try
         {
-            JSONObject jObject = null;
-            url = new URL("https://www.teucontrole.com/api/Usuario?email="+email);
+            ApiUtils apiUtils = new ApiUtils();
+            url = new URL(super.api +"/api/Usuario?email="+email);
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(15000);
@@ -34,15 +38,15 @@ public class UserRequest extends ApiRequest
 
             if(responseCode == HttpURLConnection.HTTP_OK)
             {
-                ApiUtils apiUtils = new ApiUtils();
-                jObject = new JSONObject(apiUtils.InputStreamToString(connection.getInputStream()).toString());
+                JSONArray jArray = new JSONArray(apiUtils.InputStreamToString(connection.getInputStream()));
+                jObject = jArray.getJSONObject(0);
             }
-
-            return jObject;
         }
         catch (Exception e)
         {
-            return null;
+            throw e;
         }
+
+        return jObject;
     }
 }

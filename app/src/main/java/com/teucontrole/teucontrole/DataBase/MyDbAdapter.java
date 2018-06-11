@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import com.teucontrole.teucontrole.Utils.ApiUtils;
 
@@ -19,13 +20,13 @@ public class MyDbAdapter
         this.myDbHelper = new MyDbHelper(_context);
     }
 
-    public JSONArray get(String command)
+    public JSONArray get(String command) throws Exception
     {
+        JSONArray jsonArray = new JSONArray();
+        ApiUtils apiUtils = new ApiUtils();
+
         try
         {
-            JSONArray jsonArray = new JSONArray();
-            ApiUtils apiUtils = new ApiUtils();
-
             SQLiteDatabase db  = myDbHelper.getReadableDatabase();
             Cursor cursor = db.rawQuery(command, null);
 
@@ -34,46 +35,34 @@ public class MyDbAdapter
                 jsonArray = apiUtils.cursorToJSONArray(cursor);
             }
 
-            return jsonArray;
+            db.close();
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            return null;
+            throw e;
         }
+
+        return jsonArray;
     }
 
-    public void insert(String command)
-    {
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
-        if(db.isOpen())
+    public void execCommand(String command)
+    {
+        try
         {
-            try
+            SQLiteDatabase db = myDbHelper.getWritableDatabase();
+
+            if(!db.isOpen())
             {
-                db.beginTransaction();
-                db.execSQL(command);
-                db.endTransaction();
-                db.setTransactionSuccessful();
+                return;
             }
-            catch (SQLiteException e )
-            {
-                db.endTransaction();
-                e.printStackTrace();
-            }
+
+            db.execSQL(command);
+            db.close();
         }
-
+        catch (SQLiteException e)
+        {
+            throw e;
+        }
     }
-
-    public void update (String command)
-    {
-
-    }
-
-    public void delete(String command)
-    {
-
-    }
-
-
 }

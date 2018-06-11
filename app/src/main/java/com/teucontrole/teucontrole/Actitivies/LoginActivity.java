@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.teucontrole.teucontrole.Api.ApiRequest;
+import com.teucontrole.teucontrole.Controllers.SyncController;
 import com.teucontrole.teucontrole.Controllers.UserControllers;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
+import com.teucontrole.teucontrole.Utils.ApiUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -104,9 +106,43 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
-                        Intent intentMain = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(intentMain);
-                        finish();
+
+                        UserPreferences userPreferences = new UserPreferences(getApplicationContext());
+                        SyncController syncController = new SyncController(getApplicationContext());
+
+                        try
+                        {
+                            syncController.start(email, pass);
+
+                            userPreferences.set("email", email);
+                            userPreferences.set("pass", pass);
+                            userPreferences.set("isLogged", "S");
+
+                            Intent intentMain = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intentMain);
+                            finish();
+                        }
+                        catch (Exception e )
+                        {
+
+                            userPreferences.remove("email");
+                            userPreferences.remove("pass");
+                            userPreferences.set("isLogged", "N");
+
+                            syncController.logoff();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run()
+                                {
+                                    dialog.dismiss();
+
+                                    Snackbar.make(rootView, "Erro ao baixar informações.", Snackbar.LENGTH_LONG)
+                                            .setAction("OK", snackBarBtn )
+                                            .show();
+                                }
+                            });
+                        }
 
                     }
                 }).start();

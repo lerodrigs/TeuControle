@@ -1,14 +1,18 @@
 package com.teucontrole.teucontrole.Api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.teucontrole.teucontrole.Actitivies.SplashScreenActivity;
+import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 import com.teucontrole.teucontrole.Utils.ApiUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -19,28 +23,30 @@ public class PerfilRequest extends ApiRequest
     private URL url;
     private String token;
     private ApiUtils apiUtils;
+    private Context context;
     private UserPreferences userPreferences;
     private HttpURLConnection connection;
 
     public PerfilRequest(Context _context)
     {
         this.token = ApiRequest.token;
+        this.context = _context;
         this.apiUtils = new ApiUtils();
         this.userPreferences = new UserPreferences(_context);
     }
 
-    public JSONArray getAll()
+    public JSONArray getAll() throws Exception
     {
+        JSONArray jArray = new JSONArray();
+
         try
         {
-            JSONArray jArray = null;
-
             if(token == null)
             {
                 token = super.getToken(userPreferences.get("email"), userPreferences.get("pass"));
             }
 
-            url = new URL(super.api + "Perfil");
+            url = new URL(super.api + "api/Perfil");
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
@@ -52,15 +58,17 @@ public class PerfilRequest extends ApiRequest
 
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
-                jArray = new JSONArray(apiUtils.InputStreamToString(connection.getInputStream()));
+                String retorno = apiUtils.InputStreamToString(connection.getInputStream());
+                jArray = new JSONArray(retorno);
             }
-
-            return jArray;
         }
         catch (Exception e )
         {
-            return null;
+            Log.e("Error", e.getMessage());
+            throw e;
         }
+
+        return jArray;
     }
 
     public JSONObject getById(String id_perfil)
@@ -76,7 +84,7 @@ public class PerfilRequest extends ApiRequest
 
             String auth = "Bearer " + token;
 
-            url = new URL(super.api + "Perfil?id_perfil="+id_perfil);
+            url = new URL(super.api + "api/Perfil?id_perfil="+id_perfil);
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
@@ -181,5 +189,7 @@ public class PerfilRequest extends ApiRequest
             e.printStackTrace();
         }
     }
+
+
 
 }
