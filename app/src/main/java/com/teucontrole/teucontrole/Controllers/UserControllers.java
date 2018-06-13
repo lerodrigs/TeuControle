@@ -10,12 +10,6 @@ import com.teucontrole.teucontrole.Utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import okhttp3.internal.Util;
-
 public class UserControllers
 {
     private Context context;
@@ -26,23 +20,16 @@ public class UserControllers
     public UserControllers(Context _context)
     {
         this.context = _context;
-        this.userRequest = new UserRequest();
+        this.userRequest = new UserRequest(context);
         this.userPreferences = new UserPreferences(context);
         this.myDbAdapter = new MyDbAdapter(context);
     }
 
     public String getToken(String email, String pass)
     {
-        ApiRequest apiRequest = new ApiRequest();
-        String token = apiRequest.getToken(email, pass);
-
-        if(token != null)
-        {
-            userPreferences.set("token", token);
-        }
-
-        return token;
+        return userRequest.getToken(email, pass);
     }
+
 
     public JSONObject getUserInfo(String email) throws Exception
     {
@@ -50,7 +37,6 @@ public class UserControllers
 
         try
         {
-            UserRequest userRequest = new UserRequest();
             jObject = userRequest.getInfo(email);
         }
         catch (Exception e)
@@ -140,13 +126,13 @@ public class UserControllers
         return jObject;
     }
 
-    public JSONObject getFromUserLogged()
+    public JSONObject getFromUserLogged() throws Exception
     {
         JSONObject jObject = null;
 
         try
         {
-            JSONArray jArray = new JSONArray();
+            JSONArray jArray = null;
             String email = userPreferences.get("email");
 
             jArray = myDbAdapter.get("SELECT EMAIL, NOME FROM USUARIOS WHERE EMAIL = '"+email+"'");
@@ -159,7 +145,7 @@ public class UserControllers
         }
         catch (Exception e)
         {
-
+            throw e;
         }
 
         return jObject;

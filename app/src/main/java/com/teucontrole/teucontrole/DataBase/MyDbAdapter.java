@@ -4,12 +4,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
 import android.util.Log;
 
 import com.teucontrole.teucontrole.Utils.ApiUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class MyDbAdapter
 {
@@ -46,23 +49,41 @@ public class MyDbAdapter
     }
 
 
-    public void execCommand(String command)
+    public boolean execCommand(String command)
     {
+        boolean response = false;
+
         try
         {
             SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
-            if(!db.isOpen())
-            {
-                return;
-            }
-
             db.execSQL(command);
             db.close();
+
+            response = true;
         }
         catch (SQLiteException e)
         {
             throw e;
         }
+
+        return response;
+
     }
+
+    public void dropDb()
+    {
+        try
+        {
+            SQLiteDatabase db = myDbHelper.getWritableDatabase();
+            File file = new File(db.getPath());
+
+            if(Build.VERSION.SDK_INT > 15)
+            {
+                SQLiteDatabase.deleteDatabase(file);
+            }
+        }
+        catch(Exception e ){ }
+    }
+
 }

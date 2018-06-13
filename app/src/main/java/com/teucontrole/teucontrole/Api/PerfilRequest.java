@@ -20,19 +20,9 @@ import java.net.URL;
 
 public class PerfilRequest extends ApiRequest
 {
-    private URL url;
-    private String token;
-    private ApiUtils apiUtils;
-    private Context context;
-    private UserPreferences userPreferences;
-    private HttpURLConnection connection;
-
     public PerfilRequest(Context _context)
     {
-        this.token = ApiRequest.token;
-        this.context = _context;
-        this.apiUtils = new ApiUtils();
-        this.userPreferences = new UserPreferences(_context);
+        super(_context);
     }
 
     public JSONArray getAll() throws Exception
@@ -41,154 +31,37 @@ public class PerfilRequest extends ApiRequest
 
         try
         {
-            if(token == null)
-            {
-                token = super.getToken(userPreferences.get("email"), userPreferences.get("pass"));
-            }
-
-            url = new URL(super.api + "api/Perfil");
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-            connection.addRequestProperty("Authorization", "Bearer " + token);
-
-            connection.connect();
-
-            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                String retorno = apiUtils.InputStreamToString(connection.getInputStream());
-                jArray = new JSONArray(retorno);
-            }
+            jArray = get("api/Perfil");
         }
         catch (Exception e )
         {
-            Log.e("Error", e.getMessage());
             throw e;
         }
 
         return jArray;
     }
 
-    public JSONObject getById(String id_perfil)
+    public JSONObject getById(String id_perfil) throws Exception
     {
+
+        JSONObject jObject = null;
         try
         {
-            JSONObject jObject = null;
+            JSONArray jArray = get("api/Perfil?id_perfil="+id_perfil);
 
-            if(token == null)
+            if(jArray != null && jArray.length() > 0)
             {
-                token = super.getToken(userPreferences.get("email"), userPreferences.get("pass"));
+                jObject = jArray.getJSONObject(0);
             }
-
-            String auth = "Bearer " + token;
-
-            url = new URL(super.api + "api/Perfil?id_perfil="+id_perfil);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-            connection.addRequestProperty("Authorization", auth);
-
-            connection.connect();
-
-            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                jObject = new JSONObject(apiUtils.InputStreamToString(connection.getInputStream()));
-            }
-
-            return jObject;
         }
         catch (Exception e )
         {
-            return null;
+            throw e;
         }
+        return jObject;
     }
 
-    public void postOrput(JSONObject perfil, String method)
-    {
-        try
-        {
-            if(token == null)
-            {
-                token = super.getToken(userPreferences.get("email"), userPreferences.get("pass"));
-            }
 
-            String auth = "Bearer " + token;
-
-            url = new URL(super.api + "Perfil");
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod(method);
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty( "charset", "utf-8");
-            connection.setRequestProperty("Authorizarion", auth);
-
-            OutputStream outputStream = connection.getOutputStream();
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
-
-            outputStreamWriter.write(perfil.toString());
-            outputStreamWriter.flush();
-            outputStreamWriter.close();
-
-            connection.connect();
-
-            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                String retorno = apiUtils.InputStreamToString(connection.getInputStream());
-            }
-
-        }
-        catch (Exception e )
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void delete(String id_perfil, String id_perfil_atual, JSONObject perfil)
-    {
-        try
-        {
-            if(token == null)
-            {
-                token = super.getToken(userPreferences.get("email"), userPreferences.get("email"));
-            }
-
-            String auth = "Bearer " + token;
-
-            url = new URL(super.api + "Perfil?id_perfil=" + id_perfil + "?id_perfil_atual=" + id_perfil_atual);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("DELETE");
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty( "charset", "utf-8");
-            connection.setRequestProperty("Authorization", auth);
-
-            OutputStream outputStream = connection.getOutputStream();
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
-
-            outputStreamWriter.write(perfil.toString());
-            outputStreamWriter.flush();
-            outputStreamWriter.close();
-
-            connection.connect();
-
-            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                String retorno = apiUtils.InputStreamToString(connection.getInputStream());
-            }
-
-        }
-        catch (Exception e )
-        {
-            e.printStackTrace();
-        }
-    }
 
 
 

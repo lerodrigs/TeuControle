@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.teucontrole.teucontrole.Api.PerfilRequest;
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
+import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +18,14 @@ public class PerfilController
     private Context context;
     private PerfilRequest perfilRequest;
     private MyDbAdapter myDbAdapter;
+    private UserPreferences userPreferences;
 
     public PerfilController(Context _context)
     {
         this.context = _context;
         this.perfilRequest = new PerfilRequest(_context);
         this.myDbAdapter = new MyDbAdapter(context);
+        this.userPreferences = new UserPreferences(context);
     }
 
     public JSONArray getAll() throws Exception
@@ -61,8 +64,6 @@ public class PerfilController
 
             if(jArray != null && jArray.length() > 0)
             {
-                String command = null;
-
                 for (int c=0; c < jArray.length(); c++)
                 {
                     JSONObject jsonObject = jArray.getJSONObject(c);
@@ -103,6 +104,29 @@ public class PerfilController
         return jsonObject;
     }
 
+    public String getIdPerfilUserLogged() throws Exception
+    {
+        String id_perfil = null;
+
+        try
+        {
+            String query = "SELECT ID_PERFIL FROM PERFIS_USUARIO WHERE EMAIL ='"+userPreferences.get("email")+"";
+            JSONArray jArray = myDbAdapter.get(query);
+
+            if(jArray != null && jArray.length() > 0)
+            {
+                id_perfil = jArray.getJSONObject(0).getString("id_perfil");
+            }
+        }
+
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return id_perfil;
+    }
+
     public void insertDb(JSONObject jsonObject) throws Exception
     {
         try
@@ -135,8 +159,18 @@ public class PerfilController
         }
         catch (Exception e )
         {
-            Log.e("Error:", e.getMessage());
             throw  e;
         }
     }
+
+    public boolean updateDB()
+    {
+        return true;
+    }
+
+    public boolean deleteDB()
+    {
+        return true;
+    }
+
 }

@@ -14,6 +14,7 @@ public class SyncController
 {
     private UserControllers userController;
     private PerfilController perfilController;
+    private CategoriaController categoriaController;
     private UserPreferences userPreferences;
     private Context context;
 
@@ -23,9 +24,9 @@ public class SyncController
         this.userController = new UserControllers(_context);
         this.perfilController = new PerfilController(_context);
         this.userPreferences = new UserPreferences(_context);
+        this.categoriaController = new CategoriaController(context);
     }
 
-    /* METODO USADO QUANDO O USUÁRIO FAZ O LOGIN */
 
     public void start(String email, String pass) throws Exception
     {
@@ -33,6 +34,7 @@ public class SyncController
         {
             userController.start(email);
             perfilController.start();
+            categoriaController.start();
         }
         catch (Exception e)
         {

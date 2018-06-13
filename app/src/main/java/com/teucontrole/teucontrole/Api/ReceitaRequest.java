@@ -1,12 +1,12 @@
 package com.teucontrole.teucontrole.Api;
 
+import android.content.Context;
+
 public class ReceitaRequest extends ApiRequest
 {
-    private String token;
-
-    public ReceitaRequest()
+    public ReceitaRequest(Context context)
     {
-        this.token = ApiRequest.token;
+        super(context);
     }
 
 
