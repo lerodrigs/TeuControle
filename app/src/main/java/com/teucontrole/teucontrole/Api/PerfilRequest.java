@@ -61,6 +61,55 @@ public class PerfilRequest extends ApiRequest
         return jObject;
     }
 
+    public boolean post(JSONObject jObject) throws Exception
+    {
+        boolean response = false;
+
+        try
+        {
+            response = post("", jObject);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return response;
+    }
+
+    public boolean put(JSONObject jObject) throws Exception
+    {
+        boolean response = false;
+
+        try
+        {
+            response = put("", jObject);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return response;
+    }
+
+    public boolean delete(JSONObject jObject) throws Exception
+    {
+        boolean response = false;
+
+        try
+        {
+            response = delete("", jObject);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        return response;
+    }
+
+
+
 
 
 

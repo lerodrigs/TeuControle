@@ -35,6 +35,12 @@ public class SyncController
             userController.start(email);
             perfilController.start();
             categoriaController.start();
+            //conta
+            //receita,
+            //receita recorrente
+            //despesa,
+            //despesa recorrente
+            //fatura
         }
         catch (Exception e)
         {

@@ -4,6 +4,7 @@ import android.content.Context;
 import com.teucontrole.teucontrole.Api.ApiRequest;
 import com.teucontrole.teucontrole.Api.UserRequest;
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
+import com.teucontrole.teucontrole.Repository.UserRepository;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 import com.teucontrole.teucontrole.Utils.Utils;
 
@@ -13,16 +14,14 @@ import org.json.JSONObject;
 public class UserControllers
 {
     private Context context;
-    private UserPreferences userPreferences;
     private UserRequest userRequest;
-    private MyDbAdapter myDbAdapter;
+    private UserRepository userRepository;
 
     public UserControllers(Context _context)
     {
         this.context = _context;
         this.userRequest = new UserRequest(context);
-        this.userPreferences = new UserPreferences(context);
-        this.myDbAdapter = new MyDbAdapter(context);
+        this.userRepository = new UserRepository(context);
     }
 
     public String getToken(String email, String pass)
@@ -30,8 +29,7 @@ public class UserControllers
         return userRequest.getToken(email, pass);
     }
 
-
-    public JSONObject getUserInfo(String email) throws Exception
+    public JSONObject requestUserInfo(String email) throws Exception
     {
         JSONObject jObject = null;
 
@@ -51,11 +49,11 @@ public class UserControllers
     {
         try
         {
-            JSONObject jObject = getUserInfo(email);
+            JSONObject jObject = requestUserInfo(email);
 
             if(jObject != null)
             {
-                insertDb(jObject);
+                insert(jObject);
             }
         }
         catch (Exception e)
@@ -64,59 +62,51 @@ public class UserControllers
         }
     }
 
-    public void insertDb(JSONObject jObject) throws Exception
+    public boolean insert(JSONObject jObject) throws Exception
     {
+        boolean result = false;
+
         try
         {
-            if(getByEmailDb(jObject.getString("email")) == null)
-            {
-                String data_nascimento = Utils.getDateFromJObject(jObject, "data_nascimento");
-                String validade_assinatura = Utils.getDateFromJObject(jObject, "validade_assinatura");
-
-                String command = "INSERT INTO USUARIOS (" +
-                        "ID_USUARIO, "  +
-                        "NOME, "  +
-                        "SEXO, " +
-                        "ID_ESTADO, " +
-                        "ID_CIDADE, " +
-                        "DATA_NASCIMENTO, " +
-                        "EMAIL, " +
-                        "VALIDADE_ASSINATURA)" +
-                        " VALUES (" +
-                        ""+Utils.getValueJObject(jObject, "id_usuario") + "," +
-                        "'"+Utils.getValueJObject(jObject, "nome") + "', " +
-                        ""+Utils.getValueJObject(jObject, "sexo") + ", "+
-                        ""+Utils.getValueJObject(jObject, "id_estado") + ", "+
-                        ""+Utils.getValueJObject(jObject,"id_cidade")+ ", "+
-                        ""+data_nascimento+ ", "+
-                        "'"+Utils.getValueJObject(jObject, "email")+ "', "+
-                        "'"+validade_assinatura+ "'); ";
-
-                myDbAdapter.execCommand(command);
-            }
+            if(getByEmail(jObject.getString("email")) == null)
+                result = userRepository.insert(jObject);
+            else
+                result = update(jObject);
         }
         catch (Exception e)
         {
             throw e;
         }
+
+        return result;
     }
 
-    public JSONObject getByEmailDb(String email) throws Exception
+    public boolean update(JSONObject jObject) throws Exception
+    {
+        boolean result = false;
+
+        try
+        {
+            if(getByEmail(jObject.getString("email")) != null)
+            {
+                result = userRepository.update(jObject);
+            }
+        }
+        catch (Exception e )
+        {
+            throw e;
+        }
+
+        return result;
+    }
+
+    public JSONObject getByEmail(String email) throws Exception
     {
         JSONObject jObject = null;
 
         try
         {
-
-            JSONArray jArray = new JSONArray();
-
-            String query = "SELECT * FROM USUARIOS WHERE EMAIL = '"+email+"'";
-            jArray = myDbAdapter.get(query);
-
-            if((jArray.length()) > 0)
-            {
-                jObject = jArray.getJSONObject(0);
-            }
+            jObject = userRepository.getByEmail(email);
         }
         catch (Exception e)
         {
@@ -132,16 +122,7 @@ public class UserControllers
 
         try
         {
-            JSONArray jArray = null;
-            String email = userPreferences.get("email");
-
-            jArray = myDbAdapter.get("SELECT EMAIL, NOME FROM USUARIOS WHERE EMAIL = '"+email+"'");
-
-            if(jArray.length() > 0)
-            {
-                jObject = jArray.getJSONObject(0);
-            }
-
+            jObject = userRepository.getFromUserLogged();
         }
         catch (Exception e)
         {

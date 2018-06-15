@@ -32,7 +32,7 @@ public class UserPreferences
         }
         catch (Exception e )
         {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -44,8 +44,7 @@ public class UserPreferences
         }
         catch (Exception e )
         {
-            e.printStackTrace();
-            return null;
+            throw e;
         }
     }
 
@@ -58,7 +57,9 @@ public class UserPreferences
             editor.remove(key);
             editor.commit();
         }
-        catch (Exception e){ }
+        catch (Exception e){
+            throw e;
+        }
     }
 
 }

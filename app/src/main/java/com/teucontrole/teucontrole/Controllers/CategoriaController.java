@@ -11,19 +11,14 @@ import org.json.JSONObject;
 
 public class CategoriaController
 {
-    private MyDbAdapter myDbAdapter;
     private Context context;
     private CategoriaRequest categoriaRequest;
-    private StringBuilder strCommand;
-
     private PerfilController perfilController;
 
     public CategoriaController(Context _context)
     {
         this.context = _context;
-        this.myDbAdapter = new MyDbAdapter(context);
         this.categoriaRequest = new CategoriaRequest(context);
-
         this.perfilController = new PerfilController(context);
     }
 
@@ -31,15 +26,31 @@ public class CategoriaController
     {
         try
         {
-            String id_perfil = perfilController.getIdPerfilUserLogged();
+            String[] ids = perfilController.getIdPerfilUserLogged();
+            String id_perfil = null;
 
-            JSONArray jArrayCategoriasDespesas = getCategoriasDespesas(id_perfil);
-            processToDB(jArrayCategoriasDespesas, false);
+            //revisar.
 
-            JSONArray jArrayCategoriasReceitas = getCategoriasReceitas(id_perfil);
-            processToDB(jArrayCategoriasReceitas, true);
+            for(int c=0; c < ids.length; c++ )
+            {
+                id_perfil = ids[c];
+                JSONArray jArrayCategoriasDespesas = requestCategoriasDespesas(id_perfil);
+                processToDB(jArrayCategoriasDespesas, false);
+
+                jArrayCategoriasDespesas = null;
+            }
+
+            for(int c=0; c < ids.length; c++)
+            {
+                id_perfil = ids[0];
+                JSONArray jArrayCategoriasReceitas = requestCategoriasReceitas(id_perfil);
+                processToDB(jArrayCategoriasReceitas, true);
+
+                jArrayCategoriasReceitas = null;
+            }
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             throw e;
         }
     }
@@ -69,7 +80,7 @@ public class CategoriaController
         return response;
     }
 
-    public JSONArray getCategoriasDespesas(String id_perfil) throws Exception
+    public JSONArray requestCategoriasDespesas(String id_perfil) throws Exception
     {
         JSONArray jArray = new JSONArray();
 
@@ -85,7 +96,7 @@ public class CategoriaController
         return jArray;
     }
 
-    public JSONArray getCategoriasReceitas(String id_perfil) throws Exception
+    public JSONArray requestCategoriasReceitas(String id_perfil) throws Exception
     {
         JSONArray jArray = null;
 
@@ -107,23 +118,7 @@ public class CategoriaController
 
         try
         {
-            strCommand = new StringBuilder();
 
-            if(jsonObject != null)
-            {
-                if(receita)
-                {
-                    strCommand.append("INSERT INTO CATEGORIAS_RECEITAS ");
-                    strCommand.append("( ");
-                }
-                else
-                {
-                    strCommand.append("INSERT INTO CATEGORIAS_DESPESAS ");
-                    strCommand.append("( ");
-                }
-
-                myDbAdapter.execCommand(strCommand.toString());
-            }
         }
         catch (Exception e)
         {
@@ -139,18 +134,6 @@ public class CategoriaController
 
         try
         {
-            strCommand = new StringBuilder();
-
-            if(receita)
-            {
-                strCommand.append("UPDATE CATEGORIAS_RECEITAS");
-            }
-            else {
-                strCommand.append("UPDATE CATEGORIAS_DESPESAS");
-            }
-
-            myDbAdapter.execCommand(strCommand.toString());
-
             response = true;
         }
         catch (Exception e )

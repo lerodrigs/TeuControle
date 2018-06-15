@@ -84,6 +84,25 @@ public class Utils
         return data;
     }
 
+    public static String trataString(String campo)
+    {
+        String retorno = null;
+
+        try
+        {
+            if(campo == null || campo.contains("null") || campo.isEmpty())
+                retorno = null;
+            else
+                retorno = "'" + campo + "'";
+        }
+        catch (Exception e )
+        {
+            throw e;
+        }
+
+        return retorno;
+    }
+
 
 
 }

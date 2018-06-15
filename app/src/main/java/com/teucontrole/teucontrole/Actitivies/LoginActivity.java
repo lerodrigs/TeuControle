@@ -65,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run()
                     {
-                        String email = emailEditText.getText().toString();
-                        String pass = passEditText.getText().toString();
+                        String email = "leandro.rodrigs11@gmail.com";//emailEditText.getText().toString();
+                        String pass = "morango110895";//passEditText.getText().toString();
 
                         if(email.isEmpty() || pass.isEmpty())
                         {

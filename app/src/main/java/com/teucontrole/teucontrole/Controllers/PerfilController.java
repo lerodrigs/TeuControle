@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.teucontrole.teucontrole.Api.PerfilRequest;
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
+import com.teucontrole.teucontrole.Repository.PerfilRepository;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
+import com.teucontrole.teucontrole.Utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,18 +19,18 @@ public class PerfilController
 {
     private Context context;
     private PerfilRequest perfilRequest;
-    private MyDbAdapter myDbAdapter;
     private UserPreferences userPreferences;
+    private PerfilRepository perfilRepository;
 
     public PerfilController(Context _context)
     {
         this.context = _context;
         this.perfilRequest = new PerfilRequest(_context);
-        this.myDbAdapter = new MyDbAdapter(context);
+        this.perfilRepository = new PerfilRepository(context);
         this.userPreferences = new UserPreferences(context);
     }
 
-    public JSONArray getAll() throws Exception
+    public JSONArray requestAll() throws Exception
     {
         JSONArray jsonArray = new JSONArray();
 
@@ -45,7 +47,7 @@ public class PerfilController
         return jsonArray;
     }
 
-    public JSONObject getById(String id_perfil)
+    public JSONObject requestById(String id_perfil)
     {
         try
         {
@@ -60,7 +62,7 @@ public class PerfilController
     {
         try
         {
-            JSONArray jArray = getAll();
+            JSONArray jArray = requestAll();
 
             if(jArray != null && jArray.length() > 0)
             {
@@ -70,7 +72,7 @@ public class PerfilController
 
                     if(jsonObject != null)
                     {
-                        insertDb(jsonObject);
+                        insert(jsonObject);
                     }
                 }
             }
@@ -82,19 +84,13 @@ public class PerfilController
         }
     }
 
-    public JSONObject getByIdsDb(String id_perfil, int id_usuario) throws Exception
+    public JSONObject getByIds(String id_perfil, int id_usuario) throws Exception
     {
         JSONObject jsonObject = null;
 
         try
         {
-            JSONArray jArray = null;
-            jArray = myDbAdapter.get("SELECT * FROM PERFIS_USUARIOS WHERE ID_PERFIL = '"+id_perfil+"' AND ID_USUARIO = "+ id_usuario);
-
-            if(jArray != null && jArray.length() > 0)
-            {
-                jsonObject = jArray.getJSONObject(0);
-            }
+            jsonObject = perfilRepository.getByIds(id_perfil, id_usuario);
         }
         catch (Exception e )
         {
@@ -104,19 +100,13 @@ public class PerfilController
         return jsonObject;
     }
 
-    public String getIdPerfilUserLogged() throws Exception
+    public String[] getIdPerfilUserLogged() throws Exception
     {
-        String id_perfil = null;
+        String[] id_perfil = null;
 
         try
         {
-            String query = "SELECT ID_PERFIL FROM PERFIS_USUARIO WHERE EMAIL ='"+userPreferences.get("email")+"";
-            JSONArray jArray = myDbAdapter.get(query);
-
-            if(jArray != null && jArray.length() > 0)
-            {
-                id_perfil = jArray.getJSONObject(0).getString("id_perfil");
-            }
+            id_perfil = perfilRepository.getIdPerfilUserLogged();
         }
 
         catch (Exception e)
@@ -127,50 +117,61 @@ public class PerfilController
         return id_perfil;
     }
 
-    public void insertDb(JSONObject jsonObject) throws Exception
+    public boolean insert(JSONObject jsonObject) throws Exception
     {
+        boolean result = false;
+
         try
         {
-            int isDefault = 0;
-
-            if(getByIdsDb(jsonObject.getString("id_perfil"), jsonObject.getInt("id_usuario")) == null)
-            {
-                if(jsonObject.getBoolean("is_default"))
-                {
-                    isDefault = 1;
-                }
-
-                String command = "INSERT INTO PERFIS_USUARIOS " +
-                        "( ID_USUARIO, " +
-                        "ID_PERFIL, " +
-                        "NOME, " +
-                        "DESCRICAO," +
-                        "IS_DEFAULT) " +
-                        " VALUES ( " +
-                        ""+jsonObject.getInt("id_usuario") + "," +
-                        "'"+jsonObject.getString("id_perfil") + "'," +
-                        "'"+jsonObject.getString("nome")  + "'," +
-                        "'"+jsonObject.getString("descricao")  + "'," +
-                        ""+isDefault +
-                        ");";
-
-                myDbAdapter.execCommand(command);
-            }
+            if(getByIds(jsonObject.getString("id_perfil"), jsonObject.getInt("id_usuario")) == null)
+                result = perfilRepository.insert(jsonObject);
+            else
+                result = update(jsonObject);
         }
         catch (Exception e )
         {
             throw  e;
         }
+
+        return result;
     }
 
-    public boolean updateDB()
+    public boolean update(JSONObject jObject) throws Exception
     {
-        return true;
+        boolean result = false;
+
+        try
+        {
+            int id_user = Integer.parseInt(Utils.getValueJObject(jObject, "id_usuario"));
+            String id_perfil = Utils.getValueJObject(jObject, "id_perfil");
+
+            if(getByIds(id_perfil, id_user) != null)
+            {
+                result = perfilRepository.update(jObject);
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
     }
 
-    public boolean deleteDB()
+    public boolean deleteFromDB(String id_perfil, int id_user)
     {
-        return true;
+        boolean result = false;
+
+        try
+        {
+            result = perfilRepository.delete(id_perfil, id_user);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
     }
 
 }

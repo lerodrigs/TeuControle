@@ -53,21 +53,49 @@ public class CategoriaRequest extends ApiRequest
         return jArray;
     }
 
-    public boolean post(JSONObject obj)
+    public boolean post(JSONObject obj) throws Exception
     {
         boolean resposta = false;
+
+        try
+        {
+            resposta = post("", obj);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
         return resposta;
     }
 
-    public boolean put(JSONObject obj)
+    public boolean put(JSONObject obj) throws Exception
     {
         boolean resposta = false;
+        try
+        {
+            resposta = put("", obj);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
         return resposta;
     }
 
-    public boolean delete(JSONObject obj)
+    public boolean delete(JSONObject jObject) throws Exception
     {
-        boolean resposta = false;
-        return resposta;
+        boolean response = false;
+
+        try
+        {
+            response = delete("", jObject);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return response;
     }
 }
