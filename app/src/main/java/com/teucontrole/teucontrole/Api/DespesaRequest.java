@@ -16,8 +16,6 @@ import java.util.Date;
 
 public class DespesaRequest extends ApiRequest
 {
-
-
     public DespesaRequest(Context _context)
     {
         super(_context);

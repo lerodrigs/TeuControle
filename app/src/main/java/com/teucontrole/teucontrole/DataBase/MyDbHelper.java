@@ -61,6 +61,24 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "DESCRICAO  TEXT, " +
                     "IS_DEFAULT BOOLEAN, " +
                     "FOREIGN KEY (ID_USUARIO) REFERENCES USUARIOS (ID_USUARIO));");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS CATEGORIAS_RECEITAS (" +
+                "ID_CATEGORIA_RECEITA TEXT PRIMARY KEY NOT NULL, " +
+                "ID_PERFIL TEXT NOT NULL, " +
+                "NOME VARCHAR(150), " +
+                "DESCRICAO VARCHAR(300), " +
+                "COR VARCHAR(10), " +
+                "FOREIGN KEY(ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL));");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS CATEGORIAS_DESPESAS (" +
+                    "ID_CATEGORIA_DESPESA TEXT PRIMARY KEY NOT NULL, " +
+                    "ID_PERFIL TEXT NOT NULL, " +
+                    "NOME VARCHAR(150), " +
+                    "DESCRICAO VARCHAR(300), " +
+                    "COR VARCHAR(10), " +
+                    "FOREIGN KEY(ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL));");
+
+
         }
         catch (Exception e )
         {

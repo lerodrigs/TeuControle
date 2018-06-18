@@ -84,7 +84,7 @@ public class Utils
         return data;
     }
 
-    public static String trataString(String campo)
+    public static String checkStringForExec(String campo)
     {
         String retorno = null;
 

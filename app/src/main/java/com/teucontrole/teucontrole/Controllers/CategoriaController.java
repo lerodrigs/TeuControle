@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.teucontrole.teucontrole.Api.CategoriaRequest;
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
+import com.teucontrole.teucontrole.Repository.CategoriaRepository;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 import org.json.JSONArray;
@@ -14,12 +15,26 @@ public class CategoriaController
     private Context context;
     private CategoriaRequest categoriaRequest;
     private PerfilController perfilController;
+    private CategoriaRepository categoriaRepository;
 
-    public CategoriaController(Context _context)
+    private String pk;
+    private boolean isReceita;
+
+    public CategoriaController(Context _context, boolean _receita)
     {
         this.context = _context;
         this.categoriaRequest = new CategoriaRequest(context);
         this.perfilController = new PerfilController(context);
+        this.categoriaRepository = new CategoriaRepository(context, _receita);
+
+        this.pk = "id_categoria_";
+        this.isReceita = _receita;
+
+        if(isReceita)
+            pk = pk + "receita";
+        else
+            pk = pk + "despesa";
+
     }
 
     public void start() throws Exception
@@ -29,25 +44,25 @@ public class CategoriaController
             String[] ids = perfilController.getIdPerfilUserLogged();
             String id_perfil = null;
 
-            //revisar.
+            for(int c=0; c < ids.length; c++)
+            {
+                id_perfil = ids[c];
+                JSONArray jArrayCategoriasReceitas = requestCategoriasReceitas(id_perfil);
+                processToDB(jArrayCategoriasReceitas);
+            }
+
+            this.isReceita = false;
+            this.categoriaRepository = new CategoriaRepository(context, isReceita);
+            this.pk = "id_categoria_despesa";
 
             for(int c=0; c < ids.length; c++ )
             {
                 id_perfil = ids[c];
                 JSONArray jArrayCategoriasDespesas = requestCategoriasDespesas(id_perfil);
-                processToDB(jArrayCategoriasDespesas, false);
-
-                jArrayCategoriasDespesas = null;
+                processToDB(jArrayCategoriasDespesas);
             }
 
-            for(int c=0; c < ids.length; c++)
-            {
-                id_perfil = ids[0];
-                JSONArray jArrayCategoriasReceitas = requestCategoriasReceitas(id_perfil);
-                processToDB(jArrayCategoriasReceitas, true);
 
-                jArrayCategoriasReceitas = null;
-            }
         }
         catch (Exception e)
         {
@@ -55,7 +70,7 @@ public class CategoriaController
         }
     }
 
-    public boolean processToDB(JSONArray jArray, boolean receita) throws Exception
+    public boolean processToDB(JSONArray jArray) throws Exception
     {
         boolean response = false;
         try
@@ -68,19 +83,35 @@ public class CategoriaController
 
                     if(jObject != null)
                     {
-                        insertDB(jObject, receita);
+                        insert(jObject);
                     }
                 }
             }
         }
         catch (Exception e){
             throw e;
-        };
+        }
 
         return response;
     }
 
     public JSONArray requestCategoriasDespesas(String id_perfil) throws Exception
+    {
+        JSONArray jArray = new JSONArray();
+
+        try
+        {
+            jArray = categoriaRequest.getCategoriasDespesas(id_perfil);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return jArray;
+    }
+
+    public JSONArray requestCategoriasReceitas(String id_perfil) throws Exception
     {
         JSONArray jArray = new JSONArray();
 
@@ -96,45 +127,35 @@ public class CategoriaController
         return jArray;
     }
 
-    public JSONArray requestCategoriasReceitas(String id_perfil) throws Exception
-    {
-        JSONArray jArray = null;
-
-        try
-        {
-            jArray = categoriaRequest.getCategoriasReceitas(id_perfil);
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-
-        return jArray;
-    }
-
-    public boolean insertDB(JSONObject jsonObject, boolean receita) throws Exception
+    public boolean insert(JSONObject jsonObject) throws Exception
     {
         boolean response = false;
 
         try
         {
-
+            if(getCategoria(jsonObject.getString(pk)) == null)
+                categoriaRepository.insert(jsonObject);
+            else
+                categoriaRepository.update(jsonObject);
         }
         catch (Exception e)
         {
-            throw e;
+             throw e;
         }
 
         return response;
     }
 
-    public boolean updateDB(JSONObject jObject, boolean receita) throws Exception
+    public boolean update(JSONObject jObject) throws Exception
     {
         boolean response = false;
 
         try
         {
-            response = true;
+            if(getCategoria(jObject.getString(pk)) != null)
+                response = update(jObject);
+            else
+                response = insert(jObject);
         }
         catch (Exception e )
         {
@@ -143,4 +164,36 @@ public class CategoriaController
 
         return response;
     }
+
+    public JSONObject getCategoria(String id_categoria) throws Exception
+    {
+        JSONObject jObject = null;
+
+        try
+        {
+            jObject = categoriaRepository.getCategoria(id_categoria);
+        }
+        catch (Exception e )
+        {
+            throw e;
+        }
+
+        return jObject;
+    }
+
+  public JSONArray getCategorias(String id_perfil) throws Exception
+  {
+    JSONArray jArray = null;
+
+    try
+    {
+        jArray = categoriaRepository.getCategorias(id_perfil);
+    }
+    catch (Exception e)
+    {
+        throw e;
+    }
+
+    return jArray;
+  }
 }

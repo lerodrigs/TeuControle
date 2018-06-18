@@ -24,7 +24,7 @@ public class SyncController
         this.userController = new UserControllers(_context);
         this.perfilController = new PerfilController(_context);
         this.userPreferences = new UserPreferences(_context);
-        this.categoriaController = new CategoriaController(context);
+        this.categoriaController = new CategoriaController(context, true); //receita
     }
 
 

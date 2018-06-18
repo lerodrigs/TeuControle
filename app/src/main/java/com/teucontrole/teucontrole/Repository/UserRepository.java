@@ -41,13 +41,13 @@ public class UserRepository
                     "VALIDADE_ASSINATURA)" +
                     " VALUES (" +
                     ""+Utils.getValueJObject(jObject, "id_usuario") + "," +
-                    "'"+Utils.getValueJObject(jObject, "nome") + "', " +
-                    ""+Utils.getValueJObject(jObject, "sexo") + ", "+
-                    ""+Utils.getValueJObject(jObject, "id_estado") + ", "+
-                    ""+Utils.getValueJObject(jObject,"id_cidade")+ ", "+
-                    ""+data_nascimento+ ", "+
-                    "'"+Utils.getValueJObject(jObject, "email")+ "', "+
-                    "'"+validade_assinatura+ "'); ";
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome")) + ", " +
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "sexo")) + ", "+
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_estado")) + ", "+
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject,"id_cidade"))+ ", "+
+                    ""+Utils.checkStringForExec(data_nascimento)+ ", "+
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "email"))+ ", "+
+                    ""+Utils.checkStringForExec(validade_assinatura)+ "); ";
 
             ok = myDbAdapter.execCommand(command);
         }
@@ -69,13 +69,13 @@ public class UserRepository
             String validadeAssinatura = Utils.getDateFromJObject(jObject, "validade_assinatura");
 
             String command = "UPDATE USUARIOS " +
-                             "SET NOME = '" + Utils.getValueJObject(jObject, "nome")+ "', " +
-                             "SEXO = " + Utils.getValueJObject(jObject, "sexo")+", " +
-                             "ID_ESTADO = " + Utils.getValueJObject(jObject, "id_estado")+", " +
-                             "ID_CIDADE = " + Utils.getValueJObject(jObject, "id_cidade") + ", " +
-                             "DATA_NASCIMENTO =" + dataNascimento + ", " +
-                             "VALIDADE_ASSINATURA = " +validadeAssinatura+ " " +
-                             "WHERE EMAIL = '" +Utils.getValueJObject(jObject, "email") + "';";
+                             "SET NOME = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome"))+ ", " +
+                             "SEXO = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "sexo"))+ ", " +
+                             "ID_ESTADO = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_estado"))+", " +
+                             "ID_CIDADE = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_cidade")) + ", " +
+                             "DATA_NASCIMENTO =" + Utils.checkStringForExec(dataNascimento) + ", " +
+                             "VALIDADE_ASSINATURA = " +Utils.checkStringForExec(validadeAssinatura)+ " " +
+                             "WHERE EMAIL = " +Utils.checkStringForExec(Utils.getValueJObject(jObject, "email")) + ";";
 
             ok = myDbAdapter.execCommand(command);
         }

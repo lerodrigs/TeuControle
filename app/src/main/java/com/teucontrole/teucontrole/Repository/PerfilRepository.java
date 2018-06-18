@@ -107,12 +107,12 @@ public class PerfilRepository
                     " VALUES ( " +
                     ""+ Utils.getValueJObject(jObject, "id_usuario") + ", " +
                     "'"+Utils.getValueJObject(jObject, "id_perfil") + "', " +
-                    "'"+Utils.trataString(Utils.getValueJObject(jObject, "nome"))  + "', " +
-                    ""+Utils.trataString(Utils.getValueJObject(jObject, "descricao"))  + ", " +
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome"))  + ", " +
+                    ""+Utils.checkStringForExec(Utils.getValueJObject(jObject, "descricao"))  + ", " +
                     ""+isDefault +
                     ");";
 
-            myDbAdapter.execCommand(command);
+            result = myDbAdapter.execCommand(command);
         }
         catch (Exception e)
         {
@@ -135,8 +135,8 @@ public class PerfilRepository
             }
 
             String command = "UPDATE PERFIS_USUARIOS " +
-                             "SET NOME = " + Utils.trataString(Utils.getValueJObject(jObject, "nome"))+ ", " +
-                             "DESCRICAO = "+ Utils.trataString(Utils.getValueJObject(jObject, "descricao")) + ", " +
+                             "SET NOME = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome"))+ ", " +
+                             "DESCRICAO = "+ Utils.checkStringForExec(Utils.getValueJObject(jObject, "descricao")) + ", " +
                              "IS_DEFAULT = "+isDefault+" " +
                              "WHERE ID_PERFIL = '"+Utils.getValueJObject(jObject, "id_perfil")+"' AND " +
                              "ID_USUARIO =" + Utils.getValueJObject(jObject, "id_usuario");
