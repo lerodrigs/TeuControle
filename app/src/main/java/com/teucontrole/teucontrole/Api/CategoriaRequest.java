@@ -89,7 +89,7 @@ public class CategoriaRequest extends ApiRequest
 
         try
         {
-            response = delete("", jObject);
+            response = delete(jObject.getString(""));
         }
         catch (Exception e)
         {

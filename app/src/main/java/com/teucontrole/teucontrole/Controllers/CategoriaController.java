@@ -61,8 +61,6 @@ public class CategoriaController
                 JSONArray jArrayCategoriasDespesas = requestCategoriasDespesas(id_perfil);
                 processToDB(jArrayCategoriasDespesas);
             }
-
-
         }
         catch (Exception e)
         {

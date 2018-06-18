@@ -15,6 +15,8 @@ public class SyncController
     private UserControllers userController;
     private PerfilController perfilController;
     private CategoriaController categoriaController;
+    private ContaController contaController;
+    private ReceitaController receitaController;
     private UserPreferences userPreferences;
     private Context context;
 
@@ -25,6 +27,8 @@ public class SyncController
         this.perfilController = new PerfilController(_context);
         this.userPreferences = new UserPreferences(_context);
         this.categoriaController = new CategoriaController(context, true); //receita
+        this.contaController = new ContaController(context);
+        this.receitaController = new ReceitaController(context);
     }
 
 
@@ -35,12 +39,24 @@ public class SyncController
             userController.start(email);
             perfilController.start();
             categoriaController.start();
-            //conta
-            //receita,
+            contaController.start();
+            receitaController.start();
             //receita recorrente
             //despesa,
             //despesa recorrente
             //fatura
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
+    public void sync()
+    {
+        try
+        {
+
         }
         catch (Exception e)
         {

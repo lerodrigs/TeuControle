@@ -99,7 +99,7 @@ public class PerfilRequest extends ApiRequest
 
         try
         {
-            response = delete("", jObject);
+            response = delete("");
         }
         catch(Exception e)
         {

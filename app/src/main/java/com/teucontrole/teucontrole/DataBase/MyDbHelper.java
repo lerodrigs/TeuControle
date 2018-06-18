@@ -78,7 +78,22 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "COR VARCHAR(10), " +
                     "FOREIGN KEY(ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL));");
 
-
+            db.execSQL("CREATE TABLE IF NOT EXISTS CONTAS_BANCARIAS ( " +
+                    "ID_CONTA TEXT PRIMARY KEY NOT NULL, " +
+                    "ID_USUARIO_CRIADOR INTEGER, " +
+                    "NOME VARCHAR(120), " +
+                    "ID_PERFIL TEXT NOT NULL, " +
+                    "SALDO NUMERIC(15,2), " +
+                    "ATIVA BOOLEAN, " +
+                    "ID_CONTA_TIPO INTEGER, " +
+                    "ID_CONTA_BANCARIA_TIPO INTEGER, " +
+                    "NOME1 VARCHAR(120), " +
+                    "NOME2 VARCHAR(120), " +
+                    "DIA_FECHAMENTO INTENGER, " +
+                    "DIA_VENCIMENTO INTENGER, " +
+                    "LIMITE NUMERIC(15,2), " +
+                    "ID_BANDEIRA INTEGER, " +
+                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL))");
         }
         catch (Exception e )
         {

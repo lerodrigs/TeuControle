@@ -155,7 +155,7 @@ public class ApiRequest
         return resposta;
     }
 
-    public boolean delete(String endPoint, JSONObject jObject) throws Exception
+    public boolean delete(String endPoint) throws Exception
     {
         boolean resposta = false;
 
