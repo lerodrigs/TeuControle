@@ -59,4 +59,20 @@ public class ReceitaRequest extends ApiRequest
 
         return result;
     }
+
+    public boolean delete(JSONObject jObject) throws Exception
+    {
+        boolean result = false;
+
+        try
+        {
+            result = delete("api/Receita?id_receita="+ jObject.getString("id_perfil") + "&id_receita=" + jObject.getString("id_receita"));
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
+    }
 }

@@ -114,9 +114,6 @@ public class ContaRepository
             else
                 ativa = 0;
 
-            String dia_fechamento = Utils.getDateFromJObject(jObject, "dia_fechamento");
-            String dia_vencimento = Utils.getDateFromJObject(jObject, "dia_vencimento");
-
             command.append("UPDATE CONTAS_BANCARIAS ");
             command.append("SET NOME = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome")) + ", ");
             command.append("ID_USUARIO_CRIADOR = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_usuario_criador")) + ", ");
@@ -127,8 +124,8 @@ public class ContaRepository
             command.append("ID_CONTA_BANCARIA_TIPO  = " + Utils.getValueJObject(jObject, "id_conta_bancaria_tipo") + ", ");
             command.append("NOME1  = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome1")) + ", ");
             command.append("NOME2  = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome2")) + ", ");
-            command.append("DIA_FECHAMENTO =" + Utils.checkStringForExec(dia_fechamento) + ", ");
-            command.append("DIA_VENCIMENTO =" + Utils.checkStringForExec(dia_vencimento) + ", ");
+            command.append("DIA_FECHAMENTO =" + Utils.getValueJObject(jObject, "dia_fechamento") + ", ");
+            command.append("DIA_VENCIMENTO =" + Utils.getValueJObject(jObject, "dia_vencimento") + ", ");
             command.append("LIMITE = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "limite")) + ", ");
             command.append("ID_BANDEIRA = " + Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_bandeira")) + " ");
             command.append("WHERE id_conta =" + Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_conta"))+ ";");

@@ -18,7 +18,25 @@ public class ReceitaRepository
         this.myDbAdapter = new MyDbAdapter(context);
     }
 
-    public boolean insert(JSONObject jObject)
+    public boolean insert(JSONObject jObject) throws Exception
+    {
+        boolean result = false;
+        StringBuilder command = new StringBuilder();
+
+
+        try
+        {
+            command.append("INSERT INTO RECEITAS (");
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
+    }
+
+    public boolean update(JSONObject jObject) throws Exception
     {
         boolean result = false;
 
@@ -34,28 +52,13 @@ public class ReceitaRepository
         return result;
     }
 
-    public boolean update(JSONObject jObject)
+    public boolean delete(JSONObject jObject) throws Exception
     {
         boolean result = false;
 
         try
         {
-
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-
-        return result;
-    }
-
-    public boolean delete(JSONObject jObject)
-    {
-        boolean result = false;
-
-        try
-        {
+            String query = "DELETE FROM RECEITAS WHERE ID_RECEITA='"+jObject.getString("id_receita")+"';";
 
         }
         catch (Exception e)
@@ -91,9 +94,4 @@ public class ReceitaRepository
 
         return jObject;
     }
-
-
-
-
-
 }
