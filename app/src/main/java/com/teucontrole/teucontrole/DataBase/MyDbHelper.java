@@ -94,6 +94,33 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "LIMITE NUMERIC(15,2), " +
                     "ID_BANDEIRA INTEGER, " +
                     "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL))");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS RECEITAS (" +
+                    "ID_RECEITA TEXT PRIMARY KEY NOT NULL, " +
+                    "NOME VARCHA(100) NOT NULL, " +
+                    "VALOR NUMERIC(15,2) NOT NULL, " +
+                    "VALOR_RECEBIDO NUMERIC(15,2), " +
+                    "DATA_VENCIMENTO DATETIME NOT NULL, " +
+                    "DATA_PAGAMENTO DATETIME, " +
+                    "ID_PERFIL TEXT NOT NULL, " +
+                    "DATA_CADASTRO DATETIME, " +
+                    "DATA_MODIFICACAO DATETIME, " +
+                    "ID_CONTA TEXT NOT NULL, " +
+                    "ID_RECEITA_RECORRENTE TEXT, " +
+                    "EXCECAO VARCHAR(1), " +
+                    "DATA_ORIGINAL DATETIME, " +
+                    "ID_TITULO_STATUS BYTE, " +
+                    "CONTA_NOME VARCHAR(100), " +
+                    "CATEGORIA_RECEITA_NOME VARCHAR(100), " +
+                    "COR VARCHAR(20), " +
+                    "ID_RECORRENTE_FREQUENCIA TEXT, " +
+                    "INICIO DATETIME, " +
+                    "TERMINO DATETIME, " +
+                    "INTERVALO DATETIME, " +
+                    "TOTAL_OCORRENCIAS INT, " +
+                    "TIPO_FIM INT, " +
+                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL), " +
+                    "FOREIGN KEY (ID_CONTA) REFERENCES CONTAS_BANCARIAS (ID_CONTA));");
         }
         catch (Exception e )
         {

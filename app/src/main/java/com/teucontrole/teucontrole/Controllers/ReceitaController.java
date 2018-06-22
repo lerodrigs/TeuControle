@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ReceitaController
@@ -36,8 +37,13 @@ public class ReceitaController
             String ids[] = perfilController.getIdPerfilUserLogged();
             String id_perfil = null;
 
-            Date dataInicio = new Date();
-            Date dataTermino = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+
+            Date dataInicio = calendar.getTime();
+
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), dataInicio.getDay() + 29);
+            Date dataTermino = calendar.getTime();
 
             if(ids != null && ids.length > 0)
             {
@@ -74,12 +80,14 @@ public class ReceitaController
 
         try
         {
-            DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             String dataInicio = dateFormat.format(dt_inicio);
             String dataFim = dateFormat.format(dt_fim);
 
-            jArray = receitaRequest.getReceitas("api/Receitas?id_perfil="+id_perfil+"&dt_inicio="+dataInicio+"&dt_termino="+dataFim);
+            String endPoint = "api/Receita?id_perfil="+id_perfil+"&dt_inicio="+dataInicio+"&dt_termino="+dataFim;
+
+            jArray = receitaRequest.getReceitas(endPoint);
         }
         catch (Exception e)
         {
