@@ -21,20 +21,69 @@ public class DespesaRequest extends ApiRequest
         super(_context);
     }
 
-    public JSONArray get(String id_perfil, Date dt_inicio, Date dt_fim)
+    public JSONArray request(String endPoint) throws Exception
     {
-        return null;
+        JSONArray jArray = null;
+
+        try
+        {
+            jArray = get(endPoint);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return jArray;
     }
 
-    public void delete(String id_perfil, Date dt_inicio, JSONObject despesa)
+    public boolean delete(String id_perfil, Date dt_inicio, JSONObject despesa)
     {
+        boolean result = false;
 
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+
+        }
+
+        return result;
     }
 
-    public void postOrput(JSONObject despesa, String method)
+    public boolean post(JSONObject despesa, String method)
     {
+        boolean result = false;
 
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
     }
 
+    public boolean put(JSONObject jObject ) throws Exception
+    {
+        boolean result = false;
+
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        return result;
+    }
 
 }

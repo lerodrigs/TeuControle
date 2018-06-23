@@ -17,6 +17,7 @@ public class SyncController
     private CategoriaController categoriaController;
     private ContaController contaController;
     private ReceitaController receitaController;
+    private DespesaController despesaController;
     private UserPreferences userPreferences;
     private Context context;
 
@@ -29,6 +30,7 @@ public class SyncController
         this.categoriaController = new CategoriaController(context, true); //receita
         this.contaController = new ContaController(context);
         this.receitaController = new ReceitaController(context);
+        this.despesaController = new DespesaController(context);
     }
 
 
@@ -41,9 +43,7 @@ public class SyncController
             categoriaController.start();
             contaController.start();
             receitaController.start();
-            //receita recorrente
-            //despesa,
-            //despesa recorrente
+            despesaController.start();
             //fatura
         }
         catch (Exception e)

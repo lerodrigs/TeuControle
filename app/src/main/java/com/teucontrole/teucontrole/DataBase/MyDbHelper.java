@@ -107,7 +107,9 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "DATA_MODIFICACAO DATETIME, " +
                     "ID_CONTA TEXT NOT NULL, " +
                     "ID_RECEITA_RECORRENTE TEXT, " +
-                    "EXCECAO VARCHAR(1), " +
+                    "ID_CATEGORIA_RECEITA TEXT, " +
+                    "DESCRICAO VARCHAR(300), " +
+                    "EXCECAO INT, " +
                     "DATA_ORIGINAL DATETIME, " +
                     "ID_TITULO_STATUS BYTE, " +
                     "CONTA_NOME VARCHAR(100), " +
@@ -120,6 +122,7 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "TOTAL_OCORRENCIAS INT, " +
                     "TIPO_FIM INT, " +
                     "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL), " +
+                    "FOREIGN KEY (ID_CATEGORIA_RECEITA) REFERENCES CATEGORIAS_RECEITAS (ID_CATEGORIA_RECEITA), " +
                     "FOREIGN KEY (ID_CONTA) REFERENCES CONTAS_BANCARIAS (ID_CONTA));");
         }
         catch (Exception e )
