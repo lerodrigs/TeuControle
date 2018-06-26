@@ -29,7 +29,6 @@ import com.teucontrole.teucontrole.Fragments.LancamentosFragment;
 import com.teucontrole.teucontrole.Models.Item;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.Utils.ItemsMenuUtils;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -127,25 +126,16 @@ public class MainActivity extends AppCompatActivity
         try
         {
             String option = menuItem.getTitle().toString();
-            switch (option)
+
+            if(option.equals("Calendario"))
             {
-                case "Salvar":
-                    break;
 
-                case "Remover":
-                    break;
-
-                default:
-                    finish();
-                    break;
             }
         }
         catch (Exception e) {}
 
         return super.onOptionsItemSelected(menuItem);
     }
-
-
 
     public static void setToolbar(final String textToolbar)
     {
@@ -161,7 +151,6 @@ public class MainActivity extends AppCompatActivity
     {
         return toolbar;
     }
-
 
     private ListView.OnItemClickListener itemClickListener = new ListView.OnItemClickListener()
     {

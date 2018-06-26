@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
+import com.teucontrole.teucontrole.Controllers.UserControllers;
 
 import com.teucontrole.teucontrole.R;
+import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -22,7 +21,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         context = this;
-
         userLogged();
     }
 
@@ -35,12 +33,24 @@ public class SplashScreenActivity extends AppCompatActivity {
                 @Override
                 public void run()
                 {
-                    com.teucontrole.teucontrole.Controllers.UserControllers userController = new com.teucontrole.teucontrole.Controllers.UserControllers(getApplicationContext());
+                    try
+                    {
+                        UserControllers userController = new UserControllers(getApplicationContext());
+                        UserPreferences userPreferences = new UserPreferences(getApplicationContext());
+                        Intent intent = null;
 
-                    Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                    //Intent loginIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(loginIntent);
-                    finish();
+                        if(userController.getFromUserLogged() != null && userPreferences.get("isLogged").equals("S"))
+                            intent = new Intent(context, MainActivity.class);
+                        else
+                            intent = new Intent(context, LoginActivity.class);
+
+                        startActivity(intent);
+                        finish();
+
+                    }
+                    catch (Exception e) {
+
+                    }
                 }
 
             }).start();

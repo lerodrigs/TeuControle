@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toolbar;
 
 import com.teucontrole.teucontrole.Actitivies.MainActivity;
@@ -14,6 +15,8 @@ import com.teucontrole.teucontrole.R;
 
 public class ReceitasFragment extends Fragment
 {
+    ListView listview;
+
     public static ReceitasFragment NewInstance()
     {
         ReceitasFragment fragment = new ReceitasFragment();
@@ -32,6 +35,7 @@ public class ReceitasFragment extends Fragment
         if (getArguments() != null)
         {
         }
+
     }
 
     @Override
@@ -43,6 +47,11 @@ public class ReceitasFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle bundle)
     {
+        listview = (ListView) view.findViewById(R.id.listviewReceitas);
+
+
         super.onViewCreated(view, bundle);
     }
+
+
 }
