@@ -24,6 +24,19 @@ public class UserControllers
         this.userRepository = new UserRepository(context);
     }
 
+    public boolean userLogged()
+    {
+        try
+        {
+            return true;
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
+
+
     public String getToken(String email, String pass)
     {
         return userRequest.getToken(email, pass);

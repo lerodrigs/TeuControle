@@ -149,13 +149,13 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "ID_DESPESA TEXT PRIMARY KEY NOT NULL, " +
                     "NOME VARCHA(100) NOT NULL, " +
                     "VALOR NUMERIC(15,2) NOT NULL, " +
-                    "VALOR_RECEBIDO NUMERIC(15,2), " +
+                    "VALOR_PAGO NUMERIC(15,2), " +
                     "DATA_VENCIMENTO DATETIME NOT NULL, " +
                     "DATA_PAGAMENTO DATETIME, " +
                     "ID_PERFIL TEXT NOT NULL, " +
                     "DATA_CADASTRO DATETIME, " +
                     "DATA_MODIFICACAO DATETIME, " +
-                    "ID_CONTA TEXT NOT NULL, " +
+                    "ID_CONTA TEXT, " +
                     "ID_DESPESA_RECORRENTE TEXT, " +
                     "ID_CATEGORIA_DESPESA TEXT, " +
                     "DESCRICAO VARCHAR(300), " +

@@ -35,6 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 @Override
                 public void run()
                 {
+                    com.teucontrole.teucontrole.Controllers.UserControllers userController = new com.teucontrole.teucontrole.Controllers.UserControllers(getApplicationContext());
 
                     Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     //Intent loginIntent = new Intent(getApplicationContext(), MainActivity.class);

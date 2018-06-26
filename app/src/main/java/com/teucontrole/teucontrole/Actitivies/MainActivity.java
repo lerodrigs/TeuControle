@@ -108,6 +108,45 @@ public class MainActivity extends AppCompatActivity
         setChoosedFragment(1);
     }
 
+      @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu)
+    {
+        try
+        {
+            android.view.MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_toolbar, menu);
+        }
+        catch (Exception e){}
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem menuItem)
+    {
+        try
+        {
+            String option = menuItem.getTitle().toString();
+            switch (option)
+            {
+                case "Salvar":
+                    break;
+
+                case "Remover":
+                    break;
+
+                default:
+                    finish();
+                    break;
+            }
+        }
+        catch (Exception e) {}
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+
+
     public static void setToolbar(final String textToolbar)
     {
         context.runOnUiThread(new Runnable() {
@@ -122,6 +161,7 @@ public class MainActivity extends AppCompatActivity
     {
         return toolbar;
     }
+
 
     private ListView.OnItemClickListener itemClickListener = new ListView.OnItemClickListener()
     {

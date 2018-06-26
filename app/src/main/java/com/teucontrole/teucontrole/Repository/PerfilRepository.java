@@ -49,7 +49,7 @@ public class PerfilRepository
 
                     for(int c=0; c < jArray.length(); c++)
                     {
-                        String id_perfil = jArray.getJSONObject(0).getString("ID_PERFIL");
+                        String id_perfil = jArray.getJSONObject(c).getString("ID_PERFIL");
                         ids[c] = id_perfil;
                     }
                 }
