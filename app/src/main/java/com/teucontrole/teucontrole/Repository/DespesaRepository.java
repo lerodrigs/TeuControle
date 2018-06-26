@@ -54,7 +54,7 @@ public class DespesaRepository
             command.append("TIPO_FIM, ");
             command.append("ID_FATURA, ");
             command.append("MAE) VALUES ( ");
-            command.append(Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_receita")) + ", ");
+            command.append(Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_despesa")) + ", ");
             command.append(Utils.checkStringForExec(Utils.getValueJObject(jObject, "nome")) + ", ");
             command.append(Utils.getValueJObject(jObject, "valor") + ", ");
             command.append(Utils.getValueJObject(jObject, "valor_recebido") + ", ");
@@ -138,14 +138,14 @@ public class DespesaRepository
         return result;
     }
 
-    public boolean delete(JSONObject jObject) throws Exception
+    public boolean delete(String id_despesa) throws Exception
     {
         boolean result = false;
         StringBuilder command = new StringBuilder();
 
         try
         {
-            String query = "DELETE FROM DESPESAS WHERE ID_DESPESA='"+jObject.getString("id_despesa")+"';";
+            String query = "DELETE FROM DESPESAS WHERE ID_DESPESA='"+id_despesa+"';";
 
             result = myDbAdapter.execCommand(command.toString());
         }

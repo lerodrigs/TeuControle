@@ -18,6 +18,7 @@ public class SyncController
     private ContaController contaController;
     private ReceitaController receitaController;
     private DespesaController despesaController;
+    private FaturaController faturaController;
     private UserPreferences userPreferences;
     private Context context;
 
@@ -31,6 +32,7 @@ public class SyncController
         this.contaController = new ContaController(context);
         this.receitaController = new ReceitaController(context);
         this.despesaController = new DespesaController(context);
+        this.faturaController = new FaturaController(context);
     }
 
 
@@ -43,8 +45,8 @@ public class SyncController
             categoriaController.start();
             contaController.start();
             receitaController.start();
+            faturaController.start();
             despesaController.start();
-            //fatura
         }
         catch (Exception e)
         {
@@ -70,7 +72,6 @@ public class SyncController
         {
             userPreferences.remove("email");
             userPreferences.remove("pass");
-            userPreferences.remove("isLogged");
 
             MyDbAdapter myDbAdapter = new MyDbAdapter(context);
             myDbAdapter.dropDb();

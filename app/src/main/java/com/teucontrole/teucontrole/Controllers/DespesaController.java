@@ -190,12 +190,13 @@ import java.util.Date;
 
     }
 
-    public boolean deleteFromDB(JSONObject jObject) throws Exception
+    public boolean deleteFromDB(String id_despesa) throws Exception
     {
         boolean result = false;
+
         try
         {
-
+            result = despesaRepository.delete(id_despesa);
         }
         catch (Exception e )
         {
