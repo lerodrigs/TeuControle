@@ -176,4 +176,24 @@ public class ReceitaRepository
 
         return jObject;
     }
+
+    public JSONArray getList(String dataFormatada) throws Exception
+    {
+        StringBuilder query = new StringBuilder();
+        JSONArray results = null;
+
+        try
+        {
+            query.append("SELECT * ");
+            query.append("  FROM RECEITAS A");
+            query.append(" WHERE A.DATA_VENCIMENTO = '"+dataFormatada+"'");
+
+            results = myDbAdapter.get(query.toString());
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return results;
+    }
 }

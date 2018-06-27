@@ -85,6 +85,8 @@ public class AdapterListViewReceitas extends BaseAdapter
             TextView valor = view.findViewById(R.id.valor_row);
             TextView categoria = view.findViewById(R.id.categoria_row);
 
+            status.setText("Aguardando");
+
             if(Utils.getValueJObject(receita, "nome") != null)
                 nome.setText(receita.getString("nome"));
 
@@ -94,11 +96,29 @@ public class AdapterListViewReceitas extends BaseAdapter
                 dataVencimento.setText(dtFormat.parse(Utils.getDateFromJObject(receita, "data_vencimento")).toString());
             }
 
+            if(Utils.getValueJObject(receita, "valor") != null)
+                valor.setText(receita.getString("valor"));
+
+            if(Utils.getValueJObject(receita, "categoria_receita_nome") != null)
+                categoria.setText(receita.getString("categoria_receita_nome"));
+
             return view;
         }
         catch (Exception e)
         {
             return null;
+        }
+    }
+
+    public void updateListView(JSONArray _receitas)
+    {
+        try
+        {
+            receitas = _receitas;
+            this.notifyDataSetChanged();
+        }
+        catch (Exception e){
+
         }
     }
 

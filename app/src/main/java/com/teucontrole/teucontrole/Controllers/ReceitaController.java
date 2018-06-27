@@ -198,4 +198,24 @@ public class ReceitaController
 
         return jObject;
     }
+
+    public JSONArray getList(Date data) throws Exception
+    {
+        JSONArray list = null;
+
+        try
+        {
+            if(data == null){
+                data = new Date();
+            }
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            list = receitaRepository.getList(dateFormat.format(data));
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return list;
+    }
 }
