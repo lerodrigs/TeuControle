@@ -54,7 +54,7 @@ public class SyncController
         }
     }
 
-    public void sync()
+    public void sync() throws Exception
     {
         try
         {

@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
 import com.teucontrole.teucontrole.Actitivies.MainActivity;
+import com.teucontrole.teucontrole.Adapters.AdapterListViewReceitas;
 import com.teucontrole.teucontrole.R;
 
 public class ReceitasFragment extends Fragment
@@ -35,7 +37,6 @@ public class ReceitasFragment extends Fragment
         if (getArguments() != null)
         {
         }
-
     }
 
     @Override
@@ -48,10 +49,19 @@ public class ReceitasFragment extends Fragment
     public void onViewCreated(View view, Bundle bundle)
     {
         listview = (ListView) view.findViewById(R.id.listviewReceitas);
-
+        listview.setOnItemClickListener(clickListView);
 
         super.onViewCreated(view, bundle);
     }
+
+    private AdapterView.OnItemClickListener clickListView = new AdapterView.OnItemClickListener()
+    {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+
+        }
+    };
 
 
 }
