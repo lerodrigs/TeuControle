@@ -62,6 +62,7 @@ public class ReceitasFragment extends Fragment
         listview = (ListView) view.findViewById(R.id.listviewReceitas);
         listview.setOnItemClickListener(clickListView);
 
+        carregaReceitas(null);
 
         super.onViewCreated(view, bundle);
     }
@@ -85,20 +86,53 @@ public class ReceitasFragment extends Fragment
                 try
                 {
                     JSONArray receitas = receitaController.getList(data);
-                    int count = receitas.length();
-
-                    if(receitas != null && count > 0 )
-                    {
-                        if(adapter == null)
-                            adapter = new AdapterListViewReceitas(receitas, context);
-
-                        adapter.updateListView(receitas);
-                    }
+                    updateListView(receitas);
                 }
                 catch (Exception e){
 
                 }
             }
         }).start();
+    }
+
+    public static void updateListView(final JSONArray list)
+    {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    if(list != null && list.length() > 0)
+                    {
+                        if(adapter == null)
+                        {
+                            adapter = new AdapterListViewReceitas(list, context);
+                            listview.setAdapter(adapter);
+                        }
+
+                        adapter = (AdapterListViewReceitas) listview.getAdapter();
+                        adapter.updateListView(list);
+                    }
+                }
+                catch (Exception e) {
+                }
+            }
+        });
+    }
+
+    public static JSONArray requestReceitas(final Date date)
+    {
+        JSONArray result = null;
+
+        try
+        {
+            //result = receitaController.requestReceitas(date, date);
+        }
+        catch (Exception e){
+
+        }
+
+        return result;
     }
 }

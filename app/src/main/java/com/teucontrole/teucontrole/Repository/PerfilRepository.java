@@ -14,11 +14,13 @@ public class PerfilRepository
     private Context context;
     private UserPreferences userPreferences;
     private MyDbAdapter myDbAdapter;
+    private UserRepository userRepository;
 
     public PerfilRepository(Context _context)
     {
         this.context = _context;
         this.userPreferences = new UserPreferences(context);
+        this.userRepository = new UserRepository(context);
         this.myDbAdapter = new MyDbAdapter(context);
     }
 
@@ -28,20 +30,16 @@ public class PerfilRepository
 
         try
         {
-            int id_usuario = 0;
-            String query = "SELECT id_usuario FROM USUARIOS WHERE EMAIL = '"+userPreferences.get("email")+"'";
+            JSONObject jObject = userRepository.getByEmail(userPreferences.get("email"));
+            int id_usuario =0;
 
-            JSONArray jArray = myDbAdapter.get(query);
-
-            if(jArray != null && jArray.length() > 0)
-            {
-                id_usuario = jArray.getJSONObject(0).getInt("ID_USUARIO");
-            }
+            if(jObject != null)
+                id_usuario = jObject.getInt("id_usuario");
 
             if(id_usuario > 0)
             {
-                query = "SELECT id_perfil FROM PERFIS_USUARIOS WHERE ID_USUARIO = " +id_usuario+ ";";
-                jArray = myDbAdapter.get(query);
+                String query = "SELECT id_perfil FROM PERFIS_USUARIOS WHERE ID_USUARIO = " +id_usuario+ ";";
+                JSONArray jArray = myDbAdapter.get(query);
 
                 if(jArray != null && jArray.length() > 0)
                 {
@@ -49,7 +47,7 @@ public class PerfilRepository
 
                     for(int c=0; c < jArray.length(); c++)
                     {
-                        String id_perfil = jArray.getJSONObject(c).getString("ID_PERFIL");
+                        String id_perfil = jArray.getJSONObject(c).getString("id_perfil");
                         ids[c] = id_perfil;
                     }
                 }
@@ -166,6 +164,31 @@ public class PerfilRepository
         }
 
         return result;
+    }
+
+    public JSONArray getPerfis() throws Exception
+    {
+        JSONArray jPerfis = null;
+
+        try
+        {
+            JSONObject jUsuario = userRepository.getByEmail(userPreferences.get("email"));
+            int id_usuario = 0;
+
+            if(jUsuario != null)
+                id_usuario = jUsuario.getInt("id_usuario");
+
+            if(id_usuario > 0)
+            {
+                String query = "SELECT id_perfil, id_usuario, nome FROM PERFIS_USUARIOS WHERE ID_USUARIO = '"+id_usuario+"'";
+                jPerfis = myDbAdapter.get(query);
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return jPerfis;
     }
 
 

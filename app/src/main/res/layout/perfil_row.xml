@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:minHeight="80dp"
-              android:background="@color/cinza">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="65dp">
+
     <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="80dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1"
-        android:background="@drawable/shape_row"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <RelativeLayout
-            android:minHeight="80dp"
-            android:padding="20dp"
-            android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+        <TextView
+            android:text="@string/nome"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:id="@+id/relativeLayout2">
-            <TextView
-                android:text="@string/nome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nome_perfil"
-                android:layout_centerVertical="true"
-                android:textColor="@color/primaryText" />
-        </RelativeLayout>
+            android:id="@+id/nome_perfil"
+            android:layout_centerVertical="true"
+            android:textColor="@color/branco" />
+
+        <TextView
+            android:text="@string/nome"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_perfil"
+            android:layout_centerVertical="true"
+            android:textColor="@color/branco" />
     </RelativeLayout>
 </LinearLayout>

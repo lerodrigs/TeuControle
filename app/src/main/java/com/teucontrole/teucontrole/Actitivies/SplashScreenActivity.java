@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.teucontrole.teucontrole.Controllers.UserControllers;
 
 import com.teucontrole.teucontrole.R;
@@ -37,9 +39,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                     {
                         UserControllers userController = new UserControllers(getApplicationContext());
                         UserPreferences userPreferences = new UserPreferences(getApplicationContext());
+
                         Intent intent = null;
 
-                        if(userController.getFromUserLogged() != null && userPreferences.get("isLogged").equals("S"))
+                        if(userController.getFromUserLogged() != null &&  userPreferences.get("isLogged") != null && userPreferences.get("isLogged").equals("S"))
                             intent = new Intent(context, MainActivity.class);
                         else
                             intent = new Intent(context, LoginActivity.class);
@@ -48,8 +51,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                         finish();
 
                     }
-                    catch (Exception e) {
-
+                    catch (Exception e)
+                    {
+                        Log.e("SplashScreenActivity", e.getMessage());
                     }
                 }
 

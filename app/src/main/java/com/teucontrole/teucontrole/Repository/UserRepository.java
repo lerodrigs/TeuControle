@@ -137,7 +137,7 @@ public class UserRepository
             JSONArray jArray = new JSONArray();
             String email = userPreferences.get("email");
 
-            jArray = myDbAdapter.get("SELECT EMAIL, NOME FROM USUARIOS WHERE EMAIL = '"+email+"'");
+            jArray = myDbAdapter.get("SELECT email, nome FROM USUARIOS WHERE EMAIL = '"+email+"'");
 
             if(jArray.length() > 0)
             {

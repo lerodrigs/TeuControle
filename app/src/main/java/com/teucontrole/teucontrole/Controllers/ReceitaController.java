@@ -209,7 +209,7 @@ public class ReceitaController
                 data = new Date();
             }
 
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             list = receitaRepository.getList(dateFormat.format(data));
         }
         catch (Exception e){

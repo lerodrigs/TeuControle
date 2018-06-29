@@ -26,157 +26,157 @@ public class MyDbHelper extends SQLiteOpenHelper
         {
 
             db.execSQL("CREATE TABLE IF NOT EXISTS USER_INFO (" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "EMAIL VARCHAR(100) NOT NULL, " +
-                    "PASS  TEXT NOT NULL);");
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "email VARCHAR(100) NOT NULL, " +
+                    "pass  TEXT NOT NULL);");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS TITULOS_STATUS(" +
-                    "ID_TITULO_STATUS TEXT PRIMARY KEY NOT NULL," +
-                    "NOME VARCHAR(50));");
+                    "id_titulo_status TEXT PRIMARY KEY NOT NULL," +
+                    "nome VARCHAR(50));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS ESTADOS (" +
-                    "ID_ESTADO INTEGER PRIMARY KEY NOT NULL, " +
-                    "NOME VARCHAR(80), " +
-                    "UF VARCHAR(5));");
+                    "id_estado INTEGER PRIMARY KEY NOT NULL, " +
+                    "nome VARCHAR(80), " +
+                    "uf VARCHAR(5));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS CIDADES (" +
-                    "ID_CIDADE INTEGER PRIMARY KEY NOT NULL, " +
-                    "ID_ESTADO INTEGER, " +
-                    "NOME VARCHAR(80)," +
-                    "FOREIGN KEY (ID_ESTADO) REFERENCES ESTADOS (ID_ESTADO));");
+                    "id_cidade INTEGER PRIMARY KEY NOT NULL, " +
+                    "id_estado INTEGER, " +
+                    "nome VARCHAR(80)," +
+                    "FOREIGN KEY (id_estado) REFERENCES ESTADOS (id_estado));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS USUARIOS (" +
-                    "ID_USUARIO      INTEGER PRIMARY KEY NOT NULL, " +
-                    "NOME            VARCHAR(80)," +
-                    "SEXO            VARCHAR(1), " +
-                    "ID_ESTADO       INTEGER, " +
-                    "ID_CIDADE       INTEGER, " +
-                    "DATA_NASCIMENTO DATE, " +
-                    "EMAIL           VARCHAR(100), " +
-                    "VALIDADE_ASSINATURA DATE, " +
-                    "FOREIGN KEY (ID_ESTADO) REFERENCES ESTADOS (ID_ESTADO), " +
-                    "FOREIGN KEY (ID_CIDADE) REFERENCES CIDADES (ID_CIDADE) );");
+                    "id_usuario      INTEGER PRIMARY KEY NOT NULL, " +
+                    "nome            VARCHAR(80)," +
+                    "sexo            VARCHAR(1), " +
+                    "id_estado       INTEGER, " +
+                    "id_cidade       INTEGER, " +
+                    "data_nascimento DATE, " +
+                    "email           VARCHAR(100), " +
+                    "validade_assinatura DATE, " +
+                    "FOREIGN KEY (id_estado) REFERENCES ESTADOS (id_estado), " +
+                    "FOREIGN KEY (id_cidade) REFERENCES CIDADES (id_cidade) );");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS PERFIS_USUARIOS (" +
-                     "ID_PERFIL TEXT NOT NULL, " +
-                     "ID_USUARIO INTEGER NOT NULL, " +
-                     "NOME       VARCHAR(100), " +
-                     "DESCRICAO  TEXT, " +
-                     "IS_DEFAULT BOOLEAN," +
-                     "PRIMARY KEY(ID_PERFIL, ID_USUARIO), " +
-                     "FOREIGN KEY (ID_USUARIO) REFERENCES USUARIOS (ID_USUARIO));");
+                     "id_perfil TEXT NOT NULL, " +
+                     "id_usuario INTEGER NOT NULL, " +
+                     "nome       VARCHAR(100), " +
+                     "descricao  TEXT, " +
+                     "is_default BOOLEAN," +
+                     "PRIMARY KEY(id_perfil, id_usuario), " +
+                     "FOREIGN KEY (id_usuario) REFERENCES USUARIOS (id_usuario));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS CATEGORIAS_RECEITAS (" +
-                     "ID_CATEGORIA_RECEITA TEXT PRIMARY KEY NOT NULL, " +
-                     "ID_PERFIL TEXT NOT NULL, " +
-                     "NOME VARCHAR(150), " +
-                     "DESCRICAO VARCHAR(300), " +
-                     "COR VARCHAR(10), " +
-                     "FOREIGN KEY(ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL));");
+                     "id_categoria_receita TEXT PRIMARY KEY NOT NULL, " +
+                     "id_perfil TEXT NOT NULL, " +
+                     "nome VARCHAR(150), " +
+                     "descricao VARCHAR(300), " +
+                     "cor VARCHAR(10), " +
+                     "FOREIGN KEY(id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS CATEGORIAS_DESPESAS (" +
-                    "ID_CATEGORIA_DESPESA TEXT PRIMARY KEY NOT NULL, " +
-                    "ID_PERFIL TEXT NOT NULL, " +
-                    "NOME VARCHAR(150), " +
-                    "DESCRICAO VARCHAR(300), " +
-                    "COR VARCHAR(10), " +
-                    "FOREIGN KEY(ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL));");
+                    "id_categoria_despesa TEXT PRIMARY KEY NOT NULL, " +
+                    "id_perfil TEXT NOT NULL, " +
+                    "nome VARCHAR(150), " +
+                    "descricao VARCHAR(300), " +
+                    "cor VARCHAR(10), " +
+                    "FOREIGN KEY(id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS CONTAS_BANCARIAS ( " +
-                    "ID_CONTA TEXT PRIMARY KEY NOT NULL, " +
-                    "ID_USUARIO_CRIADOR INTEGER, " +
-                    "NOME VARCHAR(120), " +
-                    "ID_PERFIL TEXT NOT NULL, " +
-                    "SALDO NUMERIC(15,2), " +
-                    "ATIVA BOOLEAN, " +
-                    "ID_CONTA_TIPO INTEGER, " +
-                    "ID_CONTA_BANCARIA_TIPO INTEGER, " +
-                    "NOME1 VARCHAR(120), " +
-                    "NOME2 VARCHAR(120), " +
-                    "DIA_FECHAMENTO INTENGER, " +
-                    "DIA_VENCIMENTO INTENGER, " +
-                    "LIMITE NUMERIC(15,2), " +
-                    "ID_BANDEIRA INTEGER, " +
-                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL))");
+                    "id_conta TEXT PRIMARY KEY NOT NULL, " +
+                    "id_usuario_criador INTEGER, " +
+                    "nome VARCHAR(120), " +
+                    "id_perfil TEXT NOT NULL, " +
+                    "saldo NUMERIC(15,2), " +
+                    "ativa BOOLEAN, " +
+                    "id_conta_tipo INTEGER, " +
+                    "id_conta_bancaria_tipo INTEGER, " +
+                    "nome1 VARCHAR(120), " +
+                    "nome2 VARCHAR(120), " +
+                    "dia_fechamento INTENGER, " +
+                    "dia_vencimento INTENGER, " +
+                    "limite NUMERIC(15,2), " +
+                    "id_bandeira INTEGER, " +
+                    "FOREIGN KEY (id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil))");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS RECEITAS (" +
-                    "ID_RECEITA TEXT PRIMARY KEY NOT NULL, " +
-                    "NOME VARCHA(100) NOT NULL, " +
-                    "VALOR NUMERIC(15,2) NOT NULL, " +
-                    "VALOR_RECEBIDO NUMERIC(15,2), " +
-                    "DATA_VENCIMENTO DATETIME NOT NULL, " +
-                    "DATA_PAGAMENTO DATETIME, " +
-                    "ID_PERFIL TEXT NOT NULL, " +
-                    "DATA_CADASTRO DATETIME, " +
-                    "DATA_MODIFICACAO DATETIME, " +
-                    "ID_CONTA TEXT NOT NULL, " +
-                    "ID_RECEITA_RECORRENTE TEXT, " +
-                    "ID_CATEGORIA_RECEITA TEXT, " +
-                    "DESCRICAO VARCHAR(300), " +
-                    "EXCECAO INT, " +
-                    "DATA_ORIGINAL DATETIME, " +
-                    "ID_TITULO_STATUS BYTE, " +
-                    "CONTA_NOME VARCHAR(100), " +
-                    "CATEGORIA_RECEITA_NOME VARCHAR(100), " +
-                    "COR VARCHAR(20), " +
-                    "ID_RECORRENTE_FREQUENCIA TEXT, " +
-                    "INICIO DATETIME, " +
-                    "TERMINO DATETIME, " +
-                    "INTERVALO DATETIME, " +
-                    "TOTAL_OCORRENCIAS INT, " +
-                    "TIPO_FIM INT, " +
-                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL), " +
-                    "FOREIGN KEY (ID_CATEGORIA_RECEITA) REFERENCES CATEGORIAS_RECEITAS (ID_CATEGORIA_RECEITA), " +
-                    "FOREIGN KEY (ID_CONTA) REFERENCES CONTAS_BANCARIAS (ID_CONTA));");
+                    "id_receita TEXT PRIMARY KEY NOT NULL, " +
+                    "nome VARCHA(100) NOT NULL, " +
+                    "valor NUMERIC(15,2) NOT NULL, " +
+                    "valor_recebido NUMERIC(15,2), " +
+                    "data_vencimento DATETIME NOT NULL, " +
+                    "data_pagamento DATETIME, " +
+                    "id_perfil TEXT NOT NULL, " +
+                    "data_cadastro DATETIME, " +
+                    "data_modificacao DATETIME, " +
+                    "id_conta TEXT NOT NULL, " +
+                    "id_receita_recorrente TEXT, " +
+                    "id_categoria_receita TEXT, " +
+                    "descricao VARCHAR(300), " +
+                    "excecao INT, " +
+                    "data_original DATETIME, " +
+                    "id_titulo_status BYTE, " +
+                    "conta_nome VARCHAR(100), " +
+                    "categoria_receita_nome VARCHAR(100), " +
+                    "cor VARCHAR(20), " +
+                    "id_recorrente_frequencia TEXT, " +
+                    "inicio DATETIME, " +
+                    "termino DATETIME, " +
+                    "intervalo DATETIME, " +
+                    "total_ocorrencias INT, " +
+                    "tipo_fim INT, " +
+                    "FOREIGN KEY (id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil), " +
+                    "FOREIGN KEY (id_categoria_receita) REFERENCES CATEGORIAS_RECEITAS (id_categoria_receita), " +
+                    "FOREIGN KEY (id_conta) REFERENCES CONTAS_BANCARIAS (id_conta));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS FATURAS (" +
-                    "ID_FATURA TEXT PRIMARY KEY NOT NULL, " +
-                    "ID_PERFIL TEXT NOT NULL," +
-                    "DATA_VENCIMENTO DATETIME, " +
-                    "DATA_FECHAMENTO DATETIME, " +
-                    "VALOR_TOTAL NUMERIC(15,2), " +
-                    "VALOR_PAGO NUMERIC(15,2), " +
-                    "DATA_PAGAMENTO DATETIME, " +
-                    "ID_CONTA TEXT, " +
-                    "DATA_CADASTRO DATETIME," +
-                    "DATA_MODIFICACAO DATETIME, " +
-                    "ID_CONTA_QUE_PAGA TEXT, " +
-                    "ID_TITULO_STATUS INT, " +
-                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL), " +
-                    "FOREIGN KEY (ID_CONTA) REFERENCES CONTAS_BANCARIAS (ID_CONTA)); ");
+                    "id_fatura TEXT PRIMARY KEY NOT NULL, " +
+                    "id_perfil TEXT NOT NULL," +
+                    "data_vencimento DATETIME, " +
+                    "data_fechamento DATETIME, " +
+                    "valor_total NUMERIC(15,2), " +
+                    "valor_pago NUMERIC(15,2), " +
+                    "data_pagamento DATETIME, " +
+                    "id_conta TEXT, " +
+                    "data_cadastro DATETIME," +
+                    "data_modificacao DATETIME, " +
+                    "id_conta_que_paga TEXT, " +
+                    "id_titulo_status INT, " +
+                    "FOREIGN KEY (id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil), " +
+                    "FOREIGN KEY (id_conta) REFERENCES CONTAS_BANCARIAS (id_conta)); ");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS DESPESAS (" +
-                    "ID_DESPESA TEXT PRIMARY KEY NOT NULL, " +
-                    "NOME VARCHA(100) NOT NULL, " +
-                    "VALOR NUMERIC(15,2) NOT NULL, " +
-                    "VALOR_PAGO NUMERIC(15,2), " +
-                    "DATA_VENCIMENTO DATETIME NOT NULL, " +
-                    "DATA_PAGAMENTO DATETIME, " +
-                    "ID_PERFIL TEXT NOT NULL, " +
-                    "DATA_CADASTRO DATETIME, " +
-                    "DATA_MODIFICACAO DATETIME, " +
-                    "ID_CONTA TEXT, " +
-                    "ID_DESPESA_RECORRENTE TEXT, " +
-                    "ID_CATEGORIA_DESPESA TEXT, " +
-                    "DESCRICAO VARCHAR(300), " +
-                    "EXCECAO INT, " +
-                    "DATA_ORIGINAL DATETIME, " +
-                    "ID_TITULO_STATUS BYTE, " +
-                    "CONTA_NOME VARCHAR(100), " +
-                    "CATEGORIA_DESPESA_NOME VARCHAR(100), " +
-                    "COR VARCHAR(20), " +
-                    "ID_RECORRENTE_FREQUENCIA TEXT, " +
-                    "INICIO DATETIME, " +
-                    "TERMINO DATETIME, " +
-                    "INTERVALO DATETIME, " +
-                    "TOTAL_OCORRENCIAS INT, " +
-                    "TIPO_FIM INT," +
-                    "ID_FATURA TEXT, " +
-                    "MAE INT, " +
-                    "FOREIGN KEY (ID_PERFIL) REFERENCES PERFIS_USUARIOS (ID_PERFIL), " +
-                    "FOREIGN KEY (ID_CATEGORIA_DESPESA) REFERENCES CATEGORIAS_DESPESAS (ID_CATEGORIA_DESPESA), " +
-                    "FOREIGN KEY (ID_CONTA) REFERENCES CONTAS_BANCARIAS (ID_CONTA), " +
-                    "FOREIGN KEY (ID_FATURA) REFERENCES FATURA (ID_FATURA));");
+                    "id_despesa TEXT PRIMARY KEY NOT NULL, " +
+                    "nome VARCHA(100) NOT NULL, " +
+                    "valor NUMERIC(15,2) NOT NULL, " +
+                    "valor_pago NUMERIC(15,2), " +
+                    "data_vencimento DATETIME NOT NULL, " +
+                    "data_pagamento DATETIME, " +
+                    "id_perfil TEXT NOT NULL, " +
+                    "data_cadastro DATETIME, " +
+                    "data_modificacao DATETIME, " +
+                    "id_conta TEXT, " +
+                    "id_despesa_recorrente TEXT, " +
+                    "id_categoria_despesa TEXT, " +
+                    "descricao VARCHAR(300), " +
+                    "excecao INT, " +
+                    "data_original DATETIME, " +
+                    "id_titulo_status BYTE, " +
+                    "conta_nome VARCHAR(100), " +
+                    "categoria_despesa_nome VARCHAR(100), " +
+                    "cor VARCHAR(20), " +
+                    "id_recorrente_frequencia TEXT, " +
+                    "inicio DATETIME, " +
+                    "termino DATETIME, " +
+                    "intervalo DATETIME, " +
+                    "total_ocorrencias INT, " +
+                    "tipo_fim INT," +
+                    "id_fatura TEXT, " +
+                    "mae INT, " +
+                    "FOREIGN KEY (id_perfil) REFERENCES PERFIS_USUARIOS (id_perfil), " +
+                    "FOREIGN KEY (id_categoria_despesa) REFERENCES CATEGORIAS_DESPESAS (id_categoria_despesa), " +
+                    "FOREIGN KEY (id_conta) REFERENCES CONTAS_BANCARIAS (id_conta), " +
+                    "FOREIGN KEY (id_fatura) REFERENCES FATURA (id_fatura));");
 
 
         }

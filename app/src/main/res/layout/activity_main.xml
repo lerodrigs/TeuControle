@@ -24,23 +24,80 @@
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark">
 
+
             <include layout="@layout/nav_drawer"
                 android:id="@+id/nav_drawer" />
 
             <RelativeLayout
+               android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relMenu"
+                    android:background="@color/colorPrimary"
+                    android:layout_below="@id/nav_drawer">
+
+                    <ListView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:dividerHeight="0dp"
+                        android:choiceMode="singleChoice"
+                        android:id="@+id/listview_menu">
+                    </ListView>
+                </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/rel_perfis"
+                android:layout_below="@id/relMenu"
+                android:background="@drawable/bg_nav_header"
+                android:clickable="true"
+                android:minHeight="60dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="15dp"
+                    android:textColor="@color/branco"
+                    android:textStyle="bold"
+                    android:text="@string/perfis"
+                    android:textSize="14dp"
+                    android:id="@+id/fuck"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/seta_baixo"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rel_listviewPerfis"
+                android:layout_below="@id/rel_perfis"
                 android:background="@color/colorPrimary"
-                android:layout_below="@id/nav_drawer">
+                android:minHeight="60dp"
+                android:visibility="gone">
+>
 
                 <ListView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:dividerHeight="0dp"
                     android:choiceMode="singleChoice"
-                    android:id="@+id/listview_menu">
+                    android:id="@+id/listview_perfis">
                 </ListView>
+
             </RelativeLayout>
+
+
+
 
         </RelativeLayout>
 

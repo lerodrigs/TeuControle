@@ -174,4 +174,19 @@ public class PerfilController
         return result;
     }
 
+    public JSONArray getPerfis()
+    {
+        JSONArray jArray = null;
+
+        try
+        {
+            jArray = perfilRepository.getPerfis();
+        }
+        catch (Exception e){
+
+        }
+
+        return jArray;
+    }
+
 }

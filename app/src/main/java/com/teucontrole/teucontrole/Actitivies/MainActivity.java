@@ -5,6 +5,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import android.app.AlertDialog;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,13 +23,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.teucontrole.teucontrole.Adapters.AdapterListViewMenuPerfil;
 import com.teucontrole.teucontrole.Adapters.AdapterMenuItems;
+import com.teucontrole.teucontrole.Controllers.PerfilController;
 import com.teucontrole.teucontrole.Fragments.CheckListFragment;
 import com.teucontrole.teucontrole.Fragments.ConfiguracoesFragment;
+import com.teucontrole.teucontrole.Fragments.CustomDatePickerFragment;
 import com.teucontrole.teucontrole.Fragments.LancamentosFragment;
 import com.teucontrole.teucontrole.Models.Item;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.Utils.ItemsMenuUtils;
+
+import org.json.JSONArray;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         ListView listviewMenu = navigationView.findViewById(R.id.listview_menu);
 
+        //Menu lateral
         List<Item> items = ItemsMenuUtils.getMenuItems();
         AdapterMenuItems adapterMenuItems = new AdapterMenuItems(items, this);
 
@@ -73,6 +81,42 @@ public class MainActivity extends AppCompatActivity
         listviewMenu.setAdapter(adapterMenuItems);
         listviewMenu.setItemsCanFocus(false);
 
+        //Menu de perfis
+        final ListView listviewPerfis = navigationView.findViewById(R.id.listview_perfis);
+        listviewPerfis.setOnItemClickListener(perfilItemclick);
+        listviewMenu.setItemsCanFocus(false);
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    JSONArray jPerfis = getMenuPerfis();
+
+                    if(jPerfis != null && jPerfis.length() > 0)
+                    {
+                        final AdapterListViewMenuPerfil adapter = new AdapterListViewMenuPerfil(jPerfis, context);
+                        context.runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                listviewPerfis.setAdapter(adapter);
+                            }
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+
+            }
+        }).start();
+
+        //Floating Action Menus/Buttons
         fabReceita = findViewById(R.id.fab_receitas);
         fabReceita.setOnClickListener(fabReceitasClick);
 
@@ -129,6 +173,8 @@ public class MainActivity extends AppCompatActivity
 
             if(option.equals("Calendario"))
             {
+                DialogFragment dialogFragment = new CustomDatePickerFragment();
+                dialogFragment.show(getSupportFragmentManager(), "date picker");
 
             }
         }
@@ -147,6 +193,22 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private JSONArray getMenuPerfis()
+    {
+        JSONArray jArray = null;
+
+        try
+        {
+            PerfilController perfilController = new PerfilController(context);
+            jArray = perfilController.getPerfis();
+        }
+        catch (Exception e){
+
+        }
+
+        return jArray;
+    }
+
     public static Toolbar getToolbar()
     {
         return toolbar;
@@ -158,6 +220,15 @@ public class MainActivity extends AppCompatActivity
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
             setChoosedFragment((int) id);
+        }
+    };
+
+    private ListView.OnItemClickListener perfilItemclick = new ListView.OnItemClickListener()
+    {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+
         }
     };
 
@@ -370,7 +441,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            addNewCategoria(true);
+
         }
     };
 
@@ -439,24 +510,7 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    public void addNewCategoria(final boolean isReceita)
-    {
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if(isReceita)
-                {
 
-                }
-                else
-                {
-
-                }
-            }
-        }).start();
-    }
 
 
 }

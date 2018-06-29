@@ -85,15 +85,42 @@ public class AdapterListViewReceitas extends BaseAdapter
             TextView valor = view.findViewById(R.id.valor_row);
             TextView categoria = view.findViewById(R.id.categoria_row);
 
-            status.setText("Aguardando");
+            if(Utils.getValueJObject(receita, "id_titulo_status") != null)
+            {
+                switch (receita.getString("id_titulo_status"))
+                {
+                    case "1":
+                        break;
+
+                    case "2":
+                        break;
+
+                    case "3":
+                        break;
+
+                    case "0":
+                        break;
+                }
+            }
 
             if(Utils.getValueJObject(receita, "nome") != null)
                 nome.setText(receita.getString("nome"));
 
             if(Utils.getDateFromJObject(receita, "data_vencimento") != null)
             {
-                DateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy");
-                dataVencimento.setText(dtFormat.parse(Utils.getDateFromJObject(receita, "data_vencimento")).toString());
+                String dataStr = Utils.getDateFromJObject(receita, "data_vencimento");
+                String _mes;
+
+                int ano = Integer.parseInt(dataStr.substring(0,4));
+                int mes = Integer.parseInt(dataStr.substring(5,7));
+                int dia = Integer.parseInt(dataStr.substring(8,10));
+
+                if(mes < 9 )
+                    _mes = "0"+mes;
+                else
+                    _mes = String.valueOf(mes);
+
+                dataVencimento.setText(dia + "/" + _mes + "/" + ano);
             }
 
             if(Utils.getValueJObject(receita, "valor") != null)
