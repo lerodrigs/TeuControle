@@ -63,7 +63,7 @@
                     android:textStyle="bold"
                     android:text="@string/perfis"
                     android:textSize="14dp"
-                    android:id="@+id/fuck"/>
+                    android:id="@+id/lbl_perfilMenu"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:id="@+id/setaPerfil"
                     android:paddingRight="20dp"
                     android:src="@mipmap/seta_baixo"/>
 

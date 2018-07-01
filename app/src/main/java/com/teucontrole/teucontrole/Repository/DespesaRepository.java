@@ -8,6 +8,8 @@ import com.teucontrole.teucontrole.Utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.jar.JarEntry;
+
 public class DespesaRepository
 {
     private Context context;
@@ -181,5 +183,26 @@ public class DespesaRepository
         }
 
         return jObject;
+    }
+
+    public JSONArray getList(String dataFormatada) throws Exception
+    {
+        JSONArray jArray = null;
+        StringBuilder query = new StringBuilder();
+
+        try
+        {
+            query.append("SELECT *");
+            query.append("  FROM DESPESAS A");
+            query.append(" WHERE 1=1 ");
+            //query.append("   AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
+
+            jArray = myDbAdapter.get(query.toString());
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return jArray;
     }
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.teucontrole.teucontrole.Models.Item;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.Utils.Utils;
 
@@ -15,26 +14,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-public class AdapterListViewReceitas extends BaseAdapter
+public class AdapterListViewDespesas extends BaseAdapter
 {
-    private JSONArray receitas;
+    private JSONArray despesas;
     private Activity context;
 
-    public AdapterListViewReceitas(JSONArray _receitas, Activity _context)
+    public AdapterListViewDespesas(JSONArray _list, Activity _context)
     {
-        this.receitas = _receitas;
+        this.despesas = _list;
         this.context = _context;
     }
 
     @Override
     public int getCount()
     {
-        return receitas.length();
+        return despesas.length();
     }
 
     @Override
@@ -44,7 +38,7 @@ public class AdapterListViewReceitas extends BaseAdapter
 
         try
         {
-            item = receitas.getJSONObject(position);
+            item = despesas.getJSONObject(position);
         }
         catch (JSONException e) {
         }
@@ -59,7 +53,7 @@ public class AdapterListViewReceitas extends BaseAdapter
 
         try
         {
-            id = receitas.getInt(position);
+            id = despesas.getInt(position);
         }
         catch (Exception e) {
         }
@@ -74,7 +68,7 @@ public class AdapterListViewReceitas extends BaseAdapter
         try
         {
             View view = convertView;
-            JSONObject receita = receitas.getJSONObject(position);
+            JSONObject despesa = despesas.getJSONObject(position);
 
             if(view == null)
                 view = context.getLayoutInflater().inflate(R.layout.receita_row, null);
@@ -85,30 +79,12 @@ public class AdapterListViewReceitas extends BaseAdapter
             TextView valor = view.findViewById(R.id.valor_row);
             TextView categoria = view.findViewById(R.id.categoria_row);
 
-            if(Utils.getValueJObject(receita, "id_titulo_status") != null)
+            if(Utils.getValueJObject(despesa, "nome") != null)
+                nome.setText(despesa.getString("nome"));
+
+            if(Utils.getDateFromJObject(despesa, "data_vencimento") != null)
             {
-                switch (receita.getString("id_titulo_status"))
-                {
-                    case "1":
-                        break;
-
-                    case "2":
-                        break;
-
-                    case "3":
-                        break;
-
-                    case "0":
-                        break;
-                }
-            }
-
-            if(Utils.getValueJObject(receita, "nome") != null)
-                nome.setText(receita.getString("nome"));
-
-            if(Utils.getDateFromJObject(receita, "data_vencimento") != null)
-            {
-                String dataStr = Utils.getDateFromJObject(receita, "data_vencimento");
+                String dataStr = Utils.getDateFromJObject(despesa, "data_vencimento");
                 String _mes;
 
                 int ano = Integer.parseInt(dataStr.substring(0,4));
@@ -123,11 +99,11 @@ public class AdapterListViewReceitas extends BaseAdapter
                 dataVencimento.setText(dia + "/" + _mes + "/" + ano);
             }
 
-            if(Utils.getValueJObject(receita, "valor") != null)
-                valor.setText(receita.getString("valor"));
+            if(Utils.getValueJObject(despesa, "valor") != null)
+                valor.setText(despesa.getString("valor"));
 
-            if(Utils.getValueJObject(receita, "categoria_receita_nome") != null)
-                categoria.setText(receita.getString("categoria_receita_nome"));
+            if(Utils.getValueJObject(despesa, "categoria_despesa_nome") != null)
+                categoria.setText(despesa.getString("categoria_despesa_nome"));
 
             return view;
         }
@@ -137,16 +113,15 @@ public class AdapterListViewReceitas extends BaseAdapter
         }
     }
 
-    public void updateListView(JSONArray _receitas)
+    public void updateListView(JSONArray _despesas)
     {
         try
         {
-            receitas = _receitas;
+            this.despesas = _despesas;
             this.notifyDataSetChanged();
         }
         catch (Exception e){
 
         }
     }
-
 }

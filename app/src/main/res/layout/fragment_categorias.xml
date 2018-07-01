@@ -1,9 +1,84 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.teucontrole.teucontrole.Fragments.CategoriasFragment">
-
-
-
-</FrameLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_view_with_border"
+            android:id="@+id/rel_categoria_receita"
+            android:animateLayoutChanges="true"
+            android:padding="7dp"
+            android:minHeight="60dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="@drawable/shape_textview"
+                android:id="@+id/rel_clickable_categoria_receita">
+                <FrameLayout
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:id="@+id/add_blue_categoria_receita"
+                        android:src="@mipmap/add_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/txt_categoria_receita"
+                    android:text="@string/receitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_view_with_border"
+            android:id="@+id/rel_categoria_despesa"
+            android:padding="7dp"
+            android:animateLayoutChanges="true"
+            android:minHeight="60dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="@drawable/shape_textview"
+                android:id="@+id/rel_clickable_categoria_despesa">
+                <FrameLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:id="@+id/add_blue_categoria_despesa"
+                        android:src="@mipmap/add_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/txt_categoria_despesa"
+                    android:text="@string/receitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

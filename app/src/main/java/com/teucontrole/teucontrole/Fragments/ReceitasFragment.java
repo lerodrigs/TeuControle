@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.teucontrole.teucontrole.Actitivies.MainActivity;
@@ -25,6 +27,10 @@ public class ReceitasFragment extends Fragment
 {
     private static ListView listview;
     private static AdapterListViewReceitas adapter;
+
+    private static TextView txtSemRegistro;
+    private static ProgressBar progressBar;
+
     private static ReceitaController receitaController;
     private static Activity context;
 
@@ -62,6 +68,9 @@ public class ReceitasFragment extends Fragment
         listview = (ListView) view.findViewById(R.id.listviewReceitas);
         listview.setOnItemClickListener(clickListView);
 
+        txtSemRegistro = view.findViewById(R.id.txt_sem_receitas);
+        progressBar = view.findViewById(R.id.progressBar1);
+
         carregaReceitas(null);
 
         super.onViewCreated(view, bundle);
@@ -75,6 +84,21 @@ public class ReceitasFragment extends Fragment
 
         }
     };
+
+    public static JSONArray requestReceitas(final Date date)
+    {
+        JSONArray result = null;
+
+        try
+        {
+            //result = receitaController.requestReceitas(date);
+        }
+        catch (Exception e){
+
+        }
+
+        return result;
+    }
 
     public static void carregaReceitas(final Date data)
     {
@@ -95,6 +119,44 @@ public class ReceitasFragment extends Fragment
         }).start();
     }
 
+    public static void txtSemRegistro(final JSONArray jReceitas)
+    {
+        try
+        {
+            context.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if(jReceitas != null && jReceitas.length() > 0)
+                        txtSemRegistro.setVisibility(View.GONE);
+                    else
+                        txtSemRegistro.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+        catch (Exception e){ }
+    }
+
+    public static void showProgressBar(final boolean visible)
+    {
+        try
+        {
+            context.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if(visible)
+                        progressBar.setVisibility(View.VISIBLE);
+                    else
+                        progressBar.setVisibility(View.GONE);
+                }
+            });
+        }
+        catch (Exception e){ }
+    }
+
     public static void updateListView(final JSONArray list)
     {
         context.runOnUiThread(new Runnable() {
@@ -103,36 +165,21 @@ public class ReceitasFragment extends Fragment
             {
                 try
                 {
-                    if(list != null && list.length() > 0)
+                    if(adapter == null)
                     {
-                        if(adapter == null)
-                        {
-                            adapter = new AdapterListViewReceitas(list, context);
-                            listview.setAdapter(adapter);
-                        }
-
-                        adapter = (AdapterListViewReceitas) listview.getAdapter();
-                        adapter.updateListView(list);
+                        adapter = new AdapterListViewReceitas(list, context);
+                        listview.setAdapter(adapter);
                     }
+
+                    adapter = (AdapterListViewReceitas) listview.getAdapter();
+                    adapter.updateListView(list);
+
+                    showProgressBar(false);
+                    txtSemRegistro(list);
                 }
                 catch (Exception e) {
                 }
             }
         });
-    }
-
-    public static JSONArray requestReceitas(final Date date)
-    {
-        JSONArray result = null;
-
-        try
-        {
-            //result = receitaController.requestReceitas(date, date);
-        }
-        catch (Exception e){
-
-        }
-
-        return result;
     }
 }

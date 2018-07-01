@@ -20,12 +20,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.teucontrole.teucontrole.Adapters.AdapterListViewMenuPerfil;
 import com.teucontrole.teucontrole.Adapters.AdapterMenuItems;
 import com.teucontrole.teucontrole.Controllers.PerfilController;
+import com.teucontrole.teucontrole.Controllers.UserControllers;
 import com.teucontrole.teucontrole.Fragments.CheckListFragment;
 import com.teucontrole.teucontrole.Fragments.ConfiguracoesFragment;
 import com.teucontrole.teucontrole.Fragments.CustomDatePickerFragment;
@@ -33,8 +36,10 @@ import com.teucontrole.teucontrole.Fragments.LancamentosFragment;
 import com.teucontrole.teucontrole.Models.Item;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.Utils.ItemsMenuUtils;
+import com.teucontrole.teucontrole.Utils.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -43,14 +48,17 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-    static Activity context;
-    static FloatingActionButton fabReceita;
-    static FloatingActionButton fabDespesas;
-    static FloatingActionMenu fabMenuContasCartao;
-    static FloatingActionMenu fabMenuCategorias;
-    static FloatingActionButton fabFaturas;
-    static FloatingActionMenu fabCheckList;
-    static Toolbar toolbar;
+    private static Activity context;
+    private static FloatingActionButton fabReceita;
+    private static FloatingActionButton fabDespesas;
+    private static FloatingActionMenu fabMenuContasCartao;
+    private static FloatingActionMenu fabMenuCategorias;
+    private static FloatingActionButton fabFaturas;
+    private static FloatingActionMenu fabCheckList;
+    private static Toolbar toolbar;
+
+    private ImageView imgSetaMenuPerfil;
+    private RelativeLayout relListViewPerfis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -86,6 +94,15 @@ public class MainActivity extends AppCompatActivity
         listviewPerfis.setOnItemClickListener(perfilItemclick);
         listviewMenu.setItemsCanFocus(false);
 
+        RelativeLayout relPerfis = navigationView.findViewById(R.id.rel_perfis);
+        TextView lblMenuPerfis = navigationView.findViewById(R.id.lbl_perfilMenu);
+        relListViewPerfis = navigationView.findViewById(R.id.rel_listviewPerfis);
+        imgSetaMenuPerfil = navigationView.findViewById(R.id.setaPerfil);
+
+        relPerfis.setOnClickListener(relativeLayoutPerfisClick);
+        imgSetaMenuPerfil.setOnClickListener(relativeLayoutPerfisClick);
+        lblMenuPerfis.setOnClickListener(relativeLayoutPerfisClick);
+
         new Thread(new Runnable()
         {
             @Override
@@ -108,11 +125,35 @@ public class MainActivity extends AppCompatActivity
                         });
                     }
                 }
-                catch (Exception e)
-                {
+                catch (Exception e){
 
                 }
 
+            }
+        }).start();
+
+        //Informações do usuário na nav.
+        final TextView txtNome = navigationView.findViewById(R.id.nome);
+        final TextView txtemail = navigationView.findViewById(R.id.email);
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                JSONObject jUser = getUser();
+
+                if(jUser != null)
+                {
+                    try
+                    {
+                        txtNome.setText(Utils.getValueJObject(jUser, "nome"));
+                        txtemail.setText(Utils.getValueJObject(jUser, "email"));
+                    }
+                    catch (Exception e){
+
+                    }
+                }
             }
         }).start();
 
@@ -159,7 +200,9 @@ public class MainActivity extends AppCompatActivity
             android.view.MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.menu_toolbar, menu);
         }
-        catch (Exception e){}
+        catch (Exception e){
+
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -196,7 +239,7 @@ public class MainActivity extends AppCompatActivity
     private JSONArray getMenuPerfis()
     {
         JSONArray jArray = null;
-
+;
         try
         {
             PerfilController perfilController = new PerfilController(context);
@@ -208,6 +251,43 @@ public class MainActivity extends AppCompatActivity
 
         return jArray;
     }
+
+    private JSONObject getUser()
+    {
+
+        try
+        {
+            UserControllers userController = new UserControllers(context);
+            JSONObject jObject = userController.getFromUserLogged();
+
+            return jObject;
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
+    //Exibe-esconde lista de perfis
+    byte ctrlSeta =0;
+    private View.OnClickListener relativeLayoutPerfisClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if(ctrlSeta == 0)
+            {
+                imgSetaMenuPerfil.setImageResource(R.mipmap.seta_cima);
+                relListViewPerfis.setVisibility(View.VISIBLE);
+                ctrlSeta =1;
+            }
+            else{
+                imgSetaMenuPerfil.setImageResource(R.mipmap.seta_baixo);
+                relListViewPerfis.setVisibility(View.GONE);
+                ctrlSeta =0;
+            }
+
+        }
+    };
 
     public static Toolbar getToolbar()
     {
@@ -331,7 +411,7 @@ public class MainActivity extends AppCompatActivity
                             break;
 
                         case 4:
-                            fabFaturas.show(true);
+                            //fabFaturas.show(true);
                             break;
 
                         case 5:

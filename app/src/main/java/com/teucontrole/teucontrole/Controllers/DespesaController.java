@@ -93,6 +93,26 @@ import java.util.Date;
         return jArray;
     }
 
+    public JSONArray getList(Date date) throws Exception
+    {
+        JSONArray jArray = null;
+
+        try
+        {
+            if(date == null)
+                date = new Date();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            jArray = despesaRepository.getList(dateFormat.format(date));
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return  jArray;
+    }
+
+
     public JSONObject getDespesa(String id_despesa) throws Exception
     {
         JSONObject jObject = null;

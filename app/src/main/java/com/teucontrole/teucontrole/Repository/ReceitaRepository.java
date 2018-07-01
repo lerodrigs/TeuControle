@@ -187,8 +187,7 @@ public class ReceitaRepository
             query.append("SELECT *");
             query.append("  FROM RECEITAS A");
             query.append(" WHERE 1=1 ");
-            query.append("   AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
-            //query.append("   AND A.ID_TITULO_STATUS IN ()");
+            //query.append("   AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
 
             results = myDbAdapter.get(query.toString());
         }

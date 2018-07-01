@@ -53,6 +53,10 @@
 
     <color name="windowGreen">#388E3C</color>
 
+    <color name="status_receber">#8BC34A</color>
+    <color name="status_recebido">#212121</color>
+    <color name="status_cancelado">#FF5722</color>
+
 
 </resources>
 
