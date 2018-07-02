@@ -31,8 +31,9 @@ public class DespesasFragment extends Fragment {
 
     private static ListView listview;
     private static AdapterListViewDespesas adapter;
-    private static DespesaController despesaController;
 
+    private static DespesaController despesaController;
+    private static String id_perfil;
 
     public static DespesasFragment NewInstance()
     {
@@ -49,6 +50,11 @@ public class DespesasFragment extends Fragment {
         context = getActivity();
         despesaController = new DespesaController(context);
 
+        if(getArguments() != null)
+        {
+            id_perfil = getArguments().getString("id_perfil");
+        }
+
         super.onCreate(savedInstanceState);
     }
 
@@ -62,11 +68,12 @@ public class DespesasFragment extends Fragment {
     public void onViewCreated(View view, Bundle bundle)
     {
         listview = view.findViewById(R.id.listview_despesa);
-        txtSemRegistro = view.findViewById(R.id.txt_sem_receitas);
+        listview.setOnItemClickListener(clickListView);
+
+        txtSemRegistro = view.findViewById(R.id.txt_sem_despesas);
         progressBar = view.findViewById(R.id.progressBar1);
 
-        listview.setOnItemClickListener(clickListView);
-        carregaDespesas(null);
+        carregaDespesas(null, id_perfil);
 
         super.onViewCreated(view, bundle);
     }
@@ -80,7 +87,7 @@ public class DespesasFragment extends Fragment {
         }
     };
 
-    public static void carregaDespesas(final Date data)
+    public static void carregaDespesas(final Date data, final String _id_perfil)
     {
         Thread threadLoadDespesas = new Thread(new Runnable()
         {
@@ -89,7 +96,7 @@ public class DespesasFragment extends Fragment {
             {
                 try
                 {
-                    JSONArray jDespesas = despesaController.getList(data);
+                    JSONArray jDespesas = despesaController.getList(data, _id_perfil);
                     refreshListView(jDespesas);
                 }
                 catch (Exception e){
@@ -148,12 +155,9 @@ public class DespesasFragment extends Fragment {
                 try
                 {
                     if(adapter == null)
-                    {
                         adapter = new AdapterListViewDespesas(list, context);
-                        listview.setAdapter(adapter);
-                    }
 
-                    adapter = (AdapterListViewDespesas) listview.getAdapter();
+                    listview.setAdapter(adapter);
                     adapter.updateListView(list);
 
                     showProgressBar(false);
@@ -164,4 +168,6 @@ public class DespesasFragment extends Fragment {
             }
         });
     }
+
+
 }

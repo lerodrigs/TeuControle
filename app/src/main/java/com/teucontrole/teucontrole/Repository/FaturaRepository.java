@@ -23,6 +23,28 @@ public class FaturaRepository
         this.myDbAdapter = new MyDbAdapter(context);
     }
 
+    public JSONArray getList(String dataFormatada, String id_perfil) throws Exception
+    {
+        JSONArray jArray = null;
+        StringBuilder query = new StringBuilder();
+
+        try
+        {
+            query.append("SELECT *");
+            query.append("  FROM FATURAS A ");
+            query.append(" WHERE 1=1");
+            query.append("   AND A.ID_PERFIL ='"+id_perfil+"'");
+            //query.append(" AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
+
+            jArray = myDbAdapter.get(query.toString());
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return jArray;
+    }
+
     public JSONObject getFatura(String id_fatura) throws Exception
     {
         JSONObject jsonObject = null;

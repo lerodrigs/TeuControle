@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity
     private ImageView imgSetaMenuPerfil;
     private RelativeLayout relListViewPerfis;
 
+    private static PerfilController perfilController;
+    private static String id_perfil_selecionado;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         context = this;
+        perfilController = new PerfilController(context);
+
         drawerLayout = findViewById(R.id.drawer_layout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,6 +107,8 @@ public class MainActivity extends AppCompatActivity
         relPerfis.setOnClickListener(relativeLayoutPerfisClick);
         imgSetaMenuPerfil.setOnClickListener(relativeLayoutPerfisClick);
         lblMenuPerfis.setOnClickListener(relativeLayoutPerfisClick);
+
+        id_perfil_selecionado = perfilSelected(null);
 
         new Thread(new Runnable()
         {
@@ -228,7 +235,8 @@ public class MainActivity extends AppCompatActivity
 
     public static void setToolbar(final String textToolbar)
     {
-        context.runOnUiThread(new Runnable() {
+        context.runOnUiThread(new Runnable()
+        {
             @Override
             public void run() {
                 toolbar.setTitle(textToolbar);
@@ -242,7 +250,6 @@ public class MainActivity extends AppCompatActivity
 ;
         try
         {
-            PerfilController perfilController = new PerfilController(context);
             jArray = perfilController.getPerfis();
         }
         catch (Exception e){
@@ -252,9 +259,28 @@ public class MainActivity extends AppCompatActivity
         return jArray;
     }
 
+    private String perfilSelected(String id_perfil)
+    {
+        String result = null;
+
+        try
+        {
+            if(id_perfil == null)
+                result = perfilController.getPerfilDefault();
+            else
+            {
+                result = id_perfil;
+            }
+        }
+        catch (Exception e ){
+
+        }
+
+        return result;
+    }
+
     private JSONObject getUser()
     {
-
         try
         {
             UserControllers userController = new UserControllers(context);
@@ -285,7 +311,6 @@ public class MainActivity extends AppCompatActivity
                 relListViewPerfis.setVisibility(View.GONE);
                 ctrlSeta =0;
             }
-
         }
     };
 
@@ -336,6 +361,11 @@ public class MainActivity extends AppCompatActivity
                     fragment = CheckListFragment.newInstance();
                     break;
             }
+
+            Bundle argments = new Bundle();
+
+            argments.putString("id_perfil", id_perfil_selecionado);
+            fragment.setArguments(argments);
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contentMain, fragment)

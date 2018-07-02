@@ -61,6 +61,38 @@ public class PerfilRepository
         return ids;
     }
 
+    public String getPerfilDefault() throws Exception
+    {
+        StringBuilder query = new StringBuilder();
+        String id_perfil = null;
+
+        try
+        {
+            int id_usuario = userRepository.getFromUserLogged().getInt("id_usuario");
+
+            query.append("SELECT id_perfil");
+            query.append("  FROM PERFIS_USUARIOS A");
+            query.append(" WHERE 1=1 ");
+            query.append("   AND A.IS_DEFAULT = 1");
+            query.append("   AND A.ID_USUARIO =" + id_usuario);
+
+            JSONArray jArray = myDbAdapter.get(query.toString());
+
+            for(int c =0; c < jArray.length(); c++)
+            {
+                JSONObject jObject = jArray.getJSONObject(c);
+
+                if(jObject != null)
+                    id_perfil = jObject.getString("id_perfil");
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return id_perfil;
+    }
+
     public JSONObject getByIds(String id_perfil, int id_usuario) throws Exception
     {
         JSONObject jsonObject = null;

@@ -199,7 +199,7 @@ public class ReceitaController
         return jObject;
     }
 
-    public JSONArray getList(Date data) throws Exception
+    public JSONArray getList(Date data, String id_perfil) throws Exception
     {
         JSONArray list = null;
 
@@ -210,7 +210,7 @@ public class ReceitaController
             }
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            list = receitaRepository.getList(dateFormat.format(data));
+            list = receitaRepository.getList(dateFormat.format(data), id_perfil);
         }
         catch (Exception e){
             throw e;

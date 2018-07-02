@@ -93,7 +93,7 @@ import java.util.Date;
         return jArray;
     }
 
-    public JSONArray getList(Date date) throws Exception
+    public JSONArray getList(Date date, String id_perfil) throws Exception
     {
         JSONArray jArray = null;
 
@@ -103,7 +103,7 @@ import java.util.Date;
                 date = new Date();
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            jArray = despesaRepository.getList(dateFormat.format(date));
+            jArray = despesaRepository.getList(dateFormat.format(date), id_perfil);
         }
         catch (Exception e){
             throw e;

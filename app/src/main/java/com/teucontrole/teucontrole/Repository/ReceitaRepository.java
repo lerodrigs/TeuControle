@@ -177,7 +177,7 @@ public class ReceitaRepository
         return jObject;
     }
 
-    public JSONArray getList(String dataFormatada) throws Exception
+    public JSONArray getList(String dataFormatada, String id_perfil) throws Exception
     {
         StringBuilder query = new StringBuilder();
         JSONArray results = null;
@@ -187,6 +187,7 @@ public class ReceitaRepository
             query.append("SELECT *");
             query.append("  FROM RECEITAS A");
             query.append(" WHERE 1=1 ");
+            query.append("   AND A.ID_PERFIL ='"+id_perfil+"'");
             //query.append("   AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
 
             results = myDbAdapter.get(query.toString());

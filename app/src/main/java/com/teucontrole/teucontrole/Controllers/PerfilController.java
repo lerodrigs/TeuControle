@@ -58,6 +58,21 @@ public class PerfilController
         catch (Exception e ){ return null; }
     }
 
+    public String getPerfilDefault() throws Exception
+    {
+        String id_perfil = null;
+
+        try
+        {
+            id_perfil = perfilRepository.getPerfilDefault();
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return id_perfil;
+    }
+
     public void start() throws Exception
     {
         try

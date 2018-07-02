@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ReceitasFragment extends Fragment
 
     private static ReceitaController receitaController;
     private static Activity context;
+    private static String id_perfil_selecionado;
 
     public static ReceitasFragment NewInstance()
     {
@@ -50,6 +52,7 @@ public class ReceitasFragment extends Fragment
 
         if (getArguments() != null)
         {
+            id_perfil_selecionado = getArguments().getString("id_perfil");
         }
 
         context = getActivity();
@@ -71,7 +74,7 @@ public class ReceitasFragment extends Fragment
         txtSemRegistro = view.findViewById(R.id.txt_sem_receitas);
         progressBar = view.findViewById(R.id.progressBar1);
 
-        carregaReceitas(null);
+        carregaReceitas(null, id_perfil_selecionado);
 
         super.onViewCreated(view, bundle);
     }
@@ -85,13 +88,13 @@ public class ReceitasFragment extends Fragment
         }
     };
 
-    public static JSONArray requestReceitas(final Date date)
+    public static JSONArray requestReceitas(final Date date, String id_perfil)
     {
         JSONArray result = null;
 
         try
         {
-            //result = receitaController.requestReceitas(date);
+            //result = receitaController.requestReceitas(date, date, id_perfil);
         }
         catch (Exception e){
 
@@ -100,7 +103,7 @@ public class ReceitasFragment extends Fragment
         return result;
     }
 
-    public static void carregaReceitas(final Date data)
+    public static void carregaReceitas(final Date data, final String _id_perfil)
     {
         new Thread(new Runnable()
         {
@@ -109,7 +112,7 @@ public class ReceitasFragment extends Fragment
             {
                 try
                 {
-                    JSONArray receitas = receitaController.getList(data);
+                    JSONArray receitas = receitaController.getList(data, _id_perfil);
                     updateListView(receitas);
                 }
                 catch (Exception e){
@@ -165,19 +168,18 @@ public class ReceitasFragment extends Fragment
             {
                 try
                 {
-                    if(adapter == null)
-                    {
+                    if(adapter == null || adapter.equals(null))
                         adapter = new AdapterListViewReceitas(list, context);
-                        listview.setAdapter(adapter);
-                    }
 
-                    adapter = (AdapterListViewReceitas) listview.getAdapter();
+                    listview.setAdapter(adapter);
                     adapter.updateListView(list);
 
                     showProgressBar(false);
                     txtSemRegistro(list);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
+                    Log.e("ReceitasF_LN128", e.getMessage());
                 }
             }
         });

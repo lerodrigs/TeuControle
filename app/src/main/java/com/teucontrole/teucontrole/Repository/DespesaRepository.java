@@ -185,7 +185,7 @@ public class DespesaRepository
         return jObject;
     }
 
-    public JSONArray getList(String dataFormatada) throws Exception
+    public JSONArray getList(String dataFormatada, String id_perfil) throws Exception
     {
         JSONArray jArray = null;
         StringBuilder query = new StringBuilder();
@@ -195,6 +195,7 @@ public class DespesaRepository
             query.append("SELECT *");
             query.append("  FROM DESPESAS A");
             query.append(" WHERE 1=1 ");
+            query.append("   AND A.ID_PERFIL ='"+id_perfil+"'");
             //query.append("   AND strftime('%m', A.DATA_VENCIMENTO) = strftime('%m', '"+dataFormatada+"')");
 
             jArray = myDbAdapter.get(query.toString());

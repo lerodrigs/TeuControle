@@ -8,6 +8,10 @@ import com.teucontrole.teucontrole.Repository.FaturaRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class FaturaController
 {
     private Context context;
@@ -57,6 +61,27 @@ public class FaturaController
         {
             throw e;
         }
+    }
+
+    public JSONArray getList(Date data, String id_perfil) throws Exception
+    {
+        JSONArray jArray = null;
+
+        try
+        {
+            if(data == null)
+                data = new Date();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dataFormatada = dateFormat.format(data);
+
+            jArray = faturaRepository.getList(dataFormatada, id_perfil);
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return jArray;
     }
 
 
