@@ -81,7 +81,7 @@ public class LancamentosFragment extends Fragment
         android.support.v4.app.Fragment receitasFragment =ReceitasFragment.NewInstance();
         receitasFragment.setArguments(argments);
 
-        android.support.v4.app.Fragment despesasFragment =ReceitasFragment.NewInstance();
+        android.support.v4.app.Fragment despesasFragment =DespesasFragment.NewInstance();
         despesasFragment.setArguments(argments);
 
         android.support.v4.app.Fragment contasCartoesFragment = ContasCartoesFragment.NewInstance();

@@ -1,6 +1,7 @@
 package com.teucontrole.teucontrole.Adapters;
 
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,30 +35,7 @@ public class AdapterViewPage extends FragmentStatePagerAdapter
     {
         try
         {
-            Fragment fragment = null;
-
-            switch (position)
-            {
-                case 0:
-                    fragment = ReceitasFragment.NewInstance();
-                break;
-
-                case 1:
-                    fragment = DespesasFragment.NewInstance();
-                break;
-
-                case 2:
-                    fragment = ContasCartoesFragment.NewInstance();
-                    break;
-
-                case 3:
-                    fragment = CategoriasFragment.NewInstance();
-                    break;
-                case 4:
-                    fragment = FaturasFragment.NewInstance();
-                    break;
-            }
-
+            Fragment fragment = this.fragments.get(position);
             return fragment;
         }
         catch (Exception e )
