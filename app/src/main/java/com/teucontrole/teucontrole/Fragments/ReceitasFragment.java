@@ -2,6 +2,7 @@ package com.teucontrole.teucontrole.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,12 +16,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.teucontrole.teucontrole.Actitivies.AdicionarReceitasActivity;
 import com.teucontrole.teucontrole.Actitivies.MainActivity;
 import com.teucontrole.teucontrole.Adapters.AdapterListViewReceitas;
 import com.teucontrole.teucontrole.Controllers.ReceitaController;
 import com.teucontrole.teucontrole.R;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -84,7 +87,23 @@ public class ReceitasFragment extends Fragment
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
+            try
+            {
+                JSONObject jReceita = adapter.getItem(position);
 
+                Intent addReceitas = new Intent(context, AdicionarReceitasActivity.class);
+
+                Bundle bundle = new Bundle();
+
+                bundle.putString("id_perfil", id_perfil_selecionado);
+                bundle.putString("id_receita", jReceita.getString("id_receita"));
+
+                addReceitas.putExtras(bundle);
+                startActivity(addReceitas);
+            }
+            catch (Exception e ){
+
+            }
         }
     };
 

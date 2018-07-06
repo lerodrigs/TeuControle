@@ -97,6 +97,29 @@ public class ReceitaController
         return jArray;
     }
 
+    public JSONObject requestReceita(String id_perfil, String id_receita) throws Exception
+    {
+        JSONObject receita = null;
+
+        try
+        {
+            JSONArray jsonArray = receitaRequest.getReceitas("api/Receita?_id_perfil="+id_perfil+"&_id_receita="+id_receita);
+
+            if(jsonArray != null && jsonArray.length() > 0)
+            {
+                for (int i=0; i< jsonArray.length(); i++)
+                {
+                    receita = jsonArray.getJSONObject(i);
+                }
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return receita;
+    }
+
     public boolean post(JSONObject jObject) throws Exception
     {
         boolean result = false;

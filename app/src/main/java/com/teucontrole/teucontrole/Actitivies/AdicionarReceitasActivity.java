@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,8 +16,13 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.teucontrole.teucontrole.Controllers.ReceitaController;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.Utils.MaskUtils;
+
+import org.json.JSONObject;
+
+import java.util.UUID;
 
 public class AdicionarReceitasActivity extends AppCompatActivity
 {
@@ -32,6 +38,8 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder builderDialog;
+
+    private ReceitaController receitaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,6 +89,43 @@ public class AdicionarReceitasActivity extends AppCompatActivity
             txt_valor_recebido.addTextChangedListener(new MaskUtils(txt_valor_recebido, "##.##", true));
 
             txt_descricao = findViewById(R.id.txt_descricao);
+
+            receitaController = new ReceitaController(this);
+
+            //Carrega Receita Selecionada
+            if(savedInstanceState != null)
+            {
+                final String id_receita = savedInstanceState.getString("id_receita");
+                final String id_perfil = savedInstanceState.getString("id_perfil");
+
+                if(id_receita != null)
+                {
+                    new Thread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                JSONObject jReceita = loadReceita(id_receita);
+
+                                if(jReceita == null)
+                                {
+                                    jReceita = receitaController.requestReceita(id_perfil, id_receita);
+                                }
+
+                                if(jReceita != null)
+                                {
+                                    //mostra informações
+                                }
+                            }
+                            catch (Exception e){
+
+                            }
+                        }
+                    }).start();
+                }
+            }
         }
         catch(Exception e ){}
 
@@ -167,6 +212,60 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         catch (Exception e) {}
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private JSONObject loadReceita(String id_receita)
+    {
+        JSONObject jReceita = null;
+
+        try
+        {
+            jReceita = receitaController.getReceita(id_receita);
+        }
+        catch (Exception e ){
+            Log.e("AddReceitaActvt", e.getMessage());
+        }
+
+        return jReceita;
+    }
+
+    private boolean save()
+    {
+        try
+        {
+            UUID id_receita = UUID.randomUUID(); //GUID id
+        }
+        catch (Exception e){
+
+        }
+
+        return true;
+    }
+
+    private boolean remover()
+    {
+        try
+        {
+
+        }
+        catch (Exception e){
+
+        }
+
+        return true;
+    }
+
+    private boolean update()
+    {
+        try
+        {
+
+        }
+        catch (Exception e){
+
+        }
+
+        return true;
     }
 
 }
