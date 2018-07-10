@@ -154,12 +154,37 @@ public class ReceitaRepository
     public JSONObject getReceita(String id_receita) throws Exception
     {
         JSONObject jObject = null;
-
+        StringBuilder query = new StringBuilder();
         try
         {
-            String query = "SELECT * FROM RECEITAS WHERE ID_RECEITA = '" + id_receita + "';";
+            query.append("SELECT id_receita,");
+            query.append("       nome,");
+            query.append("       valor,");
+            query.append("       valor_recebido,");
+            query.append("       data_vencimento,");
+            query.append("       data_pagamento,");
+            query.append("       id_perfil,");
+            query.append("       data_cadastro,");
+            query.append("       data_modificacao,");
+            query.append("       id_conta,");
+            query.append("       id_receita_recorrente,");
+            query.append("       id_categoria_receita,");
+            query.append("       descricao,");
+            query.append("       excecao,");
+            query.append("       data_original,");
+            query.append("       id_titulo_status,");
+            query.append("       conta_nome,");
+            query.append("       categoria_receita_nome,");
+            query.append("       id_recorrente_frequencia,");
+            query.append("       inicio,");
+            query.append("       termino,");
+            query.append("       intervalo,");
+            query.append("       total_ocorrencias,");
+            query.append("       tipo_fim ");
+            query.append("  FROM RECEITAS ");
+            query.append("WHERE ID_RECEITA = '"+id_receita+"';");
 
-            JSONArray jArray = myDbAdapter.get(query);
+            JSONArray jArray = myDbAdapter.get(query.toString());
 
             if(jArray != null && jArray.length() > 0)
             {

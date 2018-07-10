@@ -2,6 +2,7 @@ package com.teucontrole.teucontrole.Utils;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 public class MaskUtils implements TextWatcher
@@ -25,6 +26,7 @@ public class MaskUtils implements TextWatcher
         {
             return txt.replace("/", "")
                     .replace(".", "")
+                    .replace(",", "")
                     .replace("/", "")
                     .replace("(", "")
                     .replace(")", "");
@@ -59,26 +61,27 @@ public class MaskUtils implements TextWatcher
 
         if(isMoneyMask)
         {
+
             if(str.length() < 2)
-                mask = "#.##";
+                mask = "#,##";
             else if (str.length() == 3)
-                mask = "#.##";
+                mask = "#,##";
             else if (str.length() == 4)
-                mask = "##.##";
+                mask = "##,##";
             else if (str.length() == 5)
-                mask = "###.##";
+                mask = "###,##";
             else if (str.length() == 6)
-                mask = "#.###.##";
+                mask = "#,###,##";
             else if (str.length() == 7)
-                mask = "##.###.##";
+                mask = "##,###,##";
             else if (str.length() == 8)
-                mask = "###.###.##";
+                mask = "###,###,##";
             else if (str.length() == 9)
-                mask = "#.###.###.##";
+                mask = "#,###,###,##";
             else if (str.length() == 10)
-                mask = "##.###.###.##";
+                mask = "##,###,###,##";
             else if (str.length() == 11)
-                mask = "###.###.###.##";
+                mask = "###,###,###,##";
         }
 
         int i =0;
@@ -96,7 +99,12 @@ public class MaskUtils implements TextWatcher
                 mascara += str.charAt(i);
                 i++;
             }
-            catch(Exception e ) { break;}
+            catch(Exception e )
+            {
+                mascara += "00";
+                break;
+            }
+
         }
 
         isUpd = true;

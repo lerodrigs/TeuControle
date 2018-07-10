@@ -103,6 +103,32 @@ public class Utils
         return retorno;
     }
 
+    public static String formatData(String value) throws Exception
+    {
+        String dataFormatada = null;
+
+        try
+        {
+            String _mes;
+
+            int ano = Integer.parseInt(value.substring(0,4));
+            int mes = Integer.parseInt(value.substring(5,7));
+            int dia = Integer.parseInt(value.substring(8,10));
+
+            if(mes < 9 )
+                _mes = "0"+mes;
+            else
+                _mes = String.valueOf(mes);
+
+            dataFormatada = dia + "/" + _mes + "/" + ano;
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return dataFormatada;
+    }
+
 
 
 }

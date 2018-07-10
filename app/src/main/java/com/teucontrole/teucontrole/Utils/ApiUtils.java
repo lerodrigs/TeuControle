@@ -59,9 +59,16 @@ public class ApiUtils
 
                 JSONObject jObject = new JSONObject();
 
+
                 for(int c=0; c < cursor.getColumnCount(); c++)
                 {
-                    jObject.put(cursor.getColumnName(c), cursor.getString(c));
+                    String value = cursor.getString(c);
+                    String key = cursor.getColumnName(c);
+
+                    if(value == null)
+                        jObject.put(key, JSONObject.NULL);
+                    else
+                        jObject.put(key, value);
                 }
 
                 jsonArray.put(jObject);

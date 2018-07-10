@@ -102,8 +102,8 @@ public class MyDbHelper extends SQLiteOpenHelper
             db.execSQL("CREATE TABLE IF NOT EXISTS RECEITAS (" +
                     "id_receita TEXT PRIMARY KEY NOT NULL, " +
                     "nome VARCHA(100) NOT NULL, " +
-                    "valor NUMERIC(15,2) NOT NULL, " +
-                    "valor_recebido NUMERIC(15,2), " +
+                    "valor NUMERIC(18,2) NOT NULL, " +
+                    "valor_recebido NUMERIC(18,2), " +
                     "data_vencimento DATETIME NOT NULL, " +
                     "data_pagamento DATETIME, " +
                     "id_perfil TEXT NOT NULL, " +
@@ -134,8 +134,8 @@ public class MyDbHelper extends SQLiteOpenHelper
                     "id_perfil TEXT NOT NULL," +
                     "data_vencimento DATETIME, " +
                     "data_fechamento DATETIME, " +
-                    "valor_total NUMERIC(15,2), " +
-                    "valor_pago NUMERIC(15,2), " +
+                    "valor_total NUMERIC(18,2), " +
+                    "valor_pago NUMERIC(18,2), " +
                     "data_pagamento DATETIME, " +
                     "id_conta TEXT, " +
                     "data_cadastro DATETIME," +
@@ -148,8 +148,8 @@ public class MyDbHelper extends SQLiteOpenHelper
             db.execSQL("CREATE TABLE IF NOT EXISTS DESPESAS (" +
                     "id_despesa TEXT PRIMARY KEY NOT NULL, " +
                     "nome VARCHA(100) NOT NULL, " +
-                    "valor NUMERIC(15,2) NOT NULL, " +
-                    "valor_pago NUMERIC(15,2), " +
+                    "valor NUMERIC(18,2) NOT NULL, " +
+                    "valor_pago NUMERIC(18,2), " +
                     "data_vencimento DATETIME NOT NULL, " +
                     "data_pagamento DATETIME, " +
                     "id_perfil TEXT NOT NULL, " +

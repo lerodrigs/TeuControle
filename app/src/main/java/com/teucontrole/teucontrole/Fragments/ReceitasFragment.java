@@ -45,6 +45,7 @@ public class ReceitasFragment extends Fragment
 
         Bundle args = new Bundle();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -90,16 +91,15 @@ public class ReceitasFragment extends Fragment
             try
             {
                 JSONObject jReceita = adapter.getItem(position);
-
-                Intent addReceitas = new Intent(context, AdicionarReceitasActivity.class);
+                Intent receita = new Intent(context, AdicionarReceitasActivity.class);
 
                 Bundle bundle = new Bundle();
 
                 bundle.putString("id_perfil", id_perfil_selecionado);
                 bundle.putString("id_receita", jReceita.getString("id_receita"));
 
-                addReceitas.putExtras(bundle);
-                startActivity(addReceitas);
+                receita.putExtras(bundle);
+                startActivity(receita);
             }
             catch (Exception e ){
 
