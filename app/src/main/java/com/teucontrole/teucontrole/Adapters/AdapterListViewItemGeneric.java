@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.teucontrole.teucontrole.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,7 +47,30 @@ public class AdapterListViewItemGeneric extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        return null;
+        View view = convertView;
+
+        try
+        {
+            JSONObject categoria = items.getJSONObject(position);
+
+            if(view == null)
+                view = context.getLayoutInflater().inflate(R.layout.dialog_item_row, null);
+
+            TextView name = view.findViewById(R.id.name);
+            TextView id = view.findViewById(R.id.id);
+
+            if(categoria.getString("nome") != null)
+                name.setText(categoria.getString("nome"));
+
+            if(categoria.getString("id_categoria_receita") != null)
+                id.setText(categoria.getString("id_categoria_receita"));
+        }
+        catch(Exception e ){
+
+        }
+
+        return view;
+
     }
 
     public void updateListView(JSONArray _items)

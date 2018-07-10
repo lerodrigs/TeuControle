@@ -49,7 +49,9 @@ public class AdicionarReceitasActivity extends AppCompatActivity
     private AlertDialog.Builder builderDialog;
     private Toolbar toolbar;
     private Activity context;
+
     private ProcessReceitaTask processReceitaTask;
+    private LoadCategoriaDialogTask loadCategoriaDialogTask;
 
     private String id_perfil;
 
@@ -106,18 +108,21 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
             txt_descricao = findViewById(R.id.txt_descricao);
 
+            View _view = context.getLayoutInflater().inflate(R.layout.dialog_items, null);
+            this.loadCategoriaDialogTask = new LoadCategoriaDialogTask(context, txt_categoria, _view, true, id_perfil);
+
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
 
             if(bundle != null)
             {
-                String id_receita = bundle.getString("id_receita");
                 id_perfil = bundle.getString("id_perfil");
+                String id_receita = bundle.getString("id_receita");
 
-                View view = findViewById(R.id.rootViewReceitas);
-
-                toolbar.setTitle("Receita");
-                loadReceita(id_receita, id_perfil, view); //Carrega Receita Selecionada
+                if(id_receita != null){
+                    loadReceita(id_receita, id_perfil, findViewById(R.id.rootViewReceitas));
+                    toolbar.setTitle("Receita");
+                }
             }
 
         }
@@ -152,10 +157,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            View view = context.getLayoutInflater().inflate(R.layout.dialog_items, null);
-            LoadCategoriaDialogTask categoriaDialogTask = new LoadCategoriaDialogTask(context, view, true, id_perfil);
-            categoriaDialogTask.execute();
-
+            loadCategoriaDialogTask.execute();
         }
     };
 
@@ -182,8 +184,6 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
-
 
         }
     };
@@ -285,6 +285,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
         try
         {
+
             jObject.put("nome", txt_nome.getText());
             jObject.put("valor", txt_valor.getText().toString().replaceAll(",", "."));
             jObject.put("valor_recebido", txt_valor.getText().toString().replaceAll(",", "."));

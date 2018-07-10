@@ -33,12 +33,15 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
 
     private ListView listView;
     private AdapterListViewItemGeneric adapter;
+    private TextView txtCategoria;
 
-    public LoadCategoriaDialogTask(Activity _context, View _view, boolean _isReceita, String _id_perfil)
+    public LoadCategoriaDialogTask(Activity _context, TextView _txtCategoria, View _view, boolean _isReceita, String _id_perfil)
     {
         this.context = _context;
         this.view = _view;
         this.isReceita =_isReceita;
+        this.id_perfil = _id_perfil;
+        this.txtCategoria = _txtCategoria;
         this.categoriaController = new CategoriaController(context, isReceita);
 
         this.alertBuilder = new AlertDialog.Builder(context);
@@ -67,9 +70,7 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
         {
             this.items = categoriaController.getCategorias(id_perfil);
         }
-        catch (Exception e){
-
-        }
+        catch (Exception e){ }
 
         return items;
     }
@@ -93,9 +94,10 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
 
             adapter.updateListView(jsonArray);
 
+            progressBar.setVisibility(View.GONE);
+
             if(jsonArray != null && jsonArray.length() > 0)
             {
-                progressBar.setVisibility(View.GONE);
                 semRegistro.setVisibility(View.GONE);
             }
             else {
@@ -108,12 +110,19 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
         }
     }
 
-    private AdapterView.OnItemClickListener clickListView = new AdapterView.OnItemClickListener(){
-
+    private AdapterView.OnItemClickListener clickListView = new AdapterView.OnItemClickListener()
+    {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
-            categoria = adapter.getItem(position);
+            try
+            {
+                alertDialog.dismiss();
+
+                categoria = adapter.getItem(position);
+                txtCategoria.setText(categoria.getString("nome"));
+            }
+            catch (Exception e ){ }
         }
     };
 
@@ -121,6 +130,4 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
     {
         return this.categoria;
     }
-
-
 }

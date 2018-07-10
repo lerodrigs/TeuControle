@@ -462,6 +462,11 @@ public class MainActivity extends AppCompatActivity
         public void onClick(View v)
         {
             Intent adicionarReceitasIntent= new Intent(context, AdicionarReceitasActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id_perfil", id_perfil_selecionado);
+
+            adicionarReceitasIntent.putExtras(bundle);
             startActivity(adicionarReceitasIntent);
         }
     };
@@ -472,6 +477,11 @@ public class MainActivity extends AppCompatActivity
         public void onClick(View v)
         {
             Intent despesas = new Intent(context, AdicionarDespesaActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id_perfil", id_perfil_selecionado);
+
+            despesas.putExtras(bundle);
             startActivity(despesas);
         }
     };
