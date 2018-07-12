@@ -24,7 +24,9 @@ import com.teucontrole.teucontrole.Controllers.CategoriaController;
 import com.teucontrole.teucontrole.Controllers.ReceitaController;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.TasksBackground.LoadCategoriaDialogTask;
+import com.teucontrole.teucontrole.TasksBackground.LoadContaDialogTask;
 import com.teucontrole.teucontrole.TasksBackground.LoadReceitaTask;
+import com.teucontrole.teucontrole.TasksBackground.LoadSituacaoDialogTask;
 import com.teucontrole.teucontrole.TasksBackground.ProcessReceitaTask;
 import com.teucontrole.teucontrole.Utils.MaskUtils;
 import com.teucontrole.teucontrole.Utils.MonetaryMask;
@@ -52,8 +54,11 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
     private ProcessReceitaTask processReceitaTask;
     private LoadCategoriaDialogTask loadCategoriaDialogTask;
+    private LoadSituacaoDialogTask loadSituacaoDialogTask;
+    private LoadContaDialogTask loadContaDialogTask;
 
     private String id_perfil;
+    private String id_receita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -108,22 +113,23 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
             txt_descricao = findViewById(R.id.txt_descricao);
 
-            View _view = context.getLayoutInflater().inflate(R.layout.dialog_items, null);
-            this.loadCategoriaDialogTask = new LoadCategoriaDialogTask(context, txt_categoria, _view, true, id_perfil);
-
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
 
             if(bundle != null)
             {
                 id_perfil = bundle.getString("id_perfil");
-                String id_receita = bundle.getString("id_receita");
+                id_receita = bundle.getString("id_receita");
 
                 if(id_receita != null){
                     loadReceita(id_receita, id_perfil, findViewById(R.id.rootViewReceitas));
                     toolbar.setTitle("Receita");
                 }
             }
+
+            this.loadCategoriaDialogTask = new LoadCategoriaDialogTask(context, txt_categoria, true, id_perfil);
+            this.loadSituacaoDialogTask = new LoadSituacaoDialogTask(txt_situacao, context);
+            this.loadContaDialogTask = new LoadContaDialogTask(context, txt_conta, id_perfil);
 
         }
         catch(Exception e )
@@ -148,7 +154,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-
+            loadContaDialogTask.execute();
         }
     };
 
@@ -158,6 +164,15 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         public void onClick(View v)
         {
             loadCategoriaDialogTask.execute();
+        }
+    };
+
+    public View.OnClickListener txtSituacaoClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            loadSituacaoDialogTask.execute();
         }
     };
 
@@ -171,15 +186,6 @@ public class AdicionarReceitasActivity extends AppCompatActivity
     };
 
     public View.OnClickListener txtDataPagamentoClick = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-
-        }
-    };
-
-    public View.OnClickListener txtSituacaoClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -208,10 +214,15 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         try
         {
             String option = menuItem.getTitle().toString();
+
             switch (option)
             {
                 case "Salvar":
-                    save();
+
+                    if(id_receita == null)
+                        save();
+                    else
+                        update();
                     break;
 
                 case "Remover":
@@ -219,7 +230,6 @@ public class AdicionarReceitasActivity extends AppCompatActivity
                     break;
 
                 default:
-                    finish();
                     break;
             }
         }
@@ -247,12 +257,12 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         return true;
     }
 
-    private boolean remover()
+    private boolean update()
     {
         try
         {
             JSONObject receita = createJSONObject();
-            processReceitaTask = new ProcessReceitaTask(context, receita, 3);
+            processReceitaTask = new ProcessReceitaTask(context, receita, 2);
 
             processReceitaTask.execute();
         }
@@ -263,7 +273,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         return true;
     }
 
-    private boolean update()
+    private boolean remover()
     {
         try
         {
@@ -285,6 +295,24 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
         try
         {
+            JSONObject categoria = loadCategoriaDialogTask.getItemSelected();
+            JSONObject situacao = loadSituacaoDialogTask.getSituacaoSelecionada();
+            JSONObject conta = loadContaDialogTask.getItemSelected();
+
+            if(categoria != null)
+            {
+                jObject.put("id_categoria_receita", categoria.getString("id_categoria_receita"));
+                jObject.put("categoria_receita_nome", categoria.getString("nome"));
+            }
+
+            if(situacao != null)
+                jObject.put("id_titulo_status", situacao.getString("id_titulo_status"));
+
+            if(conta != null)
+            {
+                jObject.put("id_conta", conta.getString("id_conta"));
+                jObject.put("conta_nome", conta.getString("nome"));
+            }
 
             jObject.put("nome", txt_nome.getText());
             jObject.put("valor", txt_valor.getText().toString().replaceAll(",", "."));

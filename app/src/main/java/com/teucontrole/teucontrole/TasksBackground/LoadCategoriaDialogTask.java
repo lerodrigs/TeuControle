@@ -35,16 +35,16 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
     private AdapterListViewItemGeneric adapter;
     private TextView txtCategoria;
 
-    public LoadCategoriaDialogTask(Activity _context, TextView _txtCategoria, View _view, boolean _isReceita, String _id_perfil)
+    public LoadCategoriaDialogTask(Activity _context, TextView _txtCategoria, boolean _isReceita, String _id_perfil)
     {
         this.context = _context;
-        this.view = _view;
         this.isReceita =_isReceita;
         this.id_perfil = _id_perfil;
         this.txtCategoria = _txtCategoria;
         this.categoriaController = new CategoriaController(context, isReceita);
 
         this.alertBuilder = new AlertDialog.Builder(context);
+        this.view = context.getLayoutInflater().inflate(R.layout.dialog_items, null);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
 
             if(adapter == null)
             {
-                adapter = new AdapterListViewItemGeneric(context, jsonArray);
+                adapter = new AdapterListViewItemGeneric(context, jsonArray, "nome", "id_categoria_receita");
                 listView.setAdapter(adapter);
             }
 

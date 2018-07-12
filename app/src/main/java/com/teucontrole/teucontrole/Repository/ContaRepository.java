@@ -156,5 +156,20 @@ public class ContaRepository
 
         return result;
     }
+
+    public JSONArray getByIdPerfil(String _idPerfil) throws Exception
+    {
+        JSONArray items = null;
+
+        try
+        {
+            items = myDbAdapter.get("SELECT * FROM CONTAS_BANCARIAS WHERE ID_PERFIL = '"+_idPerfil+"';");
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return items;
+    }
 }
 

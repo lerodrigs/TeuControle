@@ -24,14 +24,13 @@ public class MyDbHelper extends SQLiteOpenHelper
     {
         try
         {
-
             db.execSQL("CREATE TABLE IF NOT EXISTS USER_INFO (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     "email VARCHAR(100) NOT NULL, " +
                     "pass  TEXT NOT NULL);");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS TITULOS_STATUS(" +
-                    "id_titulo_status TEXT PRIMARY KEY NOT NULL," +
+                    "id_titulo_status INT PRIMARY KEY NOT NULL," +
                     "nome VARCHAR(50));");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS ESTADOS (" +

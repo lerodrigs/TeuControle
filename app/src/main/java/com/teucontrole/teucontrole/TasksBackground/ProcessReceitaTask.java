@@ -112,4 +112,9 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
 
         }
     }
+
+    private boolean sendToApi(int _process)
+    {
+        return true;
+    }
 }

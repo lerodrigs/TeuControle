@@ -16,10 +16,15 @@ public class AdapterListViewItemGeneric extends BaseAdapter
     private JSONArray items;
     private Activity context;
 
-    public AdapterListViewItemGeneric(Activity _context, JSONArray _items)
+    private String prName;
+    private String prId;
+
+    public AdapterListViewItemGeneric(Activity _context, JSONArray _items, String _prName, String _prId)
     {
         this.context = _context;
         this.items = _items;
+        this.prId = _prId;
+        this.prName = _prName;
     }
 
     @Override
@@ -59,11 +64,11 @@ public class AdapterListViewItemGeneric extends BaseAdapter
             TextView name = view.findViewById(R.id.name);
             TextView id = view.findViewById(R.id.id);
 
-            if(categoria.getString("nome") != null)
-                name.setText(categoria.getString("nome"));
+            if(categoria.getString(prName) != null)
+                name.setText(categoria.getString(prName));
 
-            if(categoria.getString("id_categoria_receita") != null)
-                id.setText(categoria.getString("id_categoria_receita"));
+            if(categoria.getString(prId) != null)
+                id.setText(categoria.getString(prId));
         }
         catch(Exception e ){
 

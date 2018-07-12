@@ -153,6 +153,21 @@ public class ContaController
         return jObject;
     }
 
+    public JSONArray getById(String _idPerfil) throws Exception
+    {
+        JSONArray jsonArray = null;
+
+        try
+        {
+            jsonArray = contaRepository.getByIdPerfil(_idPerfil);
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return jsonArray;
+    }
+
     public boolean deleteFromDB(JSONObject jObject) throws Exception
     {
         boolean result = false;
