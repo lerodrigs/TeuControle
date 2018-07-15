@@ -48,7 +48,6 @@ public class MyDbAdapter
         return jsonArray;
     }
 
-
     public boolean execCommand(String command)
     {
         boolean response = false;
@@ -85,5 +84,4 @@ public class MyDbAdapter
         }
         catch(Exception e ){ }
     }
-
 }

@@ -130,4 +130,9 @@ public class LoadCategoriaDialogTask extends AsyncTask <String, Void, JSONArray>
     {
         return this.categoria;
     }
+
+    public void setItemSelected(JSONObject _itemSelected)
+    {
+        this.categoria = _itemSelected;
+    }
 }

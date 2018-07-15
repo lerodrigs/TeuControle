@@ -45,6 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lvl_valor"
+                    android:textSize="18sp"
                     android:textColor="@color/primaryText"
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp" />
@@ -75,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/lvl_valor_recebido"
                     android:textColor="@color/primaryText"
+                    android:textSize="18sp"
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp" />
                 <EditText
@@ -102,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/lbl_conta"
                     android:textColor="@color/primaryText"
+                    android:textSize="18sp"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
                 <TextView
@@ -109,8 +112,10 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/lbl_conta"
                     android:id="@+id/txt_conta"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/secondaryText"
                     android:textColor="@color/secondaryText"
-                    android:text="@string/selecione"
+                    android:hint="@string/selecione"
                     android:paddingLeft="20dp"
                     android:layout_centerVertical="true"
                     android:paddingTop="10dp" />
@@ -125,6 +130,7 @@
                     android:text="@string/categoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     android:id="@+id/lbl_categoria"
                     android:textColor="@color/primaryText"
                     android:paddingLeft="20dp"
@@ -132,9 +138,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textSize="16sp"
                     android:id="@+id/txt_categoria"
+                    android:textColorHint="@color/secondaryText"
                     android:textColor="@color/secondaryText"
-                    android:text="@string/selecione"
+                    android:hint="@string/selecione"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
             </LinearLayout>
@@ -149,6 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lbl_vencimento"
+                    android:textSize="18sp"
                     android:textColor="@color/primaryText"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
@@ -156,8 +165,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_dt_vencimento"
+                    android:textColorHint="@color/secondaryText"
                     android:textColor="@color/secondaryText"
-                    android:text="@string/adicionar_data"
+                    android:textSize="16sp"
+                    android:hint="@string/adicionar_data"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
             </LinearLayout>
@@ -172,6 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lbl_dt_pagamento"
+                    android:textSize="18sp"
                     android:textColor="@color/primaryText"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
@@ -179,8 +191,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_dt_pagamento"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/secondaryText"
                     android:textColor="@color/secondaryText"
-                    android:text="@string/adicionar_data"
+                    android:hint="@string/adicionar_data"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
             </LinearLayout>
@@ -195,6 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lbl_situacao"
+                    android:textSize="18sp"
                     android:textColor="@color/primaryText"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
@@ -203,7 +218,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_selecione_situacao"
                     android:textColor="@color/secondaryText"
-                    android:text="@string/selecione"
+                    android:textColorHint="@color/secondaryText"
+                    android:textSize="16sp"
+                    android:hint="@string/selecione"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp" />
             </LinearLayout>
@@ -218,6 +235,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lvl_descricao"
+                    android:textSize="16sp"
                     android:textColor="@color/primaryText"
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp" />

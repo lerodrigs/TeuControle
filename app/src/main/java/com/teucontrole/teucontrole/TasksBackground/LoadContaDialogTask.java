@@ -121,4 +121,9 @@ public class LoadContaDialogTask extends AsyncTask<String, Void, JSONArray>
     public JSONObject getItemSelected() {
         return itemSelected;
     }
+
+    public void setItemSelected(JSONObject _itemSelected)
+    {
+        this.itemSelected = _itemSelected;
+    }
 }

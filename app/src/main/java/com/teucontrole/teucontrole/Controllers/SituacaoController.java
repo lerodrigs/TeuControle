@@ -47,15 +47,4 @@ public class SituacaoController
 
         return items;
     }
-
-    public void firstCharge() throws Exception
-    {
-        try
-        {
-            situacaoRepository.firstCharge();
-        }
-        catch (Exception e){
-            throw e;
-        }
-    }
 }

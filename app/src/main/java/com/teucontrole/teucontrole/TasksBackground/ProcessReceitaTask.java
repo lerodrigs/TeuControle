@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.teucontrole.teucontrole.Controllers.ReceitaController;
@@ -20,14 +23,17 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
     private Activity context;
     private ReceitaController receitaController;
     private Dialog dialog;
+    private String messageValidation;
+    private LinearLayout rootView;
 
-    public ProcessReceitaTask(Activity _context, JSONObject item, int _process)
+    public ProcessReceitaTask(Activity _context, JSONObject item, int _process, LinearLayout _rootView)
     {
         this.receita = item;
         this.process = _process;
         this.context = _context;
         this.receitaController = new ReceitaController(context);
-
+        this.messageValidation = null;
+        this.rootView = _rootView;
     }
 
     @Override
@@ -56,6 +62,11 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
 
         try
         {
+            messageValidation = receitaController.validaObject(receita);
+
+            if(messageValidation != null)
+                return false;
+
             switch(process)
             {
                 case 1:
@@ -71,7 +82,7 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
         }
         catch (Exception e){ }
 
-        return true;
+        return result;
     }
 
     @Override
@@ -98,18 +109,19 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
                     break;
             }
 
-            if(_result)
+            if(_result && messageValidation== null)
                 message = "Receita "+action+" !";
+            else if(!_result && messageValidation != null)
+                message = this.messageValidation;
             else
-                message = "Erro ao "+action+" receita!";
+                message = "Erro ao processar receita!";
 
-            Toast.makeText(context, message, Toast.LENGTH_LONG)
+            Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
                     .show();
-
 
         }
         catch (Exception e){
-
+            throw e;
         }
     }
 

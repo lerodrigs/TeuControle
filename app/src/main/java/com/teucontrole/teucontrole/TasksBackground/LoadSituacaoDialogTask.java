@@ -125,4 +125,9 @@ public class LoadSituacaoDialogTask extends AsyncTask<String, Void, JSONArray>
             catch (Exception e ){ }
         }
     };
+
+    public void setitemSelected(JSONObject _itemSelected)
+    {
+        this.itemSelecionado = _itemSelected;
+    }
 }

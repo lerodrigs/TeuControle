@@ -6,6 +6,7 @@ import android.util.Log;
 import com.teucontrole.teucontrole.Api.ApiRequest;
 import com.teucontrole.teucontrole.Api.UserRequest;
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
+import com.teucontrole.teucontrole.Repository.SituacaoRepository;
 import com.teucontrole.teucontrole.SharedPreferences.UserPreferences;
 
 import org.json.JSONArray;
@@ -19,6 +20,7 @@ public class SyncController
     private ReceitaController receitaController;
     private DespesaController despesaController;
     private FaturaController faturaController;
+    private SituacaoRepository situacaoRepository;
     private UserPreferences userPreferences;
     private Context context;
 
@@ -33,6 +35,7 @@ public class SyncController
         this.receitaController = new ReceitaController(context);
         this.despesaController = new DespesaController(context);
         this.faturaController = new FaturaController(context);
+        this.situacaoRepository = new SituacaoRepository(context);
     }
 
 
@@ -40,6 +43,8 @@ public class SyncController
     {
         try
         {
+            firstCharge();
+
             userController.start(email);
             perfilController.start();
             categoriaController.start();
@@ -62,6 +67,17 @@ public class SyncController
         }
         catch (Exception e)
         {
+            throw e;
+        }
+    }
+
+    public void firstCharge() throws Exception
+    {
+        try
+        {
+            situacaoRepository.firstCharge();
+        }
+        catch (Exception e){
             throw e;
         }
     }

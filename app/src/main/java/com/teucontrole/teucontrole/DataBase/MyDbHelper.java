@@ -201,4 +201,10 @@ public class MyDbHelper extends SQLiteOpenHelper
         }
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db)
+    {
+
+    }
+
 }

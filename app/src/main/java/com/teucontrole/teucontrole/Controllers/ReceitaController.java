@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.teucontrole.teucontrole.Api.ReceitaRequest;
 import com.teucontrole.teucontrole.Repository.ReceitaRepository;
+import com.teucontrole.teucontrole.Utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -240,5 +241,37 @@ public class ReceitaController
         }
 
         return list;
+    }
+
+    public String validaObject(JSONObject jsonObject) throws Exception
+    {
+        String message = null;
+
+        try
+        {
+            if(Utils.getValueJObject(jsonObject, "nome") == null)
+                message = "Receita inválida, favor informar o nome!";
+
+            if(Utils.getValueJObject(jsonObject, "id_conta") == null)
+                message = "Receita inválida, selecione uma conta!";
+
+            if(Utils.getValueJObject(jsonObject, "id_titulo_status") == null)
+                message = "Receita inválida, selecione uma situação!";
+
+            if(Utils.getValueJObject(jsonObject, "data_vencimento") == null)
+                message = "Receita inválida, informar a data de vencimento!";
+
+            if(Utils.getValueJObject(jsonObject, "data_pagamento") != null)
+            {
+
+            }
+
+            if(Utils.getValueJObject(jsonObject, "valor") == null || Utils.getValueJObject(jsonObject, "valor") == "0")
+                message = "Informar o valor!";
+        }
+        catch (Exception e){
+            throw e;
+        }
+        return message;
     }
 }

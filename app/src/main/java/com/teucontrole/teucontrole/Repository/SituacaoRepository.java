@@ -1,6 +1,7 @@
 package com.teucontrole.teucontrole.Repository;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.teucontrole.teucontrole.DataBase.MyDbAdapter;
 
@@ -10,10 +11,10 @@ import org.json.JSONObject;
 public class SituacaoRepository
 {
 
-    private Activity context;
+    private Context context;
     private MyDbAdapter myDbAdapter;
 
-    public SituacaoRepository (Activity _context)
+    public SituacaoRepository (Context _context)
     {
         this.context = _context;
         this.myDbAdapter = new MyDbAdapter(context);
@@ -52,31 +53,38 @@ public class SituacaoRepository
         }
         catch (Exception e){
             throw e;
-        }
+    }
 
         return item;
     }
 
-    public void firstCharge() throws Exception
+    public boolean firstCharge() throws Exception
     {
-        StringBuilder command = new StringBuilder();
+        boolean result = false;
+        StringBuilder builder = new StringBuilder();
 
         try
         {
-            JSONArray lists = getList();
+            JSONArray jArray = getList();
 
-            if(lists == null ||  lists.length() == 0)
+            if(jArray != null && jArray.length() ==0)
             {
-                command.append("INSERT INTO TITULOS_STATUS (id_titulo_status, nome) VALUES (1,'nome'), ");
-                command.append("(2, 'recebido'), ");
-                command.append("(3, 'cancelado');");
-
-                myDbAdapter.execCommand(command.toString());
+                builder.append("INSERT INTO TITULOS_STATUS (id_titulo_status, nome) ");
+                builder.append("values ");
+                builder.append("(1, 'Aguardando'), ");
+                builder.append("(2, 'Pago'), ");
+                builder.append("(3, 'Cancelado'); ");
             }
+
+            result = myDbAdapter.execCommand(builder.toString());
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             throw e;
         }
+
+        return result;
     }
+
 
 }

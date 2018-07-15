@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,15 +41,20 @@ public class AdicionarReceitasActivity extends AppCompatActivity
     private EditText txt_nome;
     private EditText txt_valor;
     private EditText txt_valor_recebido;
+    private TextView txt_id_conta;
     private TextView txt_conta;
+    private TextView txt_id_categoria;
     private TextView txt_categoria;
     private TextView txt_data_vencimento;
     private TextView txt_data_pagamento;
+    private TextView txt_id_situacao;
     private TextView txt_situacao;
     private TextView txt_descricao;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder builderDialog;
+    private LinearLayout rootView;
+
     private Toolbar toolbar;
     private Activity context;
 
@@ -69,6 +75,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         try
         {
             context = this;
+            rootView = findViewById(R.id.rootViewReceitas);
 
             toolbar = findViewById(R.id.toolbar);
             toolbar.setTitleTextColor(Color.WHITE);
@@ -90,9 +97,11 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
             txt_nome = findViewById(R.id.nome_receita);
 
+            txt_id_conta = findViewById(R.id.id_conta);
             txt_conta = findViewById(R.id.txt_conta);
             txt_conta.setOnClickListener(txtContaClick);
 
+            txt_id_categoria = findViewById(R.id.id_categoria);
             txt_categoria = findViewById(R.id.txt_categoria);
             txt_categoria.setOnClickListener(txtCategoriaClick);
 
@@ -102,6 +111,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
             txt_data_pagamento = findViewById(R.id.txt_dt_pagamento);
             txt_data_pagamento.setOnClickListener(txtDataPagamentoClick);
 
+            txt_id_situacao = findViewById(R.id.id_situacao);
             txt_situacao = findViewById(R.id.txt_selecione_situacao);
             txt_situacao.setOnClickListener(txtSituacaoClick);
 
@@ -214,79 +224,34 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         try
         {
             String option = menuItem.getTitle().toString();
+            JSONObject receita = createJSONObject();
+            int process = 1;
 
-            switch (option)
+            if(option.equals("Salvar"))
             {
-                case "Salvar":
-
-                    if(id_receita == null)
-                        save();
-                    else
-                        update();
-                    break;
-
-                case "Remover":
-                    remover();
-                    break;
-
-                default:
-                    break;
+                if(this.id_receita == null)
+                    process = 1;
+                else
+                    process = 2;
             }
+            else if(option.equals("Remover")){
+                process = 3;
+            }
+            else {
+                process = 0;
+            }
+
+            if(process ==0){
+                finish();
+                return true;
+            }
+
+            processReceitaTask = new ProcessReceitaTask(context, receita, process, rootView);
+            processReceitaTask.execute();
         }
         catch (Exception e) {}
 
         return super.onOptionsItemSelected(menuItem);
-    }
-
-    private boolean save()
-    {
-        try
-        {
-            JSONObject receita = createJSONObject();
-            processReceitaTask = new ProcessReceitaTask(context, receita, 1);
-
-            UUID id_receita = UUID.randomUUID(); //GUID id
-            receita.put("id_receita", receita);
-
-            processReceitaTask.execute();
-        }
-        catch (Exception e){
-
-        }
-
-        return true;
-    }
-
-    private boolean update()
-    {
-        try
-        {
-            JSONObject receita = createJSONObject();
-            processReceitaTask = new ProcessReceitaTask(context, receita, 2);
-
-            processReceitaTask.execute();
-        }
-        catch (Exception e){
-
-        }
-
-        return true;
-    }
-
-    private boolean remover()
-    {
-        try
-        {
-            JSONObject receita = createJSONObject();
-            processReceitaTask = new ProcessReceitaTask(context, receita, 3);
-
-            processReceitaTask.execute();
-        }
-        catch (Exception e){
-
-        }
-
-        return true;
     }
 
     public JSONObject createJSONObject() throws Exception
@@ -299,25 +264,103 @@ public class AdicionarReceitasActivity extends AppCompatActivity
             JSONObject situacao = loadSituacaoDialogTask.getSituacaoSelecionada();
             JSONObject conta = loadContaDialogTask.getItemSelected();
 
-            if(categoria != null)
-            {
+            String nome = txt_nome.getText().toString();
+            String valor = txt_valor.getText().toString();
+            String valor_recebido = txt_valor_recebido.getText().toString();
+            String data_vencimento = txt_data_vencimento.getText().toString();
+            String data_pagamento = txt_data_pagamento.getText().toString();
+            String descricao = txt_descricao.getText().toString();
+
+            String _idSituacao = txt_id_situacao.getText().toString();
+            String _situacao = txt_situacao.getText().toString();
+
+            String _idCategoria = txt_id_categoria.getText().toString();
+            String _categoriaNome = txt_categoria.getText().toString();
+
+            String _idConta = txt_id_conta.getText().toString();
+            String _conta = txt_conta.getText().toString();
+
+            if(!_idCategoria.equals("") && !_idCategoria.equals(null)){
+                jObject.put("id_categoria_receita", _idCategoria);
+                jObject.put("categoria_receita_nome", _categoriaNome);
+            }
+            else if(categoria != null) {
                 jObject.put("id_categoria_receita", categoria.getString("id_categoria_receita"));
                 jObject.put("categoria_receita_nome", categoria.getString("nome"));
             }
+            else {
+                jObject.put("id_categoria_receita", JSONObject.NULL);
+                jObject.put("categoria_receita_nome", JSONObject.NULL);
+            }
 
-            if(situacao != null)
-                jObject.put("id_titulo_status", situacao.getString("id_titulo_status"));
-
-            if(conta != null)
-            {
+            if(!_idConta.equals("") && !_idConta.equals(null)){
+                jObject.put("id_conta", _idConta);
+                jObject.put("conta_nome", _conta);
+            }
+            else if(conta != null) {
                 jObject.put("id_conta", conta.getString("id_conta"));
                 jObject.put("conta_nome", conta.getString("nome"));
             }
+            else {
+                jObject.put("id_conta", JSONObject.NULL);
+                jObject.put("conta_nome", JSONObject.NULL);
+            }
 
-            jObject.put("nome", txt_nome.getText());
-            jObject.put("valor", txt_valor.getText().toString().replaceAll(",", "."));
-            jObject.put("valor_recebido", txt_valor.getText().toString().replaceAll(",", "."));
-            jObject.put("descricao", txt_descricao.getText());
+            if(!_situacao.equals("") && !_situacao.equals(null))
+            {
+                switch (_situacao)
+                {
+                    case "Aguardando":
+                        jObject.put("id_titulo_status", 1);
+                        break;
+
+                    case "Pago":
+                        jObject.put("id_titulo_status", 2);
+                        break;
+
+                    case "Cancelado":
+                        jObject.put("id_titulo_status", 3);
+                        break;
+                }
+            }
+            else if(situacao != null)
+                jObject.put("id_titulo_status", situacao.getString("id_titulo_status"));
+            else
+                jObject.put("id_titulo_status", 1);
+
+
+            if(nome.equals(""))
+                nome = null;
+
+            jObject.put("nome", nome == null ? JSONObject.NULL : nome);
+
+            if(valor.equals(""))
+                valor = null;
+
+            jObject.put("valor", valor == null ? JSONObject.NULL : valor);
+
+            if(valor_recebido.equals(""))
+                valor_recebido = null;
+
+            jObject.put("valor_recebido", valor_recebido == null ? JSONObject.NULL : valor_recebido);
+
+            if(data_vencimento.equals(""))
+                data_vencimento = null;
+
+            jObject.put("data_vencimento", data_vencimento == null ? JSONObject.NULL : data_vencimento);
+
+            if(data_pagamento.equals(""))
+                data_pagamento = null;
+
+            jObject.put("data_pagamento", data_pagamento == null ? JSONObject.NULL : data_pagamento);
+
+            if(descricao.equals(""))
+                descricao = null;
+
+            jObject.put("descricao", descricao == null ? JSONObject.NULL : descricao);
+            jObject.put("id_perfil", this.id_perfil);
+
+            jObject.put("id_receita", this.id_receita == null ? UUID.randomUUID() : this.id_receita);
         }
         catch (Exception e){
             throw e;

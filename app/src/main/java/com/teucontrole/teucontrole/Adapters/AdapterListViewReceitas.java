@@ -90,12 +90,18 @@ public class AdapterListViewReceitas extends BaseAdapter
                 switch (receita.getString("id_titulo_status"))
                 {
                     case "1":
+                        status.setText("Aguardando");
+                        status.setTextColor(context.getResources().getColor(R.color.secondaryText));
                         break;
 
                     case "2":
+                        status.setText("Pago");
+                        status.setTextColor(context.getResources().getColor(R.color.verde));
                         break;
 
                     case "3":
+                        status.setText("Cancelado");
+                        status.setTextColor(context.getResources().getColor(R.color.vermelho));
                         break;
 
                     case "0":

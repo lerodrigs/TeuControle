@@ -43,14 +43,16 @@
                 android:background="@drawable/textline"
                 android:minHeight="80dp"
                 android:paddingBottom="10dp">
+
                 <TextView
-                    android:text="@string/valor"
+                    android:id="@+id/lvl_valor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lvl_valor"
-                    android:textColor="@color/primaryText"
+                    android:paddingLeft="20dp"
                     android:paddingTop="10dp"
-                    android:paddingLeft="20dp" />
+                    android:text="@string/valor"
+                    android:textColor="@color/primaryText"
+                    android:textSize="18sp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/lvl_valor_recebido"
                     android:textColor="@color/primaryText"
+                    android:textSize="18sp"
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp" />
                 <EditText
@@ -106,24 +109,35 @@
                     android:minHeight="80dp"
                     android:clickable="true"
                     android:background="?android:attr/selectableItemBackground">
+
                     <TextView
-                        android:text="@string/conta"
+                        android:id="@+id/lbl_conta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/lbl_conta"
-                        android:textColor="@color/primaryText"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="@string/conta"
+                        android:textColor="@color/primaryText"
+                        android:textSize="18sp"/>
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/id_conta"/>
+
+                    <TextView
+                        android:id="@+id/txt_conta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lbl_conta"
-                        android:id="@+id/txt_conta"
-                        android:textColor="@color/secondaryText"
-                        android:text="@string/selecione"
-                        android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/selecione"
+                        android:textAllCaps="false"
+                        android:textColor="@color/secondaryText"
+                        android:textColorHint="@color/secondaryText"
+                        android:textSize="16sp"/>
                 </RelativeLayout>
             </RelativeLayout>
             <RelativeLayout
@@ -144,15 +158,23 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/lbl_categoria"
                         android:textColor="@color/primaryText"
+                        android:textSize="18sp"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/id_categoria"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/txt_categoria"
                         android:layout_below="@id/lbl_categoria"
                         android:textColor="@color/secondaryText"
-                        android:text="@string/selecione"
+                        android:textColorHint="@color/secondaryText"
+                        android:textSize="16sp"
+                        android:hint="@string/selecione"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp" />
                 </RelativeLayout>
@@ -175,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/lbl_vencimento"
                         android:textColor="@color/primaryText"
+                        android:textSize="18sp"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp" />
                     <TextView
@@ -183,7 +206,9 @@
                         android:id="@+id/txt_dt_vencimento"
                         android:layout_below="@id/lbl_vencimento"
                         android:textColor="@color/secondaryText"
-                        android:text="@string/adicionar_data"
+                        android:textColorHint="@color/secondaryText"
+                        android:textSize="16sp"
+                        android:hint="@string/adicionar_data"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp" />
                 </RelativeLayout>
@@ -205,6 +230,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/lbl_dt_pagamento"
+                        android:textSize="18sp"
                         android:textColor="@color/primaryText"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp" />
@@ -213,7 +239,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/txt_dt_pagamento"
                         android:textColor="@color/secondaryText"
-                        android:text="@string/adicionar_data"
+                        android:textColorHint="@color/secondaryText"
+                        android:textSize="16sp"
+                        android:hint="@string/adicionar_data"
                         android:layout_below="@id/lbl_dt_pagamento"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp" />
@@ -237,15 +265,22 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/lbl_situacao"
                         android:textColor="@color/primaryText"
+                        android:textSize="18sp"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/id_situacao"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/txt_selecione_situacao"
                         android:layout_below="@id/lbl_situacao"
                         android:textColor="@color/secondaryText"
-                        android:text="@string/selecione"
+                        android:hint="@string/selecione"
+                        android:textSize="16sp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp" />
                 </RelativeLayout>
@@ -263,6 +298,7 @@
                     android:id="@+id/lvl_descricao"
                     android:textColor="@color/primaryText"
                     android:paddingTop="10dp"
+                    android:textSize="18sp"
                     android:paddingLeft="20dp" />
                 <EditText
                     android:layout_width="match_parent"

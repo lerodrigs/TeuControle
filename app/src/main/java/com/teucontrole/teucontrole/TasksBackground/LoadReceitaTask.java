@@ -85,16 +85,22 @@ public class LoadReceitaTask extends AsyncTask<String, Void, JSONObject>
                 nome.setText(jObject.getString("nome"));
 
                 EditText valor = view.findViewById(R.id.txt_valor);
-                valor.setText(Utils.getValueJObject(jObject, "valor") != null ? Utils.getValueJObject(jObject, "valor") : "");
+                valor.setText(Utils.getValueJObject(jObject, "valor") != null ? jObject.getString("valor") : null);
 
                 EditText valorRecebido = view.findViewById(R.id.txt_valor_recebido);
-                valorRecebido.setText(Utils.getValueJObject(jObject, "valor_recebido") != null ? Utils.getValueJObject(jObject, "valor_recebido") : "");
+                valorRecebido.setText(Utils.getValueJObject(jObject, "valor_recebido") != null ? jObject.getString("valor_recebido") : null);
 
                 TextView conta = view.findViewById(R.id.txt_conta);
-                conta.setText(Utils.getValueJObject(jObject, "conta_nome") != null ? Utils.getValueJObject(jObject, "conta_nome") : "");
+                TextView idConta = view.findViewById(R.id.id_conta);
+
+                conta.setText(Utils.getValueJObject(jObject, "conta_nome") != null ? jObject.getString("conta_nome") : null);
+                idConta.setText(Utils.getValueJObject(jObject, "id_conta") != null ? jObject.getString("id_conta") : null);
 
                 TextView categoria = view.findViewById(R.id.txt_categoria);
-                categoria.setText(Utils.getValueJObject(jObject, "categoria_receita_nome") != null ? Utils.getValueJObject(jObject, "categoria_receita_nome") : "");
+                TextView idCategoria = view.findViewById(R.id.id_categoria);
+
+                idCategoria.setText(Utils.getValueJObject(jObject, "id_categoria_receita") != null ? jObject.getString("id_categoria_receita")  : null);
+                categoria.setText(Utils.getValueJObject(jObject, "categoria_receita_nome") != null ? jObject.getString("categoria_receita_nome") : null);
 
                 TextView txtDataVencimento = view.findViewById(R.id.txt_dt_vencimento);
                 TextView txtDataPagamento = view.findViewById(R.id.txt_dt_pagamento);
@@ -103,6 +109,7 @@ public class LoadReceitaTask extends AsyncTask<String, Void, JSONObject>
                 String data_pagamento = Utils.getDateFromJObject(jObject, "data_pagamento");
 
                 if(data_vencimento != null){
+
                     data_vencimento = Utils.formatData(data_vencimento);
                     txtDataVencimento.setText(data_vencimento);
                 }
@@ -113,10 +120,25 @@ public class LoadReceitaTask extends AsyncTask<String, Void, JSONObject>
                 }
 
                 TextView situacao = view.findViewById(R.id.txt_selecione_situacao);
-                situacao.setText(Utils.getValueJObject(jObject, "id_titulo_status"));
+                TextView idSituacao = view.findViewById(R.id.id_situacao);
+
+                idSituacao.setText(Utils.getValueJObject(jObject, "id_titulo_status") != null ? jObject.getString("id_titulo_status") : null);
+
+                switch(Utils.getValueJObject(jObject, "id_titulo_status"))
+                {
+                    case "1":
+                        situacao.setText("Aguardando");
+                        break;
+                    case "2":
+                        situacao.setText("Pago");
+                        break;
+                    case "3":
+                        situacao.setText("Cancelado");
+                        break;
+                }
 
                 EditText descricao = view.findViewById(R.id.txt_descricao);
-                descricao.setText(Utils.getValueJObject(jObject, "descricao"));
+                descricao.setText(Utils.getValueJObject(jObject, "descricao") != null ? jObject.getString("descricao") : null);
             }
 
         }
