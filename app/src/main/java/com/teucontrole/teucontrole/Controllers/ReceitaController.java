@@ -289,14 +289,14 @@ public class ReceitaController
                 if(oldReceita == null)
                     receita.put("data_cadastro", dateFormat.format(date));
                 else
-                    receita.put("data_cadastro", Utils.getValueJObject(oldReceita, "data_cadastro") != null ? oldReceita.getString("data_cadastro") : dateFormat.format(date));
+                    receita.put("data_cadastro", Utils.getValueJObject(oldReceita, "data_cadastro") != null ? dateFormat.format(oldReceita.getString("data_cadastro")) : dateFormat.format(date));
             }
 
             if(!Utils.existsParam(receita, "data_modificacao")){
                 if(oldReceita == null)
                     receita.put("data_modificacao", dateFormat.format(date));
                 else {
-                    receita.put("data_modificacao", Utils.getValueJObject(oldReceita, "data_modificacao") != null ? oldReceita.getString("data_modificacao") : dateFormat.format(date));
+                    receita.put("data_modificacao", Utils.getValueJObject(oldReceita, "data_modificacao") != null ? dateFormat.format(oldReceita.getString("data_modificacao")) : dateFormat.format(date));
                 }
             }
 
