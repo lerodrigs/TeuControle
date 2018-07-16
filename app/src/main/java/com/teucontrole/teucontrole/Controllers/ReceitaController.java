@@ -267,11 +267,106 @@ public class ReceitaController
             }
 
             if(Utils.getValueJObject(jsonObject, "valor") == null || Utils.getValueJObject(jsonObject, "valor") == "0")
-                message = "Informar o valor!";
+                message = "Receita inválida, informar o valor!";
         }
         catch (Exception e){
             throw e;
         }
+
         return message;
+    }
+
+    public JSONObject completeJSON(JSONObject receita) throws Exception
+    {
+        try
+        {
+            JSONObject oldReceita = getReceita(receita.getString("id_receita"));
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+            Date date = new Date();
+
+            if(!Utils.existsParam(receita, "data_cadastro")){
+                if(oldReceita == null)
+                    receita.put("data_cadastro", dateFormat.format(date));
+                else
+                    receita.put("data_cadastro", Utils.getValueJObject(oldReceita, "data_cadastro") != null ? oldReceita.getString("data_cadastro") : dateFormat.format(date));
+            }
+
+            if(!Utils.existsParam(receita, "data_modificacao")){
+                if(oldReceita == null)
+                    receita.put("data_modificacao", dateFormat.format(date));
+                else {
+                    receita.put("data_modificacao", Utils.getValueJObject(oldReceita, "data_modificacao") != null ? oldReceita.getString("data_modificacao") : dateFormat.format(date));
+                }
+            }
+
+            if(!Utils.existsParam(receita, "excecao")){
+                if(oldReceita == null)
+                    receita.put("excecao", 1);
+                else
+                    receita.put("excecao", Utils.getValueJObject(oldReceita, "excecao") != null ? oldReceita.getString("excecao") : 1);
+            }
+
+            if(!Utils.existsParam(receita, "cor")){
+                if(oldReceita == null)
+                    receita.put("cor", JSONObject.NULL);
+                else
+                    receita.put("cor", Utils.getValueJObject(oldReceita, "cor") != null ? oldReceita.getString("cor") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "id_receita_recorrente")){
+                if(oldReceita == null)
+                    receita.put("id_receita_recorrente", JSONObject.NULL);
+                else
+                    receita.put("id_recorrente_receita", Utils.getValueJObject(oldReceita, "id_recorrente_receita") != null ? oldReceita.getString("id_recorrente_receita") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "id_recorrente_frequencia")){
+                if(oldReceita == null)
+                    receita.put("id_recorrente_frequencia", JSONObject.NULL);
+                else
+                    receita.put("id_recorrente_frequencia", Utils.getValueJObject(oldReceita, "id_recorrente_frequencia") != null ? oldReceita.getString("id_recorrente_frequencia") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "inicio")){
+                if(oldReceita == null)
+                    receita.put("inicio", JSONObject.NULL);
+                else
+                    receita.put("inicio", Utils.getValueJObject(oldReceita, "inicio") != null ? oldReceita.getString("inicio") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "termino")){
+                if(oldReceita == null)
+                    receita.put("termino", JSONObject.NULL);
+                else
+                    receita.put("termino", Utils.getValueJObject(oldReceita, "termino") != null ? oldReceita.getString("termino") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "intervalo")){
+                if(oldReceita == null)
+                    receita.put("intervalo", JSONObject.NULL);
+                else
+                    receita.put("intervalo", Utils.getValueJObject(oldReceita, "intervalo") != null ? oldReceita.getString("intervalo") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "total_ocorrencias")){
+                if(oldReceita == null)
+                    receita.put("total_ocorrencias", JSONObject.NULL);
+                else
+                    receita.put("total_ocorrencias", Utils.getValueJObject(oldReceita, "total_ocorrencias") != null ? oldReceita.getString("total_ocorrencias") : JSONObject.NULL);
+            }
+
+            if(!Utils.existsParam(receita, "tipo_fim")){
+                if(oldReceita == null)
+                    receita.put("tipo_fim", JSONObject.NULL);
+                else
+                    receita.put("tipo_fim", Utils.getValueJObject(oldReceita, "tipo_fim") != null ? oldReceita.getString("tipo_fim") : JSONObject.NULL);
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return receita;
     }
 }

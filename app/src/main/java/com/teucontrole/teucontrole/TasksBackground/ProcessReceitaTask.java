@@ -67,6 +67,8 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
             if(messageValidation != null)
                 return false;
 
+            receita = receitaController.completeJSON(receita);
+
             switch(process)
             {
                 case 1:

@@ -111,7 +111,7 @@ public class ReceitaRepository
             command.append("DESCRICAO = "+Utils.checkStringForExec(Utils.getValueJObject(jObject, "descricao")) + ", ");
             command.append("ID_RECEITA_RECORRENTE = "+Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_receita_recorrente")) + ", ");
             command.append("EXCECAO ="+Utils.checkStringForExec(Utils.getValueJObject(jObject, "excecao")) + ", ");
-            command.append("DATA_ORIGINAL= "+Utils.checkStringForExec(Utils.getValueJObject(jObject, "data_original")) + ", ");
+            command.append("DATA_ORIGINAL = "+Utils.checkStringForExec(Utils.getValueJObject(jObject, "data_original")) + ", ");
             command.append("ID_TITULO_STATUS ="+Utils.checkStringForExec(Utils.getValueJObject(jObject, "id_titulo_status")) + ", ");
             command.append("CONTA_NOME ="+Utils.checkStringForExec(Utils.getValueJObject(jObject, "conta_nome")) + ", ");
             command.append("CATEGORIA_RECEITA_NOME = "+Utils.checkStringForExec(Utils.getValueJObject(jObject, "categoria_receita_nome")) + ", ");

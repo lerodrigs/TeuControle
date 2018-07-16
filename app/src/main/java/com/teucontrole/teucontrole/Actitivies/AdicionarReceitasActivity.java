@@ -225,6 +225,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         {
             String option = menuItem.getTitle().toString();
             JSONObject receita = createJSONObject();
+
             int process = 1;
 
             if(option.equals("Salvar"))
@@ -361,6 +362,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
             jObject.put("id_perfil", this.id_perfil);
 
             jObject.put("id_receita", this.id_receita == null ? UUID.randomUUID() : this.id_receita);
+
         }
         catch (Exception e){
             throw e;

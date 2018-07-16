@@ -1,5 +1,7 @@
 package com.teucontrole.teucontrole.Utils;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -49,6 +51,9 @@ public class Utils
 
         try
         {
+            if(!existsParam(_object, key))
+                return value;
+
             if(_object.getString(key) != null && !_object.getString(key).contains("null"))
             {
                 value = _object.getString(key);
@@ -62,12 +67,30 @@ public class Utils
         return value;
     }
 
+    public static boolean existsParam(JSONObject jObject, String key)
+    {
+        try
+        {
+            if(jObject.getString(key) != null)
+                return true;
+            else
+                return false;
+        }
+        catch (Exception e){
+            Log.e("existsParam", e.getMessage());
+            return false;
+        }
+    }
+
     public static String getDateFromJObject(JSONObject jsonObject, String key) throws Exception
     {
         String data = null;
 
         try
         {
+            if(!existsParam(jsonObject, key))
+                return null;
+
             data = getValueJObject(jsonObject, key);
 
             if(data != null)
