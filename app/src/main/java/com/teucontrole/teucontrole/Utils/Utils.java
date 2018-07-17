@@ -82,6 +82,9 @@ public class Utils
         }
     }
 
+    /*
+    only for yyyy-mm-dd format
+     */
     public static String getDateFromJObject(JSONObject jsonObject, String key) throws Exception
     {
         String data = null;
@@ -126,6 +129,9 @@ public class Utils
         return retorno;
     }
 
+    /*
+     yyyy-mm-dd for dd/mm/yyyy
+     */
     public static String formatData(String value) throws Exception
     {
         String dataFormatada = null;
@@ -151,6 +157,73 @@ public class Utils
 
         return dataFormatada;
     }
+
+    /*
+    dd/mm/yyyy
+     */
+    public static String formatDataType2(String value) throws Exception
+    {
+        String dataFormatada = null;
+
+        try
+        {
+            String _mes;
+
+            int ano = Integer.parseInt(value.substring(0,4));
+            int mes = Integer.parseInt(value.substring(5,7));
+            int dia = Integer.parseInt(value.substring(8,10));
+
+            if(mes < 9 )
+                _mes = "0"+mes;
+            else
+                _mes = String.valueOf(mes);
+
+            dataFormatada = dia + "/" + _mes + "/" + ano;
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return dataFormatada;
+    }
+
+
+    public static String genericFormatDate(String data, String requiredFormat) throws Exception
+    {
+        String dateFormatted = null;
+
+        try
+        {
+            String ano = null;
+            String mes = null;
+            String dia = null;
+
+            if(data.contains("-")){
+                ano = data.substring(0, 4);
+                mes = data.substring(5,7);
+                dia = data.substring(8,10);
+            }
+            else if(data.contains("/")){
+                dia = data.substring(0,2);
+                mes = data.substring(3,5);
+                ano = data.substring(6,10);
+            }
+
+            if(requiredFormat.contains("-")){
+                dateFormatted = ano + "-" + mes + "-" + dia;
+            }
+            else if(requiredFormat.contains("/")){
+                dateFormatted = dia + "/" + mes + "/" + ano;
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return dateFormatted;
+    }
+
+
 
 
 

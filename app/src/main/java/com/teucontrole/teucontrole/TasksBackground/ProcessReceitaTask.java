@@ -73,12 +73,21 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
             {
                 case 1:
                     result = receitaController.insert(receita);
+
+                    if(result)
+                        result = receitaController.post(receita);
                     break;
                 case 2:
                     result = receitaController.update(receita);
+
+                    if(result)
+                        result = receitaController.put(receita, receita.getString("id_receita"));
                     break;
                 case 3:
                     result = receitaController.deleteFromDB(receita);
+
+                    if(result)
+                        result = receitaController.delete(receita);
                     break;
             }
         }

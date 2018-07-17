@@ -129,7 +129,41 @@ public class ApiRequest
 
         try
         {
+            if(token == null)
+            {
+                token = getToken(userPreferences.get("email"), userPreferences.get("pass"));
+            }
+
             URL url = new URL(api + endPoint);
+            String encoded = jObject.toString();
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput( true );
+
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty( "charset", "utf-8");
+            connection.addRequestProperty("Authorization", "Bearer " + token);
+
+            OutputStream outputStream = connection.getOutputStream();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+
+            outputStreamWriter.write(encoded);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+
+            connection.connect();
+            int responseCode = connection.getResponseCode();
+
+            if(responseCode == HttpURLConnection.HTTP_OK){
+
+                String response = apiUtils.InputStreamToString(connection.getInputStream());
+
+                if(response != null)
+                    resposta = true;
+            }
         }
         catch (Exception e)
         {
@@ -145,7 +179,41 @@ public class ApiRequest
 
         try
         {
+            if(token == null)
+            {
+                token = getToken(userPreferences.get("email"), userPreferences.get("pass"));
+            }
+
             URL url = new URL(api + endPoint);
+            String encoded = jObject.toString();
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput( true );
+
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty( "charset", "utf-8");
+            connection.addRequestProperty("Authorization", "Bearer " + token);
+
+            OutputStream outputStream = connection.getOutputStream();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+
+            outputStreamWriter.write(encoded);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+
+            connection.connect();
+            int responseCode = connection.getResponseCode();
+
+            if(responseCode == HttpURLConnection.HTTP_OK)
+            {
+                String response = apiUtils.InputStreamToString(connection.getInputStream());
+
+                if(response !=null)
+                    resposta = true;
+            }
         }
         catch (Exception e)
         {
@@ -161,7 +229,40 @@ public class ApiRequest
 
         try
         {
-           URL url = new URL(api + endPoint);
+            if(token == null)
+            {
+                token = getToken(userPreferences.get("email"), userPreferences.get("pass"));
+            }
+
+            URL url = new URL(api + endPoint);
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput( true );
+
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("DELETE");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty( "charset", "utf-8");
+            connection.addRequestProperty("Authorization", "Bearer " + token);
+
+            /*OutputStream outputStream = connection.getOutputStream();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+
+            outputStreamWriter.write(encoded);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();*/
+
+            connection.connect();
+            int responseCode = connection.getResponseCode();
+
+            if(responseCode == HttpURLConnection.HTTP_OK){
+
+                String response = apiUtils.InputStreamToString(connection.getInputStream());
+
+                if(response != null)
+                    resposta = true;
+            }
         }
         catch (Exception e)
         {

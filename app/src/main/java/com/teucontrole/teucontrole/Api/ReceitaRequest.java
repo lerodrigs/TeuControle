@@ -50,7 +50,7 @@ public class ReceitaRequest extends ApiRequest
 
         try
         {
-            result = post("api/Receita?id_receita="+id_receita, jObject);
+            result = put("api/Receita?id_receita="+id_receita, jObject);
         }
         catch (Exception e)
         {
@@ -68,8 +68,7 @@ public class ReceitaRequest extends ApiRequest
         {
             result = delete("api/Receita?id_receita="+ jObject.getString("id_perfil") + "&id_receita=" + jObject.getString("id_receita"));
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw e;
         }
 

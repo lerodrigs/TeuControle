@@ -31,6 +31,7 @@ import com.teucontrole.teucontrole.TasksBackground.LoadSituacaoDialogTask;
 import com.teucontrole.teucontrole.TasksBackground.ProcessReceitaTask;
 import com.teucontrole.teucontrole.Utils.MaskUtils;
 import com.teucontrole.teucontrole.Utils.MonetaryMask;
+import com.teucontrole.teucontrole.Utils.Utils;
 
 import org.json.JSONObject;
 
@@ -348,12 +349,12 @@ public class AdicionarReceitasActivity extends AppCompatActivity
             if(data_vencimento.equals(""))
                 data_vencimento = null;
 
-            jObject.put("data_vencimento", data_vencimento == null ? JSONObject.NULL : data_vencimento);
+            jObject.put("data_vencimento", data_vencimento == null ? JSONObject.NULL : Utils.genericFormatDate(data_vencimento, "yyyy-mm-dd"));
 
             if(data_pagamento.equals(""))
                 data_pagamento = null;
 
-            jObject.put("data_pagamento", data_pagamento == null ? JSONObject.NULL : data_pagamento);
+            jObject.put("data_pagamento", data_pagamento == null ? JSONObject.NULL : Utils.genericFormatDate(data_pagamento, "yyyy-mm-dd"));
 
             if(descricao.equals(""))
                 descricao = null;

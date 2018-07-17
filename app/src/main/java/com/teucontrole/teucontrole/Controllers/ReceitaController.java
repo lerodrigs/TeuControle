@@ -153,6 +153,21 @@ public class ReceitaController
         return result;
     }
 
+    public boolean delete(JSONObject receita) throws Exception
+    {
+        boolean result = false;
+
+        try
+        {
+            result = receitaRequest.delete(receita);
+        }
+        catch (Exception e )
+        {
+            throw e;
+        }
+        return result;
+    }
+
     public boolean insert(JSONObject jObject) throws Exception
     {
         boolean result = false;
@@ -285,18 +300,36 @@ public class ReceitaController
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
             Date date = new Date();
 
-            if(!Utils.existsParam(receita, "data_cadastro")){
+
+            if(!Utils.existsParam(receita, "data_cadastro"))
+            {
                 if(oldReceita == null)
                     receita.put("data_cadastro", dateFormat.format(date));
-                else
-                    receita.put("data_cadastro", Utils.getValueJObject(oldReceita, "data_cadastro") != null ? dateFormat.format(oldReceita.getString("data_cadastro")) : dateFormat.format(date));
+                else{
+                    String dataCadastro = Utils.getValueJObject(oldReceita, "data_cadastro");
+
+                    if(dataCadastro != null)
+                        dataCadastro = Utils.genericFormatDate(dataCadastro, "yyyy-mm-dd");
+                    else
+                        dataCadastro = dateFormat.format(date);
+
+                    receita.put("data_cadastro", dataCadastro);
+                }
             }
 
-            if(!Utils.existsParam(receita, "data_modificacao")){
+            if(!Utils.existsParam(receita, "data_modificacao"))
+            {
                 if(oldReceita == null)
                     receita.put("data_modificacao", dateFormat.format(date));
                 else {
-                    receita.put("data_modificacao", Utils.getValueJObject(oldReceita, "data_modificacao") != null ? dateFormat.format(oldReceita.getString("data_modificacao")) : dateFormat.format(date));
+                    String dataModificacao = Utils.getValueJObject(oldReceita, "data_modificacao");
+
+                    if(dataModificacao != null)
+                        dataModificacao = Utils.genericFormatDate(dataModificacao, "yyyy-mm-dd");
+                    else
+                        dataModificacao = dateFormat.format(date);
+
+                    receita.put("data_modificacao", dataModificacao);
                 }
             }
 

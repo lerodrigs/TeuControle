@@ -110,12 +110,12 @@ public class LoadReceitaTask extends AsyncTask<String, Void, JSONObject>
 
                 if(data_vencimento != null){
 
-                    data_vencimento = Utils.formatData(data_vencimento);
+                    data_vencimento = Utils.genericFormatDate(data_vencimento, "dd/mm/yyyy");
                     txtDataVencimento.setText(data_vencimento);
                 }
 
                 if(data_pagamento != null){
-                    data_pagamento = Utils.formatData(data_pagamento);
+                    data_pagamento = Utils.genericFormatDate(data_pagamento, "dd/mm/yyyy");
                     txtDataPagamento.setText(data_pagamento);
                 }
 

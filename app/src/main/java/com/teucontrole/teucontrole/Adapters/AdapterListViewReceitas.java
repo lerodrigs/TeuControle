@@ -115,18 +115,9 @@ public class AdapterListViewReceitas extends BaseAdapter
             if(Utils.getDateFromJObject(receita, "data_vencimento") != null)
             {
                 String dataStr = Utils.getDateFromJObject(receita, "data_vencimento");
-                String _mes;
 
-                int ano = Integer.parseInt(dataStr.substring(0,4));
-                int mes = Integer.parseInt(dataStr.substring(5,7));
-                int dia = Integer.parseInt(dataStr.substring(8,10));
-
-                if(mes < 9 )
-                    _mes = "0"+mes;
-                else
-                    _mes = String.valueOf(mes);
-
-                dataVencimento.setText(dia + "/" + _mes + "/" + ano);
+                dataStr = Utils.genericFormatDate(dataStr, "dd/mm/yyyy");
+                dataVencimento.setText(dataStr);
             }
 
             if(Utils.getValueJObject(receita, "valor") != null)
