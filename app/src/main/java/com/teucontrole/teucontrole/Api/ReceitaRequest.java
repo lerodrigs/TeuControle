@@ -50,7 +50,7 @@ public class ReceitaRequest extends ApiRequest
 
         try
         {
-            result = put("api/Receita?id_receita="+id_receita, jObject);
+            result = put("api/Receita/"+id_receita, jObject);
         }
         catch (Exception e)
         {

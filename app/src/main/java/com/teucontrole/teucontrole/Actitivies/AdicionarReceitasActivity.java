@@ -1,9 +1,11 @@
 package com.teucontrole.teucontrole.Actitivies;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +17,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.teucontrole.teucontrole.Controllers.CategoriaController;
 import com.teucontrole.teucontrole.Controllers.ReceitaController;
+import com.teucontrole.teucontrole.Fragments.CustomDatePickerFragment;
 import com.teucontrole.teucontrole.R;
 import com.teucontrole.teucontrole.TasksBackground.LoadCategoriaDialogTask;
 import com.teucontrole.teucontrole.TasksBackground.LoadContaDialogTask;
@@ -64,6 +69,8 @@ public class AdicionarReceitasActivity extends AppCompatActivity
     private LoadSituacaoDialogTask loadSituacaoDialogTask;
     private LoadContaDialogTask loadContaDialogTask;
 
+    private DatePicker datePicker;
+
     private String id_perfil;
     private String id_receita;
 
@@ -100,21 +107,31 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
             txt_id_conta = findViewById(R.id.id_conta);
             txt_conta = findViewById(R.id.txt_conta);
-            txt_conta.setOnClickListener(txtContaClick);
+
+            RelativeLayout relConta = findViewById(R.id.rel_conta);
+            relConta.setOnClickListener(txtContaClick);
 
             txt_id_categoria = findViewById(R.id.id_categoria);
             txt_categoria = findViewById(R.id.txt_categoria);
-            txt_categoria.setOnClickListener(txtCategoriaClick);
+
+            RelativeLayout relCategoria = findViewById(R.id.rel_categoria);
+            relCategoria.setOnClickListener(txtCategoriaClick);
 
             txt_data_vencimento = findViewById(R.id.txt_dt_vencimento);
-            txt_data_vencimento.setOnClickListener(txtDataVencimentoClick);
+
+            RelativeLayout relDataVencimento = findViewById(R.id.rel_data_vencimento);
+            relDataVencimento.setOnClickListener(txtDataVencimentoClick);
 
             txt_data_pagamento = findViewById(R.id.txt_dt_pagamento);
-            txt_data_pagamento.setOnClickListener(txtDataPagamentoClick);
+
+            RelativeLayout relDataPagamento = findViewById(R.id.rel_data_pagamento);
+            relDataPagamento.setOnClickListener(txtDataPagamentoClick);
 
             txt_id_situacao = findViewById(R.id.id_situacao);
             txt_situacao = findViewById(R.id.txt_selecione_situacao);
-            txt_situacao.setOnClickListener(txtSituacaoClick);
+
+            RelativeLayout relSituacao = findViewById(R.id.rel_situacao);
+            relSituacao.setOnClickListener(txtSituacaoClick);
 
             txt_valor = findViewById(R.id.txt_valor);
             //txt_valor.addTextChangedListener(new MonetaryMask(txt_valor));
@@ -178,6 +195,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         }
     };
 
+
     public View.OnClickListener txtSituacaoClick = new View.OnClickListener()
     {
         @Override
@@ -192,7 +210,38 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            datePicker = new DatePicker(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
+            builder.setView(datePicker);
+            builder.setPositiveButton("ok", btnDataVencimento);
+            builder.show();
+        }
+    };
+
+    private DialogInterface.OnClickListener btnDataVencimento = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(datePicker != null){
+
+                String day = "";
+                String month = "";
+
+                if(datePicker.getDayOfMonth() <= 9)
+                    day = "0" + datePicker.getDayOfMonth();
+                else
+                    day = String.valueOf(datePicker.getDayOfMonth());
+
+                if(datePicker.getMonth() <= 9)
+                    month = "0"+ datePicker.getMonth();
+                else
+                    month = String.valueOf(datePicker.getMonth());
+
+                txt_data_vencimento.setText(day + "/" + month + "/"+datePicker.getYear());
+            }
+            else
+                txt_data_vencimento.setText("");
         }
     };
 
@@ -201,7 +250,38 @@ public class AdicionarReceitasActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            datePicker = new DatePicker(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
+            builder.setView(datePicker);
+            builder.setPositiveButton("ok", btnDataPagament);
+            builder.show();
+        }
+    };
+
+    private DialogInterface.OnClickListener btnDataPagament = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(datePicker != null){
+
+                String month = "";
+                String day = "";
+
+                if(datePicker.getDayOfMonth() <=9)
+                    day = "0" + datePicker.getDayOfMonth();
+                else
+                    day = String.valueOf(datePicker.getDayOfMonth());
+
+                if(datePicker.getMonth() <= 9)
+                    month = "0"+ datePicker.getMonth();
+                else
+                    month = String.valueOf(datePicker.getMonth());
+
+                txt_data_pagamento.setText(day + "/" + month + "/"+datePicker.getYear());
+            }
+            else
+                txt_data_pagamento.setText("");
         }
     };
 
@@ -250,6 +330,7 @@ public class AdicionarReceitasActivity extends AppCompatActivity
 
             processReceitaTask = new ProcessReceitaTask(context, receita, process, rootView);
             processReceitaTask.execute();
+
         }
         catch (Exception e) {}
 

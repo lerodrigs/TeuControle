@@ -224,8 +224,9 @@ public class MainActivity extends AppCompatActivity
             if(option.equals("Calendario"))
             {
                 DialogFragment dialogFragment = new CustomDatePickerFragment();
-                dialogFragment.show(getSupportFragmentManager(), "date picker");
-
+                Bundle extras = new Bundle();
+                extras.putString("tag", "MainActivity_calendario");
+                dialogFragment.show(getSupportFragmentManager(), "MainActivity_calendario");
             }
         }
         catch (Exception e) {}

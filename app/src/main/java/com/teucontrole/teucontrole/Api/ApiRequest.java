@@ -15,6 +15,8 @@ import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONStringer;
+
 
 public class ApiRequest
 {
@@ -30,6 +32,7 @@ public class ApiRequest
         this.userPreferences = new UserPreferences(context);
         this.apiUtils = new ApiUtils();
         this.api = "https://www.teucontrole.com/api/";
+        //this.api = "http://localhost:5027/api/";
     }
 
     public String getToken(String email, String pass)
@@ -211,7 +214,7 @@ public class ApiRequest
             {
                 String response = apiUtils.InputStreamToString(connection.getInputStream());
 
-                if(response !=null)
+                if(response != null)
                     resposta = true;
             }
         }

@@ -106,6 +106,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/rel_conta"
                     android:minHeight="80dp"
                     android:clickable="true"
                     android:background="?android:attr/selectableItemBackground">
@@ -150,6 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
+                    android:id="@+id/rel_categoria"
                     android:clickable="true"
                     android:background="?android:attr/selectableItemBackground">
                     <TextView
@@ -189,6 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
+                    android:id="@+id/rel_data_vencimento"
                     android:clickable="true"
                     android:background="?android:attr/selectableItemBackground">
                     <TextView
@@ -224,6 +227,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
                     android:clickable="true"
+                    android:id="@+id/rel_data_pagamento"
                     android:background="?android:attr/selectableItemBackground">
                     <TextView
                         android:text="@string/data_pagamento"
@@ -258,6 +262,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
                     android:clickable="true"
+                    android:id="@+id/rel_situacao"
                     android:background="?android:attr/selectableItemBackground">
                     <TextView
                         android:text="@string/situacao"

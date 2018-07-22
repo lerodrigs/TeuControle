@@ -158,36 +158,6 @@ public class Utils
         return dataFormatada;
     }
 
-    /*
-    dd/mm/yyyy
-     */
-    public static String formatDataType2(String value) throws Exception
-    {
-        String dataFormatada = null;
-
-        try
-        {
-            String _mes;
-
-            int ano = Integer.parseInt(value.substring(0,4));
-            int mes = Integer.parseInt(value.substring(5,7));
-            int dia = Integer.parseInt(value.substring(8,10));
-
-            if(mes < 9 )
-                _mes = "0"+mes;
-            else
-                _mes = String.valueOf(mes);
-
-            dataFormatada = dia + "/" + _mes + "/" + ano;
-        }
-        catch (Exception e){
-            throw e;
-        }
-
-        return dataFormatada;
-    }
-
-
     public static String genericFormatDate(String data, String requiredFormat) throws Exception
     {
         String dateFormatted = null;

@@ -76,18 +76,32 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
 
                     if(result)
                         result = receitaController.post(receita);
+
+                    if(!result)
+                        receitaController.deleteFromDB(receita);
+
                     break;
                 case 2:
+
+                    JSONObject oldReceita = receitaController.getReceita(receita.getString("id_receita"));
                     result = receitaController.update(receita);
 
                     if(result)
                         result = receitaController.put(receita, receita.getString("id_receita"));
+
+                    if(!result)
+                        receitaController.update(oldReceita);
+
                     break;
                 case 3:
                     result = receitaController.deleteFromDB(receita);
 
                     if(result)
                         result = receitaController.delete(receita);
+
+                    if(!result)
+                        receitaController.insert(receita);
+
                     break;
             }
         }
@@ -128,16 +142,11 @@ public class ProcessReceitaTask extends AsyncTask<String, Void, Boolean>
                 message = "Erro ao processar receita!";
 
             Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+                    .setAction("OK", null)
                     .show();
-
         }
         catch (Exception e){
             throw e;
         }
-    }
-
-    private boolean sendToApi(int _process)
-    {
-        return true;
     }
 }

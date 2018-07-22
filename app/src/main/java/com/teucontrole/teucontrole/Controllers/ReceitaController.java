@@ -193,6 +193,13 @@ public class ReceitaController
 
         try
         {
+            JSONObject oldObject = getReceita(jObject.getString("id_receita"));
+
+            if(oldObject == null)
+                result = insert(jObject);
+            else {
+
+            }
             if(getReceita(jObject.getString("id_receita")) != null)
                 result = receitaRepository.update(jObject);
             else
@@ -276,12 +283,12 @@ public class ReceitaController
             if(Utils.getValueJObject(jsonObject, "data_vencimento") == null)
                 message = "Receita inválida, informar a data de vencimento!";
 
-            if(Utils.getValueJObject(jsonObject, "data_pagamento") != null)
-            {
+            String valor = Utils.getValueJObject(jsonObject, "valor");
 
-            }
+            if(valor == null)
+                message = "Receita inválida, informar o valor!";
 
-            if(Utils.getValueJObject(jsonObject, "valor") == null || Utils.getValueJObject(jsonObject, "valor") == "0")
+            if(Utils.getValueJObject(jsonObject, "valor") == "0")
                 message = "Receita inválida, informar o valor!";
         }
         catch (Exception e){
