@@ -58,7 +58,7 @@ public class AdapterListViewMenuPerfil extends BaseAdapter
         }
         catch (JSONException e)
         {
-            e.printStackTrace();
+
         }
 
         return id;

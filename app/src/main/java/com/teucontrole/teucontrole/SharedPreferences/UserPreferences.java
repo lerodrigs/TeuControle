@@ -40,8 +40,7 @@ public class UserPreferences
     {
         try
         {
-            String retorsdasdasd =sharedPreferences.getString(key, null);
-            return retorsdasdasd;
+            return sharedPreferences.getString(key, null);
         }
         catch (Exception e )
         {

@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.teucontrole.teucontrole.Actitivies.MainActivity;
 import com.teucontrole.teucontrole.Adapters.AdapterListViewMenuPerfil;
 import com.teucontrole.teucontrole.Controllers.PerfilController;
+import com.teucontrole.teucontrole.Utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,8 +23,6 @@ public class LoadPerfisTask extends AsyncTask<String, Void, JSONArray>
     private Activity context;
     private ListView listView;
     private AdapterListViewMenuPerfil adapter;
-
-    private FragmentManager _fragmentManager;
 
     public LoadPerfisTask(Activity _context, ListView _listView, AdapterListViewMenuPerfil _adapter)
     {
@@ -64,7 +65,6 @@ public class LoadPerfisTask extends AsyncTask<String, Void, JSONArray>
         try
         {
             this.perfis = jArray;
-
             if(perfis != null && perfis.length() > 0)
             {
                 if(adapter == null){
@@ -76,5 +76,10 @@ public class LoadPerfisTask extends AsyncTask<String, Void, JSONArray>
         catch(Exception e){
             throw e;
         }
+    }
+
+    public AdapterListViewMenuPerfil getAdapter()
+    {
+        return adapter;
     }
 }

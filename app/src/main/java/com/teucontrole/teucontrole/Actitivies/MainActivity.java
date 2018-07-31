@@ -64,8 +64,11 @@ public class MainActivity extends AppCompatActivity
     private DatePicker datePicker;
     private ImageView imgSetaMenuPerfil;
     private RelativeLayout relListViewPerfis;
+    private ListView listViewPerfis;
     private PerfilController perfilController;
     private String id_perfil_selecionado;
+
+    private LoadPerfisTask loadPerfisTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -102,8 +105,12 @@ public class MainActivity extends AppCompatActivity
             listviewMenu.setItemsCanFocus(false);
 
             //Menu de perfis
-            ListView listviewPerfis = navigationView.findViewById(R.id.listview_perfis);
-            listviewMenu.setItemsCanFocus(false);
+            listViewPerfis = navigationView.findViewById(R.id.listview_perfis);
+            listViewPerfis.setOnItemClickListener(perfilClickListener);
+            //loadPerfis();
+
+            loadPerfisTask = new LoadPerfisTask(this, listViewPerfis, null);
+            loadPerfisTask.execute();
 
             RelativeLayout relPerfis = navigationView.findViewById(R.id.rel_perfis);
             TextView lblMenuPerfis = navigationView.findViewById(R.id.lbl_perfilMenu);
@@ -113,9 +120,6 @@ public class MainActivity extends AppCompatActivity
             relPerfis.setOnClickListener(relativeLayoutPerfisClick);
             imgSetaMenuPerfil.setOnClickListener(relativeLayoutPerfisClick);
             lblMenuPerfis.setOnClickListener(relativeLayoutPerfisClick);
-
-            LoadPerfisTask loadPerfisTask = new LoadPerfisTask(this, listviewPerfis, null);
-            loadPerfisTask.execute();
 
             //Informações do usuário na nav.
             TextView txtNome = navigationView.findViewById(R.id.nome);
@@ -199,6 +203,28 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(menuItem);
     }
 
+    private AdapterView.OnItemClickListener perfilClickListener = new AdapterView.OnItemClickListener()
+    {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            try
+            {
+                AdapterListViewMenuPerfil adapter = loadPerfisTask.getAdapter();
+                JSONObject jObject = adapter.getItem((int) position);
+
+                if(jObject != null)
+                {
+                    id_perfil_selecionado = Utils.getValueJObject(jObject, "id_perfil");
+                    setChoosedFragment(1);
+                }
+            }
+            catch(Exception e){
+
+            }
+        }
+    };
+
     private DialogInterface.OnClickListener dtClickCalendario = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -220,6 +246,8 @@ public class MainActivity extends AppCompatActivity
                     month = String.valueOf(datePicker.getMonth());
 
                 data = day + "/" + month + "/" + datePicker.getYear();
+
+                /**/
             }
         }
     };
@@ -270,7 +298,6 @@ public class MainActivity extends AppCompatActivity
         try
         {
             android.support.v4.app.Fragment fragment = null;
-
             resetFragmentManager();
 
             switch(id)
@@ -291,11 +318,9 @@ public class MainActivity extends AppCompatActivity
             }
 
             Bundle argments = new Bundle();
-            PerfilController perfilController = new PerfilController(context);
+            argments.putString("id_perfil", id_perfil_selecionado);
 
-            argments.putString("id_perfil", perfilController.getIdPerfilSelecionado());
             fragment.setArguments(argments);
-
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contentMain, fragment)
@@ -559,8 +584,4 @@ public class MainActivity extends AppCompatActivity
             catch (Exception e){}
         }
     };
-
-
-
-
 }
