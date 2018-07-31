@@ -47,11 +47,16 @@ public class SyncController
 
             userController.start(email);
             perfilController.start();
+
+            String id_perfil_selecionado = perfilController.getPerfilDefault();
+            perfilController.setIdPerfilSelecionado(id_perfil_selecionado);
+
             categoriaController.start();
             contaController.start();
             receitaController.start();
             faturaController.start();
             despesaController.start();
+
         }
         catch (Exception e)
         {

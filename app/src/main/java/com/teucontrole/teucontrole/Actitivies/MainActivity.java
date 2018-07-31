@@ -18,8 +18,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -35,6 +37,8 @@ import com.teucontrole.teucontrole.Fragments.CustomDatePickerFragment;
 import com.teucontrole.teucontrole.Fragments.LancamentosFragment;
 import com.teucontrole.teucontrole.Models.Item;
 import com.teucontrole.teucontrole.R;
+import com.teucontrole.teucontrole.TasksBackground.LoadInfoUserTask;
+import com.teucontrole.teucontrole.TasksBackground.LoadPerfisTask;
 import com.teucontrole.teucontrole.Utils.ItemsMenuUtils;
 import com.teucontrole.teucontrole.Utils.Utils;
 
@@ -45,8 +49,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private static Activity context;
     private static FloatingActionButton fabReceita;
@@ -57,146 +61,105 @@ public class MainActivity extends AppCompatActivity
     private static FloatingActionMenu fabCheckList;
     private static Toolbar toolbar;
 
+    private DatePicker datePicker;
     private ImageView imgSetaMenuPerfil;
     private RelativeLayout relListViewPerfis;
-
-    private static PerfilController perfilController;
-    private static String id_perfil_selecionado;
+    private PerfilController perfilController;
+    private String id_perfil_selecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        context = this;
-        perfilController = new PerfilController(context);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
-
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.setDrawerListener(toogle);
-        toogle.syncState();
-
-        navigationView = findViewById(R.id.nav_view);
-        ListView listviewMenu = navigationView.findViewById(R.id.listview_menu);
-
-        //Menu lateral
-        List<Item> items = ItemsMenuUtils.getMenuItems();
-        AdapterMenuItems adapterMenuItems = new AdapterMenuItems(items, this);
-
-        listviewMenu.setOnItemClickListener(itemClickListener);
-        listviewMenu.setAdapter(adapterMenuItems);
-        listviewMenu.setItemsCanFocus(false);
-
-        //Menu de perfis
-        final ListView listviewPerfis = navigationView.findViewById(R.id.listview_perfis);
-        listviewPerfis.setOnItemClickListener(perfilItemclick);
-        listviewMenu.setItemsCanFocus(false);
-
-        RelativeLayout relPerfis = navigationView.findViewById(R.id.rel_perfis);
-        TextView lblMenuPerfis = navigationView.findViewById(R.id.lbl_perfilMenu);
-        relListViewPerfis = navigationView.findViewById(R.id.rel_listviewPerfis);
-        imgSetaMenuPerfil = navigationView.findViewById(R.id.setaPerfil);
-
-        relPerfis.setOnClickListener(relativeLayoutPerfisClick);
-        imgSetaMenuPerfil.setOnClickListener(relativeLayoutPerfisClick);
-        lblMenuPerfis.setOnClickListener(relativeLayoutPerfisClick);
-
-        id_perfil_selecionado = perfilSelected(null);
-
-        new Thread(new Runnable()
+        try
         {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    JSONArray jPerfis = getMenuPerfis();
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-                    if(jPerfis != null && jPerfis.length() > 0)
-                    {
-                        final AdapterListViewMenuPerfil adapter = new AdapterListViewMenuPerfil(jPerfis, context);
-                        context.runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                listviewPerfis.setAdapter(adapter);
-                            }
-                        });
-                    }
-                }
-                catch (Exception e){
+            context = this;
+            perfilController = new PerfilController(context);
+            id_perfil_selecionado = perfilController.getIdPerfilSelecionado();
 
-                }
+            drawerLayout = findViewById(R.id.drawer_layout);
 
-            }
-        }).start();
+            toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle("Home");
 
-        //Informações do usuário na nav.
-        final TextView txtNome = navigationView.findViewById(R.id.nome);
-        final TextView txtemail = navigationView.findViewById(R.id.email);
+            setSupportActionBar(toolbar);
 
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                JSONObject jUser = getUser();
+            ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+            drawerLayout.setDrawerListener(toogle);
+            toogle.syncState();
 
-                if(jUser != null)
-                {
-                    try
-                    {
-                        txtNome.setText(Utils.getValueJObject(jUser, "nome"));
-                        txtemail.setText(Utils.getValueJObject(jUser, "email"));
-                    }
-                    catch (Exception e){
+            navigationView = findViewById(R.id.nav_view);
+            ListView listviewMenu = navigationView.findViewById(R.id.listview_menu);
 
-                    }
-                }
-            }
-        }).start();
+            //Menu lateral
+            List<Item> items = ItemsMenuUtils.getMenuItems();
+            AdapterMenuItems adapterMenuItems = new AdapterMenuItems(items, this);
 
-        //Floating Action Menus/Buttons
-        fabReceita = findViewById(R.id.fab_receitas);
-        fabReceita.setOnClickListener(fabReceitasClick);
+            listviewMenu.setOnItemClickListener(itemClickListener);
+            listviewMenu.setAdapter(adapterMenuItems);
+            listviewMenu.setItemsCanFocus(false);
 
-        fabDespesas = findViewById(R.id.fab_despesas);
-        fabDespesas.setOnClickListener(fabDespesasClick);
+            //Menu de perfis
+            ListView listviewPerfis = navigationView.findViewById(R.id.listview_perfis);
+            listviewMenu.setItemsCanFocus(false);
 
-        fabMenuContasCartao = findViewById(R.id.fab_contas_cartao);
-        fabMenuCategorias = findViewById(R.id.fab_categorias);
+            RelativeLayout relPerfis = navigationView.findViewById(R.id.rel_perfis);
+            TextView lblMenuPerfis = navigationView.findViewById(R.id.lbl_perfilMenu);
+            relListViewPerfis = navigationView.findViewById(R.id.rel_listviewPerfis);
+            imgSetaMenuPerfil = navigationView.findViewById(R.id.setaPerfil);
 
-        FloatingActionButton fabCategoriaReceita = findViewById(R.id.fab_cat_receita);
-        fabCategoriaReceita.setOnClickListener(fabCategoriaReceitaClick);
+            relPerfis.setOnClickListener(relativeLayoutPerfisClick);
+            imgSetaMenuPerfil.setOnClickListener(relativeLayoutPerfisClick);
+            lblMenuPerfis.setOnClickListener(relativeLayoutPerfisClick);
 
-        FloatingActionButton fabCategoriaDespesa = findViewById(R.id.fab_cat_despesa);
-        fabCategoriaDespesa.setOnClickListener(fabCategoriaDespesaClick);
+            LoadPerfisTask loadPerfisTask = new LoadPerfisTask(this, listviewPerfis, null);
+            loadPerfisTask.execute();
 
-        FloatingActionButton fabAddContaBancaria = findViewById(R.id.adicionar_conta_bancaria);
-        fabAddContaBancaria.setOnClickListener(fabAddContaBancariaClick);
+            //Informações do usuário na nav.
+            TextView txtNome = navigationView.findViewById(R.id.nome);
+            TextView txtemail = navigationView.findViewById(R.id.email);
 
-        FloatingActionButton fabAddCartaoCredito = findViewById(R.id.adicionar_cartao_de_credito);
-        fabAddCartaoCredito.setOnClickListener(fabAddCartaoCreditoClick);
+            LoadInfoUserTask loadInfoUserTask = new LoadInfoUserTask(context, txtNome, txtemail);
+            loadInfoUserTask.execute();
 
-        fabFaturas = findViewById(R.id.fab_faturas);
-        fabFaturas.setOnClickListener(fabFaturasClick);
+            //Floating Action Menus/Buttons
+            fabReceita = findViewById(R.id.fab_receitas);
+            fabReceita.setOnClickListener(fabReceitasClick);
 
-        fabCheckList = findViewById(R.id.fab_checklists);
-        FloatingActionButton fabAddCheckList = findViewById(R.id.add_checklist);
-        fabAddCheckList.setOnClickListener(fabCheckListClick);
+            fabDespesas = findViewById(R.id.fab_despesas);
+            fabDespesas.setOnClickListener(fabDespesasClick);
 
-        FloatingActionButton fabAddCheckListModelo = findViewById(R.id.add_checklist_modelo);
-        fabAddCheckListModelo.setOnClickListener(fabCheckListModeloClick);
+            fabMenuContasCartao = findViewById(R.id.fab_contas_cartao);
+            fabMenuCategorias = findViewById(R.id.fab_categorias);
 
-        setChoosedFragment(1);
+            FloatingActionButton fabCategoriaReceita = findViewById(R.id.fab_cat_receita);
+            fabCategoriaReceita.setOnClickListener(fabCategoriaReceitaClick);
+
+            FloatingActionButton fabCategoriaDespesa = findViewById(R.id.fab_cat_despesa);
+            fabCategoriaDespesa.setOnClickListener(fabCategoriaDespesaClick);
+
+            FloatingActionButton fabAddContaBancaria = findViewById(R.id.adicionar_conta_bancaria);
+            fabAddContaBancaria.setOnClickListener(fabAddContaBancariaClick);
+
+            FloatingActionButton fabAddCartaoCredito = findViewById(R.id.adicionar_cartao_de_credito);
+            fabAddCartaoCredito.setOnClickListener(fabAddCartaoCreditoClick);
+
+            fabFaturas = findViewById(R.id.fab_faturas);
+            fabFaturas.setOnClickListener(fabFaturasClick);
+
+            fabCheckList = findViewById(R.id.fab_checklists);
+            FloatingActionButton fabAddCheckList = findViewById(R.id.add_checklist);
+            fabAddCheckList.setOnClickListener(fabCheckListClick);
+
+            FloatingActionButton fabAddCheckListModelo = findViewById(R.id.add_checklist_modelo);
+            fabAddCheckListModelo.setOnClickListener(fabCheckListModeloClick);
+
+            setChoosedFragment(1);
+            //fim Floating Action Menus/Buttons
+        }
+        catch(Exception e){ }
     }
 
       @Override
@@ -223,16 +186,43 @@ public class MainActivity extends AppCompatActivity
 
             if(option.equals("Calendario"))
             {
-                DialogFragment dialogFragment = new CustomDatePickerFragment();
-                Bundle extras = new Bundle();
-                extras.putString("tag", "MainActivity_calendario");
-                dialogFragment.show(getSupportFragmentManager(), "MainActivity_calendario");
+                datePicker = new DatePicker(context);
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+
+                builder.setView(datePicker);
+                builder.setPositiveButton("ok", dtClickCalendario);
+                builder.show();
             }
         }
         catch (Exception e) {}
 
         return super.onOptionsItemSelected(menuItem);
     }
+
+    private DialogInterface.OnClickListener dtClickCalendario = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(datePicker != null)
+            {
+                String day = "";
+                String month = "";
+                String data = "";
+
+                if(datePicker.getDayOfMonth() <= 9)
+                    day = "0" + datePicker.getDayOfMonth();
+                else
+                    day = String.valueOf(datePicker.getDayOfMonth());
+
+                if(datePicker.getMonth() <= 9)
+                    month = "0"+ datePicker.getMonth();
+                else
+                    month = String.valueOf(datePicker.getMonth());
+
+                data = day + "/" + month + "/" + datePicker.getYear();
+            }
+        }
+    };
 
     public static void setToolbar(final String textToolbar)
     {
@@ -243,55 +233,6 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle(textToolbar);
             }
         });
-    }
-
-    private JSONArray getMenuPerfis()
-    {
-        JSONArray jArray = null;
-;
-        try
-        {
-            jArray = perfilController.getPerfis();
-        }
-        catch (Exception e){
-
-        }
-
-        return jArray;
-    }
-
-    private String perfilSelected(String id_perfil)
-    {
-        String result = null;
-
-        try
-        {
-            if(id_perfil == null)
-                result = perfilController.getPerfilDefault();
-            else
-            {
-                result = id_perfil;
-            }
-        }
-        catch (Exception e ){
-
-        }
-
-        return result;
-    }
-
-    private JSONObject getUser()
-    {
-        try
-        {
-            UserControllers userController = new UserControllers(context);
-            JSONObject jObject = userController.getFromUserLogged();
-
-            return jObject;
-        }
-        catch (Exception e){
-            return null;
-        }
     }
 
     //Exibe-esconde lista de perfis
@@ -315,26 +256,12 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    public static Toolbar getToolbar()
-    {
-        return toolbar;
-    }
-
     private ListView.OnItemClickListener itemClickListener = new ListView.OnItemClickListener()
     {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
             setChoosedFragment((int) id);
-        }
-    };
-
-    private ListView.OnItemClickListener perfilItemclick = new ListView.OnItemClickListener()
-    {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-        {
-
         }
     };
 
@@ -364,9 +291,11 @@ public class MainActivity extends AppCompatActivity
             }
 
             Bundle argments = new Bundle();
+            PerfilController perfilController = new PerfilController(context);
 
-            argments.putString("id_perfil", id_perfil_selecionado);
+            argments.putString("id_perfil", perfilController.getIdPerfilSelecionado());
             fragment.setArguments(argments);
+
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contentMain, fragment)

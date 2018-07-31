@@ -73,6 +73,33 @@ public class PerfilController
         return id_perfil;
     }
 
+    public String getIdPerfilSelecionado() throws Exception
+    {
+        String id_perfil_selecionado =null;
+
+        try
+        {
+            id_perfil_selecionado = userPreferences.get("id_perfil_selecionado");
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return id_perfil_selecionado;
+    }
+
+    public void setIdPerfilSelecionado(String id_perfil_selecionado) throws Exception
+    {
+        try
+        {
+            if(id_perfil_selecionado != null && !id_perfil_selecionado.isEmpty())
+                userPreferences.set("id_perfil_selecionado", id_perfil_selecionado);
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+
     public void start() throws Exception
     {
         try
