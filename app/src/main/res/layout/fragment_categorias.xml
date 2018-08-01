@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -41,6 +42,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frameLayoutListViewCatReceitas"
+                android:visibility="gone"
+                android:layout_below="@id/rel_clickable_categoria_receita">
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:dividerHeight="12dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:id="@+id/categorias_receitas"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/txt_nenhum_registro_encontrado"
+                android:textColor="@color/secondaryText"
+                android:layout_centerHorizontal="true"
+                android:padding="20dp"
+                android:id="@+id/txt_sem_registro_cat_receitas"
+                android:layout_marginTop="60dp"
+                android:textSize="18dp"
+                android:textStyle="normal" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginTop="0dp"
@@ -73,12 +103,41 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right" />
                 </FrameLayout>
+
                 <TextView
                     android:id="@+id/txt_categoria_despesa"
-                    android:text="@string/receitas"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/despesas"/>
             </RelativeLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frameLayoutListViewCatDespesas"
+                android:visibility="gone"
+                android:layout_below="@id/rel_clickable_categoria_despesa">
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:dividerHeight="12dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:id="@+id/categorias_despesas"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/txt_nenhum_registro_encontrado"
+                android:textColor="@color/secondaryText"
+                android:layout_centerHorizontal="true"
+                android:padding="20dp"
+                android:id="@+id/txt_sem_registro_cat_despesas"
+                android:layout_marginTop="60dp"
+                android:textSize="18dp"
+                android:textStyle="normal" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

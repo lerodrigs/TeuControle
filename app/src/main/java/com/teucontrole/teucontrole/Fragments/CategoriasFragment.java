@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.teucontrole.teucontrole.R;
 
-public class CategoriasFragment extends Fragment {
+public class CategoriasFragment extends Fragment
+{
+    private String id_perfil;
 
     public static CategoriasFragment NewInstance()
     {
@@ -22,10 +24,13 @@ public class CategoriasFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null)
         {
+            id_perfil = getArguments().getString("id_perfil_selecionado");
         }
     }
 
@@ -38,6 +43,8 @@ public class CategoriasFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstancedState)
     {
+
+
         super.onViewCreated(view, savedInstancedState);
     }
 

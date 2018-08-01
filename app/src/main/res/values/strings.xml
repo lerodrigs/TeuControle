@@ -14,8 +14,8 @@
     <string name="configuracoes">Configurações</string>
     <string name="sair">Sair</string>
 
-    <string name="receitas">Nova categoria para Receitas</string>
-    <string name="despesas">Nova categoria para Despesas</string>
+    <string name="receitas">Receitas</string>
+    <string name="despesas">Despesas</string>
     <string name="categorias">Categorias</string>
     <string name="contas_e_cartoes">Contas e Cartões</string>
     <string name="faturas">Faturas</string>
